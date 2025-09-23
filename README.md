@@ -14,53 +14,38 @@
 #### Main entity (Videogame):
 Attributes:
 
-*id: Unique identifier 
-
-*name: Product name
-
-*description: Product description 
-
-*price: Product price 
-
-*category: Product category 
-
-*creation_date: Creation date 
+* id: Unique identifier 
+* name: Product name
+* description: Product description 
+* price: Product price 
+* category: Product category 
+* creation_date: Creation date 
 
 #### Secondary entity (Review):
 Attributes:
 
-*product_id: Reference to the product 
-
-*review_test: Review content 
-
-*rating: Score from 1 to 5 
-
-*author: Review author name 
-
-*review_date: Review date 
-
-*is_verified: Verified purchase flag 
+* product_id: Reference to the product 
+* review_test: Review content 
+* rating: Score from 1 to 5 
+* author: Review author name 
+* review_date: Review date 
+* is_verified: Verified purchase flag 
 
 ### Images
-Entities will have associated images:
-
-Product: Each product can have multiple images (main, additional photos)
-
-Review: Reviews can include user-uploaded photos (screenshot, gameplay)
+* Entities will have associated images:
+* Product: Each product can have multiple images (main, additional photos)
+* Review: Reviews can include user-uploaded photos (screenshot, gameplay)
 
 ### Search, Filtering and Categorization
 
 #### Search
-Text search: Search by name and description across all entities
-
-Advanced search: Combined filtering by multiple criteria
+*Text search: Search by name and description across all entities
+*Advanced search: Combined filtering by multiple criteria
 
 #### Filtering
-By category: Filtering based on predefined categories
-
-By date: Date range for creation/modification
-
-By status: Filter by current element status
+* By category: Filtering based on predefined categories
+* By date: Date range for creation/modification
+* By status: Filter by current element status
 
 #### Categorization
 Tag system for content classification
