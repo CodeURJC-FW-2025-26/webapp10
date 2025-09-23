@@ -24,7 +24,6 @@ Attributes:
 #### Secondary entity (Review):
 Attributes:
 
-* product_id: Reference to the product 
 * review_test: Review content 
 * rating: Score from 1 to 5 
 * author: Review author name 
@@ -48,4 +47,4 @@ Attributes:
 * By status: Filter by current element status
 
 #### Categorization
-Tag system for content classification
+* Tag system for content classification
