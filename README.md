@@ -39,8 +39,8 @@ Attributes:
 ### Search, Filtering and Categorization
 
 #### Search
-*Text search: Search by name and description across all entities
-*Advanced search: Combined filtering by multiple criteria
+* Text search: Search by name and description across all entities
+* Advanced search: Combined filtering by multiple criteria
 
 #### Filtering
 * By category: Filtering based on predefined categories
