@@ -1,4 +1,4 @@
-# webapp10
+# MoreForPlaying
 
 ## Our goal is to make a videogame website "Steam" alike, called: MoreForPlaying
 
