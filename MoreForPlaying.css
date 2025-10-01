@@ -1,0 +1,34 @@
+/* prueba.css: Ejemplo de estilos CSS básicos */
+
+body {
+    background-color: #32e232;
+    font-family: Arial, sans-serif;
+    margin: 40px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 0;
+}
+
+div{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    color: #000000;
+    font-weight: bold;
+    background-color: #00ffb3;
+    border-radius: 10px;
+    padding: 10px;
+    margin:auto;
+    display: inline-block;
+}
+
