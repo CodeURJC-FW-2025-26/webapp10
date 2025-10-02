@@ -4,7 +4,8 @@
 .footer {
     border: 2px solid black;
     border-radius: 10px;
-    padding: 20px;
+    padding: 25px;
+    background-color: rebeccapurple;
 }
 
 body {
@@ -39,4 +40,18 @@ form {
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
+}
+
+.sidebar-item {
+    margin-bottom: 10px;
+    cursor: pointer;    
+    display: block;
+    border-bottom: 1px solid #200331;
+    color: black;
+    transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+            background: #000000;
+            color: white;
 }
