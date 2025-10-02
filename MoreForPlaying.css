@@ -1,34 +1,42 @@
-/* prueba.css: Ejemplo de estilos CSS básicos */
+.header,
+.sidebar,
+.content,
+.footer {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
 
 body {
-    background-color: #32e232;
-    font-family: Arial, sans-serif;
-    margin: 40px;
+    background-color: blueviolet;
 }
 
-h1 {
-    color: #2c3e50;
-    text-align: center;
+.games {
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 20px;
-}
-
-p {
-    color: #555;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 0;
-}
-
-div{
-    text-align: center;
-    margin-top: 20px;
-    font-size: 20px;
-    color: #000000;
-    font-weight: bold;
-    background-color: #00ffb3;
+    justify-content: center;
+    gap: 20px;
+    border: 2px solid black;
     border-radius: 10px;
-    padding: 10px;
-    margin:auto;
-    display: inline-block;
+    padding: 20px;
 }
 
+.game-create {
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.header {
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
