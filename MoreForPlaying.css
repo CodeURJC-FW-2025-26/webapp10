@@ -2,14 +2,15 @@
 .sidebar,
 .content,
 .footer {
-    border: 2px solid black;
+    border: 2px solid rgb(255, 0, 0);
     border-radius: 10px;
     padding: 25px;
-    background-color: rebeccapurple;
+    background-color: rgb(39, 38, 41);
+    color: white;
 }
 
 body {
-    background-color: blueviolet;
+    background-color: rgb(8, 4, 12);
 }
 
 .games {
@@ -18,21 +19,25 @@ body {
     margin-bottom: 20px;
     justify-content: center;
     gap: 20px;
-    border: 2px solid black;
+    border: 2px solid rgb(255, 0, 0);
     border-radius: 10px;
     padding: 20px;
+    background-color: rgb(8, 4, 12);
 }
 
 .game-create {
-    border: 2px solid rgb(0, 0, 0);
+    border: 5px solid rgb(255, 0, 0);
     border-radius: 10px;
     padding: 20px;
+    background-color: rgb(8, 4, 12);
 }
 
 .header {
     margin: 20px;
     padding: 20px;
-    text-align: center;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
 }
 
 form {
@@ -54,4 +59,29 @@ form {
 .sidebar-item:hover {
             background: #000000;
             color: white;
+}
+
+.game-card {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(39, 38, 41);
+    text-align: center;
+}
+
+#logoimg {
+    border-radius: 50%;
+    display: inline;
+    flex-wrap: wrap;
+    border: solid 5px red;
+}
+
+.footer {
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
