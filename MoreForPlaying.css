@@ -14,8 +14,6 @@ body {
 }
 
 .games {
-    display: flex;
-    flex-wrap: wrap;
     margin-bottom: 20px;
     justify-content: center;
     gap: 20px;
