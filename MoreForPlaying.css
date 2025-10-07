@@ -7,6 +7,8 @@
     padding: 25px;
     background-color: rgb(39, 38, 41);
     color: white;
+    font-family: "Orbitron";
+    font-size: 18px;
 }
 
 body {
@@ -47,7 +49,7 @@ form {
     cursor: pointer;    
     display: block;
     border-bottom: 1px solid #200331;
-    color: black;
+    color: rgb(153, 138, 138);
     transition: all 0.3s ease;
 }
 
