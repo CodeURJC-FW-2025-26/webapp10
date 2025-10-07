@@ -1,7 +1,13 @@
 .header,
 .sidebar,
 .content,
-
+.footer {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 25px;
+    background-color: rgb(39, 38, 41);
+    color: white;
+}
 
 body {
     background-color: rgb(8, 4, 12);
