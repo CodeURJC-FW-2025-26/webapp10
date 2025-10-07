@@ -38,7 +38,14 @@ body {
     justify-content: space-around;
     display: flex;
     align-items: center;
+    gap:20px;
 }
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+} 
 
 form {
     display: flex;
@@ -80,8 +87,3 @@ form {
     text-align: center;
 }
 
-.header-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
