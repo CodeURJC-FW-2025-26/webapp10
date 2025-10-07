@@ -69,7 +69,6 @@ form {
 }
 
 .game-card {
-    border: 2px solid black;
     border-radius: 10px;
     padding: 20px;
     background-color: rgb(39, 38, 41);
