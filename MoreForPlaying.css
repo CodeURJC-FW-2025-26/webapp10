@@ -1,17 +1,57 @@
 .header,
 .sidebar,
 .content,
-.footer {
-    border: 2px solid rgb(255, 0, 0);
-    border-radius: 10px;
-    padding: 25px;
-    background-color: rgb(39, 38, 41);
-    color: white;
-}
+
 
 body {
     background-color: rgb(8, 4, 12);
 }
+
+
+.header {
+    margin: 20px;
+    padding: 20px;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    gap:20px;
+}
+
+#logoimg {
+    border-radius: 50%;
+    display: inline;
+    flex-wrap: wrap;
+    border: solid 5px red;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+} 
+
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.sidebar-item {
+    margin-bottom: 10px;
+    cursor: pointer;    
+    display: block;
+    border-bottom: 1px solid #200331;
+    color: black;
+    transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+            background: #000000;
+            color: white;
+}
+
 
 .games {
     margin-bottom: 20px;
@@ -30,41 +70,6 @@ body {
     background-color: rgb(8, 4, 12);
 }
 
-.header {
-    margin: 20px;
-    padding: 20px;
-    justify-content: space-around;
-    display: flex;
-    align-items: center;
-    gap:20px;
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-} 
-
-form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.sidebar-item {
-    margin-bottom: 10px;
-    cursor: pointer;    
-    display: block;
-    border-bottom: 1px solid #200331;
-    color: black;
-    transition: all 0.3s ease;
-}
-
-.sidebar-item:hover {
-            background: #000000;
-            color: white;
-}
 
 .game-card {
     border-radius: 10px;
@@ -73,14 +78,14 @@ form {
     text-align: center;
 }
 
-#logoimg {
-    border-radius: 50%;
-    display: inline;
-    flex-wrap: wrap;
-    border: solid 5px red;
-}
+
 
 .footer {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 25px;
+    background-color: rgb(39, 38, 41);
+    color: white;
     text-align: center;
 }
 
