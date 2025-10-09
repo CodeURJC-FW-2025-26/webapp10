@@ -46,7 +46,7 @@ form {
 }
 
 .sidebar-item {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     cursor: pointer;    
     display: block;
     border-bottom: 1px solid #200331;
@@ -70,7 +70,7 @@ form {
 }
 
 .game-create {
-    border: 5px solid rgb(255, 0, 0);
+    border: 2px solid rgb(255, 0, 0);
     border-radius: 10px;
     padding: 20px;
     background-color: rgb(8, 4, 12);
@@ -83,8 +83,16 @@ form {
     padding: 20px;
     background-color: rgb(8, 4, 12);
     text-align: center;
+    border: 1px solid rgb(255, 0, 0);
+    font-size: 25px;
 }
 
+.game-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
 
 .footer {
     border: 2px solid rgb(255, 0, 0);
@@ -95,3 +103,13 @@ form {
     text-align: center;
 }
 
+.content {
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.sidebar {
+    height: 80vh;
+    position: sticky;
+    top: 20px;
+}
