@@ -9,20 +9,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Header -->
-            <div class="col-12 mb-3">
+            <div class="col-12 mb-3"> <!-- Ocupa toda la dimensión y el margen de abajo es 3 -->
                 <header class="header flex-column flex-md-row">
+                    <!-- En tamaños pequeños, se posiciona en una columna, en tamaños superiores a medio, va en una fila -->
 
                     <img id="logoimg"
                         src="https://raw.githubusercontent.com/CodeURJC-FW-2025-26/webapp10/a2d461fc0ddfd3e9b634ce1d4ba9e1374d3c15fb/LogPhoto.png"
                         alt="Logo MoreForPlaying" width="100" height="100">
 
-                    <div class="header-content d-flex flex-column flex-md-row"> 
+                    <div class="header-content flex-column flex-md-row">
 
                         <div class="d-flex gap-3">
                             <a href="#">Tienda</a>
@@ -30,11 +32,10 @@
                             <a href="#">Soporte</a>
                         </div>
 
-                        <form> <!--??-->
+                        <form>
                             <label for="Buscar">Buscar en la tienda</label>
                             <input>
                         </form>
-
                     </div>
 
                 </header>
@@ -45,21 +46,21 @@
             <!-- Sidebar -->
             <div class="col-md-3 mb-3">
                 <aside class="sidebar">
-                    <div class="category">Categorías</div>
-                    <a href="#" class="sidebar-item">Shooters</a>
-                    <a href="#" class="sidebar-item">Mundo Abierto</a>
-                    <a href="#" class="sidebar-item">Indie</a>
-                    <a href="#" class="sidebar-item">Carreras</a>
-                    <a href="#" class="sidebar-item">Deportes</a>
-                    <a href="#" class="sidebar-item">RPG</a>
+                    <div class="category"><i class="bi bi-controller"></i> Categorías</div>
+                    <a href="#" class="sidebar-item"><i class="bi bi-bullseye"></i> Shooters</a>
+                    <a href="#" class="sidebar-item"> <i class="bi bi-globe2"></i> Mundo Abierto</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-heart-fill"></i> Indie</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-speedometer2"></i> Carreras</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-trophy-fill"></i> Deportes</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-shield-shaded"></i> RPG</a>
 
-                    <div class="category">Plataformas</div>
-                    <a href="#" class="sidebar-item">PC</a>
-                    <a href="#" class="sidebar-item">PlayStation</a>
-                    <a href="#" class="sidebar-item">Xbox</a>
-                    <a href="#" class="sidebar-item">Nintendo</a>
+                    <div class="category"><i class="bi bi-laptop"></i> Plataformas</div>
+                    <a href="#" class="sidebar-item"><i class="bi bi-windows text-primary"></i> PC</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-playstation text-success"></i> PlayStation</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-xbox text-success"></i> Xbox</a>
+                    <a href="#" class="sidebar-item"> <i class="bi bi-nintendo-switch text-danger"></i> Nintendo</a>
 
-                    <div class="category">Información</div>
+                    <div class="category"><i class="bi bi-info-circle"></i> Información</div>
                     <p class="sidebar-item">Juegos: 612</p>
                     <p class="sidebar-item">Usuarios online: 3.3k</p>
                     <p class="sidebar-item">GOTY: Elden Ring</p>
@@ -68,7 +69,13 @@
             </div>
             <!-- Content -->
             <div class="col-md-9 mb-3">
-                <main class="content">
+                <main class="content"> 
+
+                    <div class="game-create col-md-3 offset-md-9 mb-3">
+                            <h1><i class="bi bi-pencil-square"></i> </h1>
+                            <a href="#" class="btn btn-secondary">Crea tu propio juego</a>
+                    </div>
+
                     <div class="games row">
                         <div class="game-card col-12 col-sm-6 col-lg-3 mb-3">
                             <div class="game-title">Minecraft</div>
@@ -143,9 +150,6 @@
                                     width="150px" height="200px">
                             </a>
                         </div>
-                    </div>
-                    <div class="game-create">
-                        <a href="#" class="btn btn-secondary">Crea tu propio juego</a>
                     </div>
                 </main>
             </div>
