@@ -25,7 +25,6 @@ body {
     display: flex;
     align-items: center;
     gap:20px;
-    font-size: 14px; 
 }
 
 #logoimg {
@@ -46,6 +45,10 @@ form {
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
+}
+
+.form-control {
+   max-width: 100%;
 }
 
 .sidebar-item {
@@ -70,15 +73,6 @@ form {
     border-radius: 10px;
     padding: 20px;
     background-color: rgb(39, 38, 41);
-}
-
-.game-create {
-    border: 2px solid rgb(255, 0, 0);
-    border-radius: 10px;
-    padding: 20px;
-    background-color: rgb(8, 4, 12);
-    display: inline-flex;
-    justify-content: space-around;
 }
 
 .game-card {
@@ -167,4 +161,20 @@ form {
     line-height: 1.6;
     margin-top: 40px;
     text-align: justify;
+}
+
+.btn {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    background-color: rgb(8, 4, 12);
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+.btn:hover {
+    background: grey;
+    color: black;
+    border: 2px solid red;
 }
