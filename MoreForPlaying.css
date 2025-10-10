@@ -1,6 +1,9 @@
 .header,
 .sidebar,
+.minecraft-p-content,
 .content,
+.m-btn,
+.description,
 .footer {
     border: 2px solid rgb(255, 0, 0);
     border-radius: 10px;
@@ -114,14 +117,18 @@ form {
     top: 20px;
 }
 
+.minecraft-p-content {
+    height: 80vh;
+}
+
 .title {
-    font-size: 55px;
+    font-size: 70px;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.description {
+.p-description {
     font-size: 30px;
     line-height: 1.6;
     margin-bottom: 20px;
@@ -135,4 +142,22 @@ form {
     text-align: center;
     border: 1px solid rgb(255, 0, 0);
     font-size: 25px;
+}
+
+.information {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(8, 4, 12);
+    text-align: center;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-top: 40px;
+    text-align: justify;
 }
