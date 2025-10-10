@@ -2,10 +2,14 @@
 <html>
 
 <head>
-    <title>MINECRAFT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Minecraft</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="MoreForPlaying.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -43,21 +47,22 @@
             <!-- Sidebar -->
             <div class="col-lg-2 md-2 mb-3">
                 <aside class="sidebar">
-                    <div>Categorías</div>
-                    <a href="#" class="sidebar-item">Shooters</a>
-                    <a href="#" class="sidebar-item">Mundo Abierto</a>
-                    <a href="#" class="sidebar-item">Indie</a>
-                    <a href="#" class="sidebar-item">Carreras</a>
-                    <a href="#" class="sidebar-item">Deportes</a>
-                    <a href="#" class="sidebar-item">RPG</a>
 
-                    <div>Plataformas</div>
-                    <a href="#" class="sidebar-item">PC</a>
-                    <a href="#" class="sidebar-item">PlayStation</a>
-                    <a href="#" class="sidebar-item">Xbox</a>
-                    <a href="#" class="sidebar-item">Nintendo</a>
+                    <div class="category"><i class="bi bi-controller"></i> Categorías</div>
+                    <a href="#" class="sidebar-item"><i class="bi bi-bullseye"></i> Shooters</a>
+                    <a href="#" class="sidebar-item"> <i class="bi bi-globe2"></i> Mundo Abierto</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-heart-fill"></i> Indie</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-speedometer2"></i> Carreras</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-trophy-fill"></i> Deportes</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-shield-shaded"></i> RPG</a>
 
-                    <div>Información</div>
+                    <div class="category"><i class="bi bi-laptop"></i> Plataformas</div>
+                    <a href="#" class="sidebar-item"><i class="bi bi-windows text-primary"></i> PC</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-playstation text-success"></i> PlayStation</a>
+                    <a href="#" class="sidebar-item"><i class="bi bi-xbox text-success"></i> Xbox</a>
+                    <a href="#" class="sidebar-item"> <i class="bi bi-nintendo-switch text-danger"></i> Nintendo</a>
+
+                    <div class="category"><i class="bi bi-info-circle"></i> Información</div>
                     <p class="sidebar-item">Juegos: 612</p>
                     <p class="sidebar-item">Usuarios online: 3.3k</p>
                     <p class="sidebar-item">GOTY: Elden Ring</p>
@@ -71,21 +76,37 @@
                 <main class="content">
                     <!--content-->
                     <div class="p-information">
-                        <div class="title">MINECRAFT</div>
-                        <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png"
-                            alt="Portada de Minecraft" width="600">
-                        <div class="description">Crea todo lo que puedas imaginar, descubre misterios espeluznantes y
-                            sobrevive
-                            a la noche en el juego de aventura tipo sandbox definitivo. En Minecraft, cada
-                            partida es diferente y te esperan aventuras inolvidables a la vuelta de la esquina.
-                            Explora y crea tu camino a un mundo infinito al que le puedes dar forma bloque a bloque.
+                        <div class="row">
+                            <div class="title col-12">MINECRAFT</div>
+                        </div>
+                        <div class="row">
+
+                            <div class="description col-12 col-md-6"> Crea todo lo que puedas imaginar, descubre misterios espeluznantes y
+                                sobrevive a la noche en el juego de aventura tipo sandbox definitivo. En Minecraft, cada
+                                partida es diferente y te esperan aventuras inolvidables a la vuelta de la esquina.
+                                Explora y crea tu camino a un mundo infinito al que le puedes dar forma bloque a bloque.
+                            </div>
+                            <div class="image-side col-12 col-md-6">
+                                <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png"
+                                alt="Portada de Minecraft" width="200">
+                                <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/EXPLORE_TheOverworld.png"
+                                alt="Portada de Minecraft" width="200">
+                                <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/SURVIVE_Creepers.png"
+                                alt="Portada de Minecraft" width="200">
+
+                            </div>
                         </div>
 
                     </div>
                 </main>
             </div>
         </div>
-
+        <div class="row">
+            <!-- Footer -->
+            <div class="col-12">
+                <footer class="footer">Un monton de copyright blablabla</footer>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -95,12 +116,7 @@
 
 <!--
         </div>
-            
-            
-            <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png" alt="Portada de Minecraft" width="600">
-
-            </header>
-
+       
             <sidebar>
                 <h2>¿Qué es Minecraft?</h2>
                 <h2>Características</h2>
