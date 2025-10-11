@@ -68,103 +68,169 @@
                 </div>
 
                 <!-- Content -->
-                <div class="col-md-9 mb-3">
-                    <main class="content">
-                        <h1>Añade un nuevo videojuego al catálogo</h1>
+                <div class="col-md-9 mb-3"> <!-- class="col-md-9 mb-3" -->
+                    <main class="content"> <!-- class="content" -->
                         
-                        <form id="add_videogame_form">
-                            <div class="form-row">
-                                <label for="videogame_name">Nombre del videojuego:</label>
-                                <input type="text" id="videogame_name" placeholder="Nombre" required>
-                            </div>
-                            <br><br>
+                        <h1>Añade un nuevo videojuego al catálogo</h1>
+                        <br>
+                        
+                        <form class="d-grid">
 
-                            <div class="form-row">
-                                <label for="videogame_description">Descripción del videojuego:</label>
-                                <textarea id="videogame_description" rows="4" cols="50" placeholder="Descripción" required></textarea>
-                            </div>
-                            <br><br>
-
-                            <div class="form-row">
-                                <label for="videogame_developer">Desarrollador del videojuego:</label>
-                                <input type="text" id="videogame_developer" placeholder="Desarrollador" required>
-                            </div>
-                            <br><br>
-
-                            <div class="form-row">
-                                <label for="videogame_editor">Editor del videojuego:</label>
-                                <input type="text" id="videogame_editor" placeholder="Editor" required>
-                            </div>
-                            <br><br>
-
-                            <div class="form-row">
-                                <label for="videogame_image">Imagen del videojuego:</label>
-                                <input type="file" id="videogame_image" accept="image/*" required>
-                            </div>
-                            <br><br>
-
-                            <div class="form-row">
-                                <label for="videogame_fecha_lanzamiento">Fecha de lanzamiento del videojuego:</label>
-                                <input type="date" id="videogame_fecha_lanzamiento" required>
-                            </div>
-                            <br><br>
-
-                            <div class="form-row">
-                                <label for="videogame_platforms">Plataformas en las que se encuentra disponible el videojuego:</label>
-                                <div id="videogame_platforms">
-                                    <label>
-                                        <input type="checkbox"> PlayStation
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Xbox
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Nintendo
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> PCs
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Móviles (Smartphones y Tablets)
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Realidad Virtual (VR)
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Máquinas Arcade
-                                    </label>
+                            <div class="row mb-4">
+                                <label for="videogame_name" class="col-sm-3 col-form-label">Nombre del videojuego:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="videogame_name" class="form-control" placeholder="Nombre" required>
                                 </div>
                             </div>
-                            <br><br>
 
-                            <div class="form-row">
-                                <label for="game_modes">Modos de juego disponibles:</label>
-                                <div id="game_modes">
-                                    <label>
-                                        <input type="checkbox"> Un jugador
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Multijugador
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Cooperativo
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Competitivo
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Práctica/Entrenamiento
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Historia/Campaña
-                                    </label>
+                            <div class="row mb-4">
+                                <label for="videogame_description" class="col-sm-3 col-form-label">Descripción del videojuego:</label>
+                                <div class="col-sm-9">
+                                    <textarea id="videogame_description" class="form-control" rows="4" placeholder="Descripción" required></textarea>
                                 </div>
                             </div>
-                            <br><br>
 
-                            <div class="form-row">
-                                <label for="age_classification">Clasificación PEGI por edades:</label>
-                                <select id="age_classification">
+                            <div class="row mb-4">
+                                <label for="videogame_developer" class="col-sm-3 col-form-label">Desarrollador del videojuego:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="videogame_developer" class="form-control" placeholder="Desarrollador" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="videogame_editor" class="col-sm-3 col-form-label">Editor del videojuego:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="videogame_editor" class="form-control" placeholder="Editor" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="videogame_image" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
+                                <div class="col-sm-9">
+                                    <input type="file" id="videogame_image" class="form-control" accept="image/*" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="videogame_cost" class="col-sm-3 col-form-label">Coste del videojuego:</label>
+                                <div class="col-sm-2">
+                                    <input type="number" id="videogame_cost" min="0" step="1" class="form-control" placeholder="Coste en €" required>
+                                </div>
+                                <label for="videogame_cost" class="col-sm-1 col-form-label">€</label>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="videogame_fecha_lanzamiento" class="col-sm-3 col-form-label">Fecha de lanzamiento del videojuego:</label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="videogame_fecha_lanzamiento" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="videogame_platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
+                                <div id="videogame_platforms" class="col-sm-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_PlayStation">
+                                        <label class="form-check-label" for="platform_PlayStation">
+                                            PlayStation
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_Xbox">
+                                        <label class="form-check-label" for="platform_Xbox">
+                                            Xbox
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_Nintendo">
+                                        <label class="form-check-label" for="platform_Nintendo">
+                                            Nintendo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_PCs">
+                                        <label class="form-check-label" for="platform_PCs">
+                                            PCs
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_Mobiles">
+                                        <label class="form-check-label" for="platform_Mobiles">
+                                            Móviles (Smartphones y Tablets)
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_VR">
+                                        <label class="form-check-label" for="platform_VR">
+                                            Realidad Virtual (VR)
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="platform_Arcade">
+                                        <label class="form-check-label" for="platform_Arcade">
+                                            Máquinas Arcade
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="game_modes" class="col-sm-3 col-form-label">Modos de juego disponibles:</label>
+                                <div id="game_modes" class="col-sm-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="mode_SinglePlayer">
+                                        <label class="form-check-label" for="mode_SinglePlayer">
+                                            Un jugador
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="mode_Multiplayer">
+                                        <label class="form-check-label" for="mode_Multiplayer">
+                                            Multijugador
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="mode_Cooperative">
+                                        <label class="form-check-label" for="mode_Cooperative">
+                                            Cooperativo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="mode_Competitive">
+                                        <label class="form-check-label" for="mode_Competitive">
+                                            Competitivo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="mode_Practice">
+                                        <label class="form-check-label" for="mode_Practice">
+                                            Práctica/Entrenamiento
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="mode_Story">
+                                        <label class="form-check-label" for="mode_Story">
+                                            Historia/Campaña
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="age_classification" class="col-sm-3 col-form-label">Clasificación PEGI por edades:</label>
+                                <select id="age_classification" class="form-select col-sm-5">
+                                    <option selected>Elija una opción</option>
                                     <option value="1">3</option>
                                     <option value="2">7</option>
                                     <option value="3">12</option>
@@ -172,55 +238,130 @@
                                     <option value="5">18</option>
                                 </select>
                             </div>
-                            <br><br>
 
-                            <div class="form-row">
-                                <label for="genres">Género/s principales del videojuego:</label>
-                                <div id="genres">
-                                    <label>
-                                        <input type="checkbox"> Supervivencia
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Acción-Aventura
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Estrategia
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Sandbox
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Deportes
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Simulación
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Puzles
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Rol (RPG)
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Terror
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Battle Royale
-                                    </label>
+                            <div class="row mb-4">
+                                <label for="videogame_qualification" class="col-sm-3 col-form-label">Calificación:</label>
+                                <div class="col-sm-3">
+                                    <input type="number" id="videogame_qualification" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
                                 </div>
                             </div>
-                            <br><br>
 
-                            <!-- Botón para cancelar el formulario y volver a la página principal -->
-                            <div class="game-create col-md-3 offset-md-9 mb-3">  <!--En pantallas pequeñas, ocupa todo el ancho, en pantallas medianas, ocupa tres columnas y desplazado 9 a la derecha -->
-                                <h1><i class="bi bi-house-fill"></i>  </h1> <!-- Icono de casa -->
-                                <a href="MoreForPlaying.html" class="btn btn-secondary">Cancelar</a> <!-- Enlace para volver a la página principal -->
+                            <div class="row mb-4">
+                                <label for="genres" class="col-sm-3 col-form-label">Género/s principales del videojuego:</label>
+                                <div id="genres" class="col-sm-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Survival">
+                                        <label class="form-check-label" for="genre_Survival">
+                                            Supervivencia
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_ActionAdventure">
+                                        <label class="form-check-label" for="genre_ActionAdventure">
+                                            Acción-Aventura
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Strategy">
+                                        <label class="form-check-label" for="genre_Strategy">
+                                            Estrategia
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Sandbox">
+                                        <label class="form-check-label" for="genre_Sandbox">
+                                            Sandbox
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Sports">
+                                        <label class="form-check-label" for="genre_Sports">
+                                            Deportes
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Simulation">
+                                        <label class="form-check-label" for="genre_Simulation">
+                                            Simulación
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Puzzle">
+                                        <label class="form-check-label" for="genre_Puzzle">
+                                            Puzles
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_RPG">
+                                        <label class="form-check-label" for="genre_RPG">
+                                            Rol (RPG)
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Horror">
+                                        <label class="form-check-label" for="genre_Horror">
+                                            Terror
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_BattleRoyale">
+                                        <label class="form-check-label" for="genre_BattleRoyale">
+                                            Battle Royale
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Racing">
+                                        <label class="form-check-label" for="genre_Racing">
+                                            Carreras
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Indie">
+                                        <label class="form-check-label" for="genre_Indie">
+                                            Indie
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_Shooters">
+                                        <label class="form-check-label" for="genre_Shooters">
+                                            Shooters
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="genre_OpenWorld">
+                                        <label class="form-check-label" for="genre_OpenWorld">
+                                            Mundo Abierto
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Botón para completar el formulario y enviar los datos -->
-                            <div class="game-create col-md-3 offset-md-9 mb-3">  <!--En pantallas pequeñas, ocupa todo el ancho, en pantallas medianas, ocupa tres columnas y desplazado 9 a la derecha -->
-                                <h1><i class="bi bi-file-plus"></i>  </h1> <!-- Icono de añadir archivo -->
-                                <a href="#" class="btn btn-secondary">Registrar Videojuego</a> <!-- Enlace para registrar el videojuego -->
+                            <!-- Fila para los botones -->
+                            <div class="row mb-4">
+                                <!-- Botón para cancelar el formulario y volver a la página principal -->
+                                <a href="MoreForPlaying.html" class="btn col-sm-2">
+                                    <h1><i class="bi bi-house-fill"></i> </h1> <!-- Icono de casa -->
+                                    Cancelar
+                                </a>
+
+                                <!-- Botón para completar el formulario y enviar los datos -->
+                                <a href="#" class="btn col-sm-2">
+                                    <h1><i class="bi bi-file-plus"></i> </h1> <!-- Icono de añadir archivo -->
+                                    Registrar Videojuego
+                                </a>
                             </div>
                         </form>
                     </main>
