@@ -61,8 +61,8 @@ form {
 }
 
 .sidebar-item:hover {
-            background: #000000;
-            color: white;
+    background: #000000;
+    color: white;
 }
 
 .games {
@@ -178,4 +178,14 @@ form {
     background: grey;
     color: black;
     border: 2px solid red;
+}
+
+#form_buttons {
+    justify-content: space-evenly;
+}
+
+#age_classification {
+    max-width: 50%;
+    max-height: 60%;
+    margin-left: 1.2%;
 }

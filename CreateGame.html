@@ -68,8 +68,8 @@
                 </div>
 
                 <!-- Content -->
-                <div class="col-md-9 mb-3"> <!-- class="col-md-9 mb-3" -->
-                    <main class="content"> <!-- class="content" -->
+                <div class="col-md-9 mb-3">
+                    <main class="content">
                         
                         <h1>Añade un nuevo videojuego al catálogo</h1>
                         <br>
@@ -229,7 +229,7 @@
 
                             <div class="row mb-4">
                                 <label for="age_classification" class="col-sm-3 col-form-label">Clasificación PEGI por edades:</label>
-                                <select id="age_classification" class="form-select col-sm-5">
+                                <select id="age_classification" class="form-select col-sm-9">
                                     <option selected>Elija una opción</option>
                                     <option value="1">3</option>
                                     <option value="2">7</option>
@@ -240,7 +240,7 @@
                             </div>
 
                             <div class="row mb-4">
-                                <label for="videogame_qualification" class="col-sm-3 col-form-label">Calificación:</label>
+                                <label for="videogame_qualification" class="col-sm-3 col-form-label">Calificación del videojuego:</label>
                                 <div class="col-sm-3">
                                     <input type="number" id="videogame_qualification" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
                                 </div>
@@ -350,15 +350,15 @@
                             </div>
 
                             <!-- Fila para los botones -->
-                            <div class="row mb-4">
+                            <div class="row mb-4" id="form_buttons">
                                 <!-- Botón para cancelar el formulario y volver a la página principal -->
-                                <a href="MoreForPlaying.html" class="btn col-sm-2">
+                                <a href="MoreForPlaying.html" class="btn col-sm-3">
                                     <h1><i class="bi bi-house-fill"></i> </h1> <!-- Icono de casa -->
                                     Cancelar
                                 </a>
 
                                 <!-- Botón para completar el formulario y enviar los datos -->
-                                <a href="#" class="btn col-sm-2">
+                                <a href="#" class="btn col-sm-3">
                                     <h1><i class="bi bi-file-plus"></i> </h1> <!-- Icono de añadir archivo -->
                                     Registrar Videojuego
                                 </a>
