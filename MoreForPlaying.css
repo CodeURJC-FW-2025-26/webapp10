@@ -12,6 +12,7 @@
     color: white;
     font-family: "Orbitron";
     font-size: 18px;
+    overflow: hidden;
 }
 
 body {
@@ -23,6 +24,7 @@ body {
     padding: 20px;
     justify-content: space-around;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap:20px;
 }
@@ -36,6 +38,7 @@ body {
 
 .header-content {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
 } 
