@@ -39,6 +39,7 @@ body {
 .header-content {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
     gap: 20px;
 } 
@@ -88,6 +89,7 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .game-card img {
@@ -146,8 +148,8 @@ form {
     background-color: rgb(8, 4, 12);
     text-align: center;
     border: 1px solid rgb(255, 0, 0);
-    font-size: 25px;
-    max-height: auto;
+    height: 100%;
+    max-width: auto;
     overflow-y: hidden;
 }
 
