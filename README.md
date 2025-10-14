@@ -16,10 +16,11 @@ Attributes:
 
 * id: Unique identifier 
 * name: Product name
-* description: Product description 
+* short description: Product short description 
+* long description: Product description 
 * price: Product price 
-* category: Product category 
-* creation_date: Creation date 
+* characteristics: Product characteristics
+* information: Product information
 
 #### Secondary entity (Review):
 Attributes:
@@ -48,3 +49,33 @@ Attributes:
 
 #### Categorization
 * Tag system for content classification
+
+
+
+## Practica 1
+
+
+###
+
+
+#### Paula De La Fuente
+
+* 5 best commits:
+  1. Creo que ya añadi la página de detalle
+  2. Minecraft finished?
+  3. Minecraft fixed
+  4. Minecraft changed
+  5. css commented
+ 
+* 5 files most participated
+  1. Minecraft.html
+  2. MoreForPlaying.css
+  3. MoreForPlaying.html
+  4. Readme.md
+  5. CreateGame.html
+
+
+
+### Marcos Vidal 
+
+### Fran García
