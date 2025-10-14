@@ -148,8 +148,8 @@ form {
     background-color: rgb(8, 4, 12);
     text-align: center;
     border: 1px solid rgb(255, 0, 0);
-    height: 100%;
-    max-width: auto;
+    max-width: 100%;
+    height: auto;
     overflow-y: hidden;
 }
 
