@@ -74,7 +74,7 @@ Attributes:
   4. Minecraft changed
   5. css commented
  
-* 5 files most participated
+* 5 files most participated:
   1. Minecraft.html
   2. MoreForPlaying.css
   3. MoreForPlaying.html
@@ -90,7 +90,7 @@ Attributes:
   4. Header modified and some coments.
   5. Content scroll
   
-* 5 files most participated
+* 5 files most participated:
   1. MoreForPlaying.html
   2. MoreForPlaying.css
   3. Readme.md
@@ -98,3 +98,20 @@ Attributes:
   5. CreateGame.html
 
 ### Fran García
+* Description of my tasks during the practice:
+  I was responsible for creating the forms on the website. I started with the [CreateGame.html](./CreateGame.html) file, as it was the longest and most complex one. Once I finished it, I moved on to the reviews form in the [Minecraft.html](./Minecraft.html) file. I also made several small improvements and adjustments to other files, and contributed ideas for the website’s design to enhance the overall appearance.
+
+* 5 best commits:
+  1. [Add form file](259a680dd422c788c3bb64688aaa05487387b1eb)
+  2. [Big changes to the form file, applying bootstrap elements](ebee7948065fe0907576df693345e7074882c5ad)
+  3. [Improved Code](27793e321a66c19c55dacec6728e89a99d394daa)
+  4. [Added the review form](bba2d6710eac8781a34f9ba9ece516df571f662f)
+  5. [Changed the Minecraft form to make it prettier](2dd0d319cb70b99070de850c2e3350ff56542274) 
+  
+* 5 files most participated:
+  1. [CreateGame.html](./CreateGame.html)
+  2. [Minecraft.html](./Minecraft.html)
+  3. [MoreForPlaying.css](./MoreForPlaying.css)
+  4. [MoreForPlaying.html](./MoreForPlaying.html)
+  5. [Readme.md](./Readme.md)
+  
