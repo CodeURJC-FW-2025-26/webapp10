@@ -76,6 +76,20 @@ Attributes:
 
 
 
-### Marcos Vidal 
+#### Marcos Vidal 
+
+* 5 best commits:
+  1. Commit 1
+  2. Bootstrap, grid y link a Minecraft.html
+  3. Content moved, sidebar added
+  4. Header modified and some coments.
+  5. Content scroll
+  
+* 5 files most participated
+  1. MoreForPlaying.html
+  2. MoreForPlaying.css
+  3. Readme.md
+  4. Minecraft.html
+  5. CreateGame.html
 
 ### Fran García
