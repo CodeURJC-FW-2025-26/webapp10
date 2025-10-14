@@ -254,6 +254,67 @@
                                     <a href="#" class="btn btn-primary">Añadir reseña</a>
                                 </div>
 
+                                <div id="add_reseñas" class="description">
+                                    <h3>Añadir Reseña</h3>
+                                    <br>
+
+                                    <form class="d-grid">
+                                        <!-- Row for the user name -->
+                                        <div class="row mb-4">
+                                            <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="user_name" class="form-control" placeholder="Nombre" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row for the comment -->
+                                        <div class="row mb-4">
+                                            <label for="comment_description" class="col-sm-3 col-form-label">Introduzca aquí su comentario:</label>
+                                            <div class="col-sm-9">
+                                                <textarea id="comment_description" class="form-control" rows="4" placeholder="Descripción" required></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row for the videogame qualification -->
+                                        <div class="row mb-4">
+                                            <label for="videogame_qualification" class="col-sm-3 col-form-label">Calificación del videojuego:</label>
+                                            <div class="col-sm-3">
+                                                <input type="number" id="videogame_qualification" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
+                                            </div>
+                                        </div>
+
+                                        <!-- Example of a radio button -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="radioPurchased" checked>
+                                            <label class="form-check-label" for="radioPurchased">
+                                                He comprado este videojuego en MoreForPlaying
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="radioPurchased2">
+                                            <label class="form-check-label" for="radioPurchased2">
+                                                He comprado este videojuego, pero no en MoreForPlaying
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="radioNotPurchased">
+                                            <label class="form-check-label" for="radioNotPurchased">
+                                                No he comprado este videojuego
+                                            </label>
+                                        </div>
+
+                                        <div class="row mb-4" id="submit_button">
+                                            <!-- "Button" to finish the comment and submit the data -->
+                                            <a href="#" class="btn btn-primary">
+                                                <h1><i class="bi bi-chat-square-dots"></i> </h1> <!-- Add file icon -->
+                                                Subir reseña
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
 
                             <div class="col-12 mb-3 d-flex flex-column flex-md-row gap-2">
