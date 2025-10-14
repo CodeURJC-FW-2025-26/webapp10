@@ -137,12 +137,19 @@ form {
     text-align: center;
 }
 
+.edit-button {
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
 .p-description {
     font-size: 18px;
     line-height: 1.6;               
     margin: 10px;
     text-align: justify;
     font-weight: bold;
+
 }
 
 .image-side {

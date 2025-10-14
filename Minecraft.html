@@ -65,13 +65,21 @@
                 <main class="minecraft-p-content">
                     <!--content-->
 
-                    <div class="row">
-                        <div class="title col-12">MINECRAFT <div class="game-rating"><i
+                    <div class="row d-flex flex-column flex-md-row">
+    
+                        <div class="title col-6">MINECRAFT <div class="game-rating"><i
                                     class="bi bi-star-fill text-danger"></i><i
                                     class="bi bi-star-fill text-danger"></i><i
                                     class="bi bi-star-fill text-danger"></i><i
                                     class="bi bi-star-fill text-danger"></i><i class="bi bi-star-fill text-danger"></i>
                             </div>
+                        </div>
+                        <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
+                                <a href="#" class="btn btn-primary">Borrar juego</a>
+                                <a href="#" class="btn btn-primary">Editar juego</a>
+                                <a href="CreateGame.html" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
+                                    Crear tu propio juego</a>
+                                <a href="MoreForPlaying.html" class="btn btn-primary">Volver a página principal</a>
                         </div>
                     </div>
 
@@ -101,16 +109,11 @@
                             <div class="information col-12">    
 
                                 <div id="price" class="description"> Precio: 26.95€
-                                    <div class="btn btn-danger">Comprar</div>
-                                    <div class="btn btn-secondary">Añadir a la lista de deseos</div>
-
-                                    <div>
-                                        <a href="#" class="btn btn-primary">Borrar</a>
-                                        <a href="#" class="btn btn-primary">Editar</a>
-                                    </div>
+                                
                                 </div>
 
                                 <div id="description" class="description">
+                                    <h2>Descripción</h2>
 
                                     <p>Minecraft es un juego de mundo abierto, y no tiene un fin claramente definido
                                         (aunque sí que tiene una dimensión llamada a sí misma 'The End', o en español
@@ -145,11 +148,11 @@
                                         las demás dificultades, no permite que aparezcan monstruos en el juego que
                                         puedan herir al jugador.</p>
 
-                                    <a href="#" class="btn btn-primary">Borrar</a>
-                                    <a href="#" class="btn btn-primary">Editar</a>
+                                  
                                 </div>
 
                                 <div id="Características" class="description">
+                                    <h2>Características</h2>
                                     <ul>
                                         <li>Mundo abierto generado por bloques</li>
                                         <li>Modos de juego: Supervivencia, Creativo, Aventura y Espectador</li>
@@ -163,11 +166,11 @@
                                         <li>Actualizaciones regulares con nuevo contenido</li>
                                         <li>Comunidad activa y creativa</li>
                                     </ul>
-                                    <a href="#" class="btn btn-primary">Borrar</a>
-                                    <a href="#" class="btn btn-primary">Editar</a>
+                                   
                                 </div>
 
                                 <div id="Características" class="description">
+                                    <h2>Información</h2>
                                     <table class="table-unstyled overflow-x-auto">
                                         <tr>
                                             <th>Desarrollador</th>
@@ -202,8 +205,7 @@
                                             <td>Aventura, Sandbox, Supervivencia</td>
                                         </tr>
                                     </table>
-                                    <a href="#" class="btn btn-primary">Borrar</a>
-                                    <a href="#" class="btn btn-primary">Editar</a>
+                                   
                                 </div>
 
                                 <div id="reseñas" class="description">
@@ -249,9 +251,6 @@
                                         mods hasta mapas personalizados. Minecraft es un juego que nunca deja de
                                         sorprender y entretener." </p>
 
-                                    <a href="#" class="btn btn-primary">Borrar</a>
-                                    <a href="#" class="btn btn-primary">Editar</a>
-                                    <a href="#" class="btn btn-primary">Añadir reseña</a>
                                 </div>
 
                                 <div id="add_reseñas" class="description">
@@ -281,29 +280,7 @@
                                             <div class="col-sm-3">
                                                 <input type="number" id="videogame_qualification" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
                                             </div>
-                                        </div>
-
-                                        <!-- Example of a radio button -->
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="radioPurchased" checked>
-                                            <label class="form-check-label" for="radioPurchased">
-                                                He comprado este videojuego en MoreForPlaying
-                                            </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="radioPurchased2">
-                                            <label class="form-check-label" for="radioPurchased2">
-                                                He comprado este videojuego, pero no en MoreForPlaying
-                                            </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="radioNotPurchased">
-                                            <label class="form-check-label" for="radioNotPurchased">
-                                                No he comprado este videojuego
-                                            </label>
-                                        </div>
+                                        </div>                      
 
                                         <div class="row mb-4" id="submit_button">
                                             <!-- "Button" to finish the comment and submit the data -->
@@ -317,13 +294,6 @@
 
                             </div>
 
-                            <div class="col-12 mb-3 d-flex flex-column flex-md-row gap-2">
-                                <a href="#" class="btn btn-primary">Borrar juego</a>
-                                <a href="#" class="btn btn-primary">Editar juego</a>
-                                <a href="CreateGame.html" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
-                                    Crear tu propio juego</a>
-                                <a href="MoreForPlaying.html" class="btn btn-primary">Volver a página principal</a>
-                            </div>
                         </div>
 
 
