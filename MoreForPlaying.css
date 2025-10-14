@@ -19,6 +19,9 @@ body {
     background-color: rgb(8, 4, 12);
 }
 
+
+/* Header styles */
+
 .header {
     margin: 20px;                          /*Add margin to separate from other elements*/
     padding: 20px;                         /*Add padding for inner spacing*/
@@ -55,6 +58,10 @@ form {
    max-width: 100%;                         /*Ensure it doesn't exceed container width*/
 }
 
+
+/* Sidebar styles */
+
+
 .sidebar-item {
     margin-bottom: 20px;
     cursor: pointer;                        /*Change cursor to pointer on hover*/
@@ -67,6 +74,15 @@ form {
 .sidebar-item:hover {
     background: #000000;
     color: white;
+}
+
+
+/* MoreForPlaying Content styles */
+
+
+.content {
+    height: 80vh;                         /*Set a fixed height for the content area*/
+    overflow-y: auto;                     /*Enable vertical scrolling if content overflows*/  
 }
 
 .games {
@@ -89,37 +105,27 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    overflow: hidden;                       /*Prevent overflow of content*/
 }
 
 .game-card img {
-    width: 100%;
+    width: 100%;                           /*Make image responsive*/
     height: auto;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
-.footer {
-    border: 2px solid rgb(255, 0, 0);
-    border-radius: 10px;
-    padding: 25px;
-    background-color: rgb(39, 38, 41);
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.content {
-    height: 80vh;
-    overflow-y: auto;
-}
 
 .sidebar {
     height: 80vh;
-    position: sticky;
-    top: 20px;
+    position: sticky;                       /*Make sidebar*/
+    top: 20px;                              /*Stick to the top with some margin*/ 
     overflow-y: auto;
 }
+
+
+/* Minecraft Styles */
+
 
 .minecraft-p-content {
     height: auto; 
@@ -148,8 +154,13 @@ form {
     background-color: rgb(8, 4, 12);
     text-align: center;
     border: 1px solid rgb(255, 0, 0);
+<<<<<<< HEAD
     max-width: 100%;
     height: auto;
+=======
+    height: auto;
+    max-width: 100%;
+>>>>>>> db9f35f5cd386d1c929b11ee705775175d0100ca
     overflow-y: hidden;
 }
 
@@ -199,7 +210,13 @@ form {
     margin-left: 1.2%;
 }
 
-.span {
-    color: red;
-    font-weight: bold;
+
+.footer {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 25px;
+    background-color: rgb(39, 38, 41);
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
 }
