@@ -126,10 +126,7 @@ form {
 
 /* Minecraft Styles */
 
-
 .minecraft-p-content {
-    height: auto; 
-    overflow-y: hidden;
     margin-bottom: 20px;
 }
 
@@ -142,7 +139,7 @@ form {
 
 .p-description {
     font-size: 18px;
-    line-height: 1.6;
+    line-height: 1.6;               
     margin: 10px;
     text-align: justify;
     font-weight: bold;
@@ -176,8 +173,12 @@ form {
     font-family:Arial, Helvetica, sans-serif;
     line-height: 1.6;
     margin-top: 40px;
-    text-align: justify;
+    text-align: justify; 
 }
+
+
+/* Form styles */
+
 
 .btn {
     border: 2px solid rgb(255, 0, 0);
@@ -204,6 +205,9 @@ form {
     max-height: 60%;
     margin-left: 1.2%;
 }
+
+
+/* Footer styles */
 
 
 .footer {
