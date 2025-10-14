@@ -57,6 +57,13 @@ Attributes:
 
 ###
 
+### Capturas de la web
+#### Página principal
+
+#### Página de detalle
+
+#### Página de nuevo elemento
+
 
 #### Paula De La Fuente
 
@@ -73,8 +80,6 @@ Attributes:
   3. MoreForPlaying.html
   4. Readme.md
   5. CreateGame.html
-
-
 
 #### Marcos Vidal 
 
