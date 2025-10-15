@@ -58,15 +58,17 @@ Attributes:
 ###
 
 ### Capturas de la web
-#### Página principal
+#### Main page
 
-#### Página de detalle
+#### Detail page
 
-#### Página de nuevo elemento
+#### New element page
 
 ### History
-
 #### Paula De La Fuente
+
+ * Description of my tasks during the practice:
+  My main task was to develop the content for the detail page, minecraft.html. Throughout the process, I worked by combining and adjusting elements between minecraft.html and moreforplaying.css, ensuring that the visual style and structure of my section were consistent with my teammates’ work. In addition to creating the page content, I contributed several ideas to improve the overall design and collaborated on enhancing the website’s responsive behavior, making sure it adapted properly to different screen sizes and devices.
 
 * 5 best commits:
   1. [Creo que ya añadi la pagina de detalle](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/e981ad7bca1e215afbf78c532309d0c754cba419)
@@ -82,26 +84,24 @@ Attributes:
   4. [Readme.md](#moreforplaying)
   5. [CreateGame.html](./CreateGame.html)
 
- * Description of my tasks during the practice:
-  My main task was to develop the content for the detail page, minecraft.html. Throughout the process, I worked by combining and adjusting elements between minecraft.html and moreforplaying.css, ensuring that the visual style and structure of my section were consistent with my teammates’ work. In addition to creating the page content, I contributed several ideas to improve the overall design and collaborated on enhancing the website’s responsive behavior, making sure it adapted properly to different screen sizes and devices.
-
 #### Marcos Vidal 
 
+* Description of my tasks during the practice:
+  I was in charge of creating the main page, as well as part of the style in the the css stylesheet. Firstly I divided the web in sections(Header, sidebar, content and footer) by using bootstrap. Afterwards, I decided to focus on the content since it was the main issue. Once I finished it, I worked on the style a little, added some icons, colors, links, etc. Finally, I made a few improvements and adjustments in order to make the web the as responsive as possible.
+
 * 5 best commits:
-  1. Commit 1
-  2. Bootstrap, grid y link a Minecraft.html
-  3. Content moved, sidebar added
-  4. Header modified and some coments.
-  5. Content scroll
+  1. [Commit 1](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/c9da3b85f3322780f93b354e1c0b37ecac64ed9e)
+  2. [Bootstrap, grid y link a Minecraft.html](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/59b432545af2740e513ea51fb94fffae1234cb16)
+  3. [Content moved, sidebar added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/c153ed8527f00d5306f99c8d965434c98b61c19b)
+  4. [3x3.](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/5c18b143a48fedd9dbb9bb70f65ad3599d25bec0)
+  5. [Content scroll](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/7d4c91615e7f7b91ca4fe7feb3190e37a5878c26)
   
 * 5 files most participated:
-  1. MoreForPlaying.html
-  2. MoreForPlaying.css
-  3. Readme.md
-  4. Minecraft.html
-  5. CreateGame.html
-
-
+  1. [MoreForPlaying.html](./MoreForPlaying.html)
+  2. [MoreForPlaying.css](./MoreForPlaying.css)
+  3. [Readme.md](#moreforplaying)
+  4. [Minecraft.html](./Minecraft.html)
+  5. [CreateGame.html](./CreateGame.html)
 
 #### Fran García
 * Description of my tasks during the practice:
