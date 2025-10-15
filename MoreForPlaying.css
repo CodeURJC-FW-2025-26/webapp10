@@ -208,6 +208,18 @@ form {
     justify-content: space-evenly;
 }
 
+.col-sm-9 {
+    align-content: center;
+}
+
+#submit_button {
+    justify-content: center;
+}
+
+#add_reseñas {
+    font-family: "Orbitron";
+}
+
 #age_classification {
     max-width: 50%;
     max-height: 60%;
