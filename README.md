@@ -59,6 +59,15 @@ Attributes:
 
 ### Capturas de la web
 #### Main page
+![](Fotos/screenshotmain1.png)
+#####
+![](Fotos/screenshotmain2.png)
+#####
+![](Fotos/screenshotmain3.png)
+#####
+![](Fotos/screenshotmain4.png)
+#####
+![](Fotos/screenshotmain5.png)
 
 #### Detail page
 
