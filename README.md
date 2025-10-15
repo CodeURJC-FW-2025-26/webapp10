@@ -64,22 +64,26 @@ Attributes:
 
 #### Página de nuevo elemento
 
+### History
 
 #### Paula De La Fuente
 
 * 5 best commits:
-  1. Creo que ya añadi la página de detalle
-  2. Minecraft finished?
-  3. Minecraft fixed
-  4. Minecraft changed
-  5. css commented
+  1. [Creo que ya añadi la pagina de detalle](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/e981ad7bca1e215afbf78c532309d0c754cba419)
+  2. [Minecraft changed(14/10)](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/eee58f516925281d5edaf5b97bda5f0a44106795)
+  3. [Minecraft fixed ](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/77dd61848b1f1eeba08b4787ff92ee60e83c6b87)
+  4. [Minecraft changed (10/10)](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/dd12c3c090f1a64db23d5bee60e344b641b096d3)
+  5. [css comment](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/914076644557927efda24015338bfc7e5800d37a) 
  
 * 5 files most participated:
-  1. Minecraft.html
-  2. MoreForPlaying.css
-  3. MoreForPlaying.html
-  4. Readme.md
-  5. CreateGame.html
+  1. [Minecraft.html](./Minecraft.html)
+  2. [MoreForPlaying.css](./MoreForPlaying.css)
+  3. [MoreForPlaying.html](./MoreForPlaying.html)
+  4. [Readme.md](#moreforplaying)
+  5. [CreateGame.html](./CreateGame.html)
+
+ * Description of my tasks during the practice:
+  My main task was to develop the content for the detail page, minecraft.html. Throughout the process, I worked by combining and adjusting elements between minecraft.html and moreforplaying.css, ensuring that the visual style and structure of my section were consistent with my teammates’ work. In addition to creating the page content, I contributed several ideas to improve the overall design and collaborated on enhancing the website’s responsive behavior, making sure it adapted properly to different screen sizes and devices.
 
 #### Marcos Vidal 
 
@@ -97,6 +101,8 @@ Attributes:
   4. Minecraft.html
   5. CreateGame.html
 
+
+
 #### Fran García
 * Description of my tasks during the practice:
   I was responsible for creating the forms on the website. I started with the [CreateGame.html](./CreateGame.html) file, as it was the longest and most complex one. Once I finished it, I moved on to the reviews form in the [Minecraft.html](./Minecraft.html) file. I also made several small improvements and adjustments to other files, and contributed ideas for the website’s design to enhance the overall appearance.
@@ -113,5 +119,5 @@ Attributes:
   2. [Minecraft.html](./Minecraft.html)
   3. [MoreForPlaying.css](./MoreForPlaying.css)
   4. [MoreForPlaying.html](./MoreForPlaying.html)
-  5. [Readme.md](#moreforplaying)
+  5. cc
   
