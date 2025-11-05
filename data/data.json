@@ -1,14 +1,62 @@
 [
     {
-        "user": "Pepe",
-        "title": "Vendo moto",
-        "text": "Barata, barata",
-        "imageFilename": "post0.jpeg"
+        "title": "Minecraft",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
     },
     {
-        "user": "Juan",
-        "title": "Compro coche",
-        "text": "Pago bien",
-        "imageFilename": "post1.jpeg"
+        "title": "The Legend of Zelda",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "Super Mario Bros",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "Animal Crossing",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "Fortnite",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "Hollow Knight",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "GTA V",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "Sims",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
+    },
+    {
+        "title": "FIFA",
+        "price": "",
+        "rating": "",
+        "imageFilename": ""
     }
 ]
