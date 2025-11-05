@@ -1,0 +1,241 @@
+.header,
+.sidebar,
+.minecraft-p-content,
+.content,
+.m-btn,
+.description,
+.footer {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 25px;
+    background-color: rgb(39, 38, 41);
+    color: white;
+    font-family: "Orbitron";
+    font-size: 18px;
+    overflow: hidden;
+}
+
+body {
+    background-color: rgb(8, 4, 12);
+}
+
+
+/* Header styles */
+
+.header {
+    margin: 20px;                          /*Add margin to separate from other elements*/
+    padding: 20px;                         /*Add padding for inner spacing*/
+    justify-content: space-around;         /*Space out child elements*/
+    display: flex;                         /*Use flexbox for layout*/
+    flex-wrap: wrap;                       /*Allow wrapping of child elements*/
+    align-items: center;                   /*Center items vertically*/
+    gap:20px;                              /*Add gap between items*/
+}
+
+#logoimg {
+    display: inline;                       /*Ensure it behaves like an inline element*/
+    flex-wrap: wrap;                              
+    border-radius: 50%;                    /*Make the image circular*/
+    border: solid 5px red;               /*Add a solid red border*/
+}
+
+.header-content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+} 
+
+form {
+    display: flex; 
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-control {
+   max-width: 100%;                         /*Ensure it doesn't exceed container width*/
+}
+
+
+/* Sidebar styles */
+
+
+.sidebar-item {
+    margin-bottom: 20px;
+    cursor: pointer;                        /*Change cursor to pointer on hover*/
+    display: block;
+    border-bottom: 1px solid #200331; 
+    color: rgb(153, 138, 138);
+    transition: all 0.3s ease;              /*Smooth transition for hover effects*/
+}
+
+.sidebar-item:hover {
+    background: #000000;
+    color: white;
+}
+
+
+/* MoreForPlaying Content styles */
+
+
+.content {
+    height: 80vh;                         /*Set a fixed height for the content area*/
+    overflow-y: auto;                     /*Enable vertical scrolling if content overflows*/  
+}
+
+.games {
+    margin-bottom: 20px;
+    justify-content: center;
+    gap: 20px;
+    border: 2px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(39, 38, 41);
+}
+
+.game-card {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(8, 4, 12);
+    text-align: center;
+    border: 1px solid rgb(255, 0, 0);
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;                       /*Prevent overflow of content*/
+}
+
+.game-card img {
+    width: 100%;                           /*Make image responsive*/
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+
+.sidebar {
+    height: 80vh;
+    position: sticky;                       /*Make sidebar*/
+    top: 20px;                              /*Stick to the top with some margin*/ 
+    overflow-y: auto;
+}
+
+
+/* Minecraft Styles */
+
+.minecraft-p-content {
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.edit-button {
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.p-description {
+    font-size: 18px;
+    line-height: 1.6;               
+    margin: 10px;
+    text-align: justify;
+    font-weight: bold;
+
+}
+
+.image-side {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(8, 4, 12);
+    text-align: center;
+    border: 1px solid rgb(255, 0, 0);
+    max-width: 100%;
+    height: auto;
+    overflow-y: hidden;
+}
+
+.information {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(8, 4, 12);
+    text-align: center;
+    font-size: 25px;
+    margin: 20px;
+    height:80vh;
+    overflow-y:auto;
+}
+
+.description {
+    font-size: 20px;
+    font-family:Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    margin-top: 40px;
+    text-align: justify; 
+}
+
+
+/* Form styles */
+
+
+.btn {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    background-color: rgb(8, 4, 12);
+    display: inline-flex;
+    justify-content: center;
+    gap: 3px;
+    align-items: center;
+    color: white;
+}
+
+.btn:hover {
+    background: grey;
+    color: black;
+    border: 2px solid red;
+}
+
+#form_buttons {
+    justify-content: space-evenly;
+}
+
+.col-sm-9 {
+    align-content: center;
+}
+
+#submit_button {
+    justify-content: center;
+}
+
+#add_reseñas {
+    font-family: "Orbitron";
+}
+
+#age_classification {
+    max-width: 50%;
+    max-height: 60%;
+    margin-left: 1.2%;
+}
+
+
+/* Footer styles */
+
+
+.footer {
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    padding: 25px;
+    background-color: rgb(39, 38, 41);
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
