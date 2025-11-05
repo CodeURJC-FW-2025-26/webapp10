@@ -70,8 +70,18 @@ Attributes:
 ![](Fotos/screenshotmain5.png)
 
 #### Detail page
+![](Fotos/screenshotsmc1.png)
+#####
+![](Fotos/screenshotsmc2.png)
+#####
+![](Fotos/screenshotsmc3.png)
 
 #### New element page
+![](Fotos/screenshotsmc4.png)
+#####
+![](Fotos/screenshotsmc5.png)
+#####
+![](Fotos/screenshotsmc6.png)
 
 ### History
 #### Paula De La Fuente
