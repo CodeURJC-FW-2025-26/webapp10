@@ -9,54 +9,48 @@
         "title": "The Legend of Zelda",
         "price": "",
         "rating": "",
-        "imageFilename": ""
-    },
-    {
-        "title": "",
-        "price": "",
-        "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/zelda.jpg"
     },
     {
         "title": "Super Mario Bros",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/mario.jpg"
     },
     {
         "title": "Animal Crossing",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/animal_crossing.jpg"
     },
     {
         "title": "Fortnite",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/fortnite.jpg"
     },
     {
         "title": "Hollow Knight",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/hollow_knight.jpg"
     },
     {
         "title": "GTA V",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/gta_v.jpg"
     },
     {
         "title": "Sims",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/sims.jpg"
     },
     {
         "title": "FIFA",
         "price": "",
         "rating": "",
-        "imageFilename": ""
+        "imageFilename": "/images/fifa.jpg"
     }
 ]
