@@ -1,62 +1,56 @@
 [
     {
         "title": "Minecraft",
-        "price": "26,95",
-        "rating": "",
+        "price": "26.95",
+        "rating": "5",
         "imageFilename": "/images/minecraft.jpg"
     },
     {
         "title": "The Legend of Zelda",
-        "price": "",
-        "rating": "",
-        "imageFilename": ""
-    },
-    {
-        "title": "",
-        "price": "",
-        "rating": "",
+        "price": "8.99",
+        "rating": "4.5",
         "imageFilename": ""
     },
     {
         "title": "Super Mario Bros",
-        "price": "",
-        "rating": "",
+        "price": "24.95",
+        "rating": "4",
         "imageFilename": ""
     },
     {
         "title": "Animal Crossing",
-        "price": "",
-        "rating": "",
+        "price": "14.95",
+        "rating": "4.5",
         "imageFilename": ""
     },
     {
         "title": "Fortnite",
-        "price": "",
-        "rating": "",
+        "price": "GRATIS",
+        "rating": "4.5",
         "imageFilename": ""
     },
     {
         "title": "Hollow Knight",
-        "price": "",
-        "rating": "",
+        "price": "12.95",
+        "rating": "5",
         "imageFilename": ""
     },
     {
         "title": "GTA V",
-        "price": "",
-        "rating": "",
+        "price": "19.99",
+        "rating": "5",
         "imageFilename": ""
     },
     {
         "title": "Sims",
-        "price": "",
-        "rating": "",
+        "price": "4.99",
+        "rating": "3.5",
         "imageFilename": ""
     },
     {
         "title": "FIFA",
-        "price": "",
-        "rating": "",
+        "price": "69.99",
+        "rating": "4",
         "imageFilename": ""
     }
 ]
