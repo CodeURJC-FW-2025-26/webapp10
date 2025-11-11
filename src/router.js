@@ -11,12 +11,12 @@ const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
 router.get('/', async (req, res) => {
 
-    let games = await catalog.getgames();
+    let games = await catalog.getGames();
 
     res.render('index', { games });
 });
 
-router.game('/game/new', upload.single('image'), async (req, res) => {
+router.post('/game/new', upload.single('image'), async (req, res) => {
 
     let game = {
         title: req.body.title,
@@ -25,7 +25,7 @@ router.game('/game/new', upload.single('image'), async (req, res) => {
         imageFilename: req.file?.filename
     };
 
-    await catalog.addgame(game);
+    await catalog.addGame(game);
 
     res.render('saved_game', { _id: game._id.toString() });
 
@@ -33,14 +33,14 @@ router.game('/game/new', upload.single('image'), async (req, res) => {
 
 router.get('/game/:id', async (req, res) => {
 
-    let game = await catalog.getgame(req.params.id);
+    let game = await catalog.getGame(req.params.id);
 
     res.render('show_game', { game });
 });
 
 router.get('/game/:id/delete', async (req, res) => {
 
-    let game = await catalog.deletegame(req.params.id);
+    let game = await catalog.deleteGame(req.params.id);
 
     if (game && game.imageFilename) {
         await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
@@ -51,7 +51,7 @@ router.get('/game/:id/delete', async (req, res) => {
 
 router.get('/game/:id/image', async (req, res) => {
 
-    let game = await catalog.getgame(req.params.id);
+    let game = await catalog.getGame(req.params.id);
 
     res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
 
