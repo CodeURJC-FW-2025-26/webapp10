@@ -6,7 +6,7 @@ export default router;
 
 const client = new MongoClient('mongodb://localhost:27017');
 
-const db = client.db('board');
+const db = client.db('catalog');
 const posts = db.collection('posts');
 
 export const UPLOADS_FOLDER = './uploads';

@@ -2,16 +2,16 @@ import express from 'express';
 import multer from 'multer';
 import fs from 'node:fs/promises';
 
-import * as board from './board.js';
+import * as catalog from './catalog.js';
 
 const router = express.Router();
 export default router;
 
-const upload = multer({ dest: board.UPLOADS_FOLDER })
+const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
 router.get('/', async (req, res) => {
 
-    let posts = await board.getPosts();
+    let posts = await catalog.getPosts();
 
     res.render('index', { posts });
 });
@@ -25,7 +25,7 @@ router.post('/post/new', upload.single('image'), async (req, res) => {
         imageFilename: req.file?.filename
     };
 
-    await board.addPost(post);
+    await catalog.addPost(post);
 
     res.render('saved_post', { _id: post._id.toString() });
 
@@ -33,17 +33,17 @@ router.post('/post/new', upload.single('image'), async (req, res) => {
 
 router.get('/post/:id', async (req, res) => {
 
-    let post = await board.getPost(req.params.id);
+    let post = await catalog.getPost(req.params.id);
 
     res.render('show_post', { post });
 });
 
 router.get('/post/:id/delete', async (req, res) => {
 
-    let post = await board.deletePost(req.params.id);
+    let post = await catalog.deletePost(req.params.id);
 
     if (post && post.imageFilename) {
-        await fs.rm(board.UPLOADS_FOLDER + '/' + post.imageFilename);
+        await fs.rm(catalog.UPLOADS_FOLDER + '/' + post.imageFilename);
     }
 
     res.render('deleted_post');
@@ -51,9 +51,9 @@ router.get('/post/:id/delete', async (req, res) => {
 
 router.get('/post/:id/image', async (req, res) => {
 
-    let post = await board.getPost(req.params.id);
+    let post = await catalog.getPost(req.params.id);
 
-    res.download(board.UPLOADS_FOLDER + '/' + post.imageFilename);
+    res.download(catalog.UPLOADS_FOLDER + '/' + post.imageFilename);
 
 });
 
