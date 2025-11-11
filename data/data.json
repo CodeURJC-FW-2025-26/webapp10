@@ -33,13 +33,13 @@
         "title": "Hollow Knight",
         "price": "12.95",
         "rating": "5",
-        "imageFilename": "/images/hollow_knight.jpg"
+        "imageFilename": "/images/hollow-poster.jpg"
     },
     {
         "title": "GTA V",
         "price": "19.99",
         "rating": "5",
-        "imageFilename": "/images/gta_v.jpg"
+        "imageFilename": "/images/GTA-poster.jpg"
     },
     {
         "title": "Sims",
