@@ -19,9 +19,9 @@ router.get('/', async (req, res) => {
 router.post('/post/new', upload.single('image'), async (req, res) => {
 
     let post = {
-        user: req.body.user,
         title: req.body.title,
-        text: req.body.text,
+        price: req.body.price,
+        rating: req.body.rating,
         imageFilename: req.file?.filename
     };
 
