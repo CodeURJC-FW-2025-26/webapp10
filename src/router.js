@@ -11,49 +11,49 @@ const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
 router.get('/', async (req, res) => {
 
-    let posts = await catalog.getPosts();
+    let games = await catalog.getgames();
 
-    res.render('index', { posts });
+    res.render('index', { games });
 });
 
-router.post('/post/new', upload.single('image'), async (req, res) => {
+router.game('/game/new', upload.single('image'), async (req, res) => {
 
-    let post = {
+    let game = {
         title: req.body.title,
         price: req.body.price,
         rating: req.body.rating,
         imageFilename: req.file?.filename
     };
 
-    await catalog.addPost(post);
+    await catalog.addgame(game);
 
-    res.render('saved_post', { _id: post._id.toString() });
+    res.render('saved_game', { _id: game._id.toString() });
 
 });
 
-router.get('/post/:id', async (req, res) => {
+router.get('/game/:id', async (req, res) => {
 
-    let post = await catalog.getPost(req.params.id);
+    let game = await catalog.getgame(req.params.id);
 
-    res.render('show_post', { post });
+    res.render('show_game', { game });
 });
 
-router.get('/post/:id/delete', async (req, res) => {
+router.get('/game/:id/delete', async (req, res) => {
 
-    let post = await catalog.deletePost(req.params.id);
+    let game = await catalog.deletegame(req.params.id);
 
-    if (post && post.imageFilename) {
-        await fs.rm(catalog.UPLOADS_FOLDER + '/' + post.imageFilename);
+    if (game && game.imageFilename) {
+        await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
     }
 
-    res.render('deleted_post');
+    res.render('deleted_game');
 });
 
-router.get('/post/:id/image', async (req, res) => {
+router.get('/game/:id/image', async (req, res) => {
 
-    let post = await catalog.getPost(req.params.id);
+    let game = await catalog.getgame(req.params.id);
 
-    res.download(catalog.UPLOADS_FOLDER + '/' + post.imageFilename);
+    res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
 
 });
 

@@ -7,32 +7,32 @@ export default router;
 const client = new MongoClient('mongodb://localhost:27017');
 
 const db = client.db('catalog');
-const posts = db.collection('posts');
+const games = db.collection('games');
 
 export const UPLOADS_FOLDER = './uploads';
 
-export async function addPost(post) {
+export async function addGame(game) {
 
-    return await posts.insertOne(post);
+    return await games.insertOne(game);
 }
 
-export async function deletePost(id){
+export async function deleteGame(id){
 
-    return await posts.findOneAndDelete({ _id: new ObjectId(id) });
+    return await games.findOneAndDelete({ _id: new ObjectId(id) });
 }
 
-export async function deletePosts(){
+export async function deleteGames(){
 
-    return await posts.deleteMany();
+    return await games.deleteMany();
 }
 
-export async function getPosts(){
+export async function getGames(){
 
-    return await posts.find().toArray();
+    return await games.find().toArray();
 }
 
-export async function getPost(id){
+export async function getGame(id){
 
-    return await posts.findOne({ _id: new ObjectId(id) });
+    return await games.findOne({ _id: new ObjectId(id) });
 }
 
