@@ -11,31 +11,41 @@ const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
 router.get('/', async (req, res) => {
 
-    function calcRating(rating){   
+    function calcRating(rating) {   
         let ratingt = Math.trunc(rating);
         let starFull = [];
         let starHalf = [];
         let starEmpty = [];
-        let stars = [starFull, starHalf, starEmpty];
-
-        while(ratingt>0){
-                starFull.push('1')//pintar estrella completa
-                ratingt--
+        
+        // Full stars
+        for (let i = 0; i < ratingt; i++) {
+            starFull.push('1');
         }
-        if(rating%1!==0){
-                starHalf.push('1')//pintar media estrella 
+        
+        // Half star
+        if (rating % 1 !== 0) {
+            starHalf.push('1');
         }
-        if(Math.trunc(rating)<=4){
-                for(rating; 5; rating++){
-                    starEmpty.push('1')//pintar estrella vacía
-                }
+        
+        // Empty stars = 5 - (full stars + half star)
+        const totalFilled = starFull.length + starHalf.length;
+        const emptyCount = 5 - totalFilled;
+        
+        for (let i = 0; i < emptyCount; i++) {
+            starEmpty.push('1');
         }
-        return stars;
-    };
-
-    // Tengo q cambiar el rating = calcRating(rating); de donde lo coja getGames
+    
+    return { starFull, starHalf, starEmpty };
+}
    
     let games = await catalog.getGames();
+
+    games = games.map(game => {
+        return {
+            ...game, // Spread operator to copy existing properties
+            stars: calcRating(game.rating || 0) // Add stars property with calculated stars
+        };
+    });
 
     res.render('index', { games });
 
@@ -53,7 +63,7 @@ router.post('/game/new', upload.single('image'), async (req, res) => {
     let game = {
         title: req.body.title,
         price: req.body.price,
-        rating: calcRating(req.body.rating),
+        rating: req.body.rating,
         imageFilename: req.file?.filename
 
     };
