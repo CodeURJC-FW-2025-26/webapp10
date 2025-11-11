@@ -13,6 +13,23 @@ router.get('/', async (req, res) => {
 
     let posts = await board.getPosts();
 
+    function calcRating(rating){   
+        let ratingt = trunc(rating)
+        while(ratingt>0){
+                //pintar estrella completa
+                ratingt--
+        }
+        if(rating%1!==0){
+                //pintar media estrella 
+        }
+        if(trunc(rating)<=4){
+                for(rating; 5; rating++){
+                    //pintar estrella vacía
+                }
+        }
+        return;
+    }
+
     res.render('index', { posts });
 });
 
@@ -56,4 +73,5 @@ router.get('/post/:id/image', async (req, res) => {
     res.download(board.UPLOADS_FOLDER + '/' + post.imageFilename);
 
 });
+
 
