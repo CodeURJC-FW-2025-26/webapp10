@@ -11,24 +11,31 @@ const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
 router.get('/', async (req, res) => {
 
-    let games = await catalog.getGames();
-
     function calcRating(rating){   
-        let ratingt = trunc(rating)
+        let ratingt = Math.trunc(rating);
+        let starFull = [];
+        let starHalf = [];
+        let starEmpty = [];
+        let stars = [starFull, starHalf, starEmpty];
+
         while(ratingt>0){
-                //pintar estrella completa
+                starFull.push('1')//pintar estrella completa
                 ratingt--
         }
         if(rating%1!==0){
-                //pintar media estrella 
+                starHalf.push('1')//pintar media estrella 
         }
-        if(trunc(rating)<=4){
+        if(Math.trunc(rating)<=4){
                 for(rating; 5; rating++){
-                    //pintar estrella vacía
+                    starEmpty.push('1')//pintar estrella vacía
                 }
         }
-        return;
-    }
+        return stars;
+    };
+
+    // Tengo q cambiar el rating = calcRating(rating); de donde lo coja getGames
+   
+    let games = await catalog.getGames();
 
     res.render('index', { games });
 
@@ -39,7 +46,7 @@ router.post('/game/new', upload.single('image'), async (req, res) => {
     let game = {
         title: req.body.title,
         price: req.body.price,
-        rating: req.body.rating,
+        rating: calcRating(req.body.rating),
         imageFilename: req.file?.filename
     };
 

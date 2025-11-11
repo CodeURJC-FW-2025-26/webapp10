@@ -2,55 +2,55 @@
     {
         "title": "Minecraft",
         "price": "26.95",
-        "ratingFilename": "5",
+        "rating": "5",
         "imageFilename": "Minecraft-poster.webp"
     },
     {
         "title": "The Legend of Zelda",
         "price": "8.99",
-        "ratingFilename": "4.5",
+        "rating": "4.5",
         "imageFilename": "Zelda-poster.png"
     },
     {
         "title": "Super Mario Bros",
         "price": "24.95",
-        "ratingFilename": "4",
+        "rating": "4",
         "imageFilename": "SuperMario-poster.jpg"
     },
     {
         "title": "Animal Crossing",
         "price": "14.95",
-        "ratingFilename": "4.5",
+        "rating": "4.5",
         "imageFilename": "Animal Crossing-poster.webp"
     },
     {
         "title": "Fortnite",
         "price": "GRATIS",
-        "ratingFilename": "4.5",
+        "rating": "4.5",
         "imageFilename": "Fortnite-poster.jpg"
     },
     {
         "title": "Hollow Knight",
         "price": "12.95",
-        "ratingFilename": "5",
+        "rating": "5",
         "imageFilename": "Hollow-poster.png"
     },
     {
         "title": "GTA V",
         "price": "19.99",
-        "ratingFilename": "5",
+        "rating": "5",
         "imageFilename": "GTA-poster.png"
     },
     {
         "title": "Sims",
         "price": "4.99",
-        "ratingFilename": "3.5",
+        "rating": "3.5",
         "imageFilename": "TheSims-poster.webp"
     },
     {
         "title": "FIFA",
         "price": "69.99",
-        "ratingFilename": "4",
+        "rating": "4",
         "imageFilename": "Fifa-poster.jpg"
     }
 ]
