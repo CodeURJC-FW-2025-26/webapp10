@@ -209,13 +209,19 @@
                                 </div>
                                 <!-- User reviews section -->
                                 <div id="reseñas" class="description overflow-x-auto">
-                                     <ul>
-                                        {{#posts}}
-                                    <li class="game-card col-12 col-sm-6 col-lg-3 mb-3">{{title}} {{imageFilename}} {{price}} {{rating}}</li>
-                                        {{/posts}}
-                                </ul>
+                                     
+                               
                                     <h2>Reseñas de usuarios</h2>
                                     <!-- Individual user review with rating and images -->
+
+                                    <ul>
+                                        {{#posts}}
+                                        {{#reviews}}
+                                            <li class="game-card col-12 col-sm-6 col-lg-3 mb-3">{{username}}</li>
+                                        {{/reviews}}
+                                        {{/posts}}
+                                    </ul>
+
                                     <h4>18/01/18 - PVilla: <i class="bi bi-person-check-fill text-info"></i>
                                                  <div class="game-rating"><i
                                                 class="bi bi-star-fill text-danger"></i><i
