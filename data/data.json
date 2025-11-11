@@ -3,54 +3,189 @@
         "title": "Minecraft",
         "price": "26.95",
         "rating": "5",
-        "imageFilename": "Minecraft-poster.webp"
+        "imageFilename": "Minecraft-poster.webp",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "The Legend of Zelda",
         "price": "8.99",
         "rating": "4.5",
-        "imageFilename": "Zelda-poster.png"
+        "imageFilename": "Zelda-poster.png",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "Super Mario Bros",
         "price": "24.95",
         "rating": "4",
-        "imageFilename": "SuperMario-poster.jpg"
+        "imageFilename": "SuperMario-poster.jpg",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "Animal Crossing",
         "price": "14.95",
         "rating": "4.5",
-        "imageFilename": "Animal Crossing-poster.webp"
+        "imageFilename": "Animal Crossing-poster.webp",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "Fortnite",
         "price": "GRATIS",
         "rating": "4.5",
-        "imageFilename": "Fortnite-poster.jpg"
+        "imageFilename": "Fortnite-poster.jpg",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "Hollow Knight",
         "price": "12.95",
         "rating": "5",
-        "imageFilename": "Hollow-poster.png"
+        "imageFilename": "Hollow-poster.png",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "GTA V",
         "price": "19.99",
         "rating": "5",
-        "imageFilename": "GTA-poster.png"
+        "imageFilename": "GTA-poster.png", 
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "Sims",
         "price": "4.99",
         "rating": "3.5",
-        "imageFilename": "TheSims-poster.webp"
+        "imageFilename": "TheSims-poster.webp",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     },
     {
         "title": "FIFA",
         "price": "69.99",
         "rating": "4",
-        "imageFilename": "Fifa-poster.jpg"
+        "imageFilename": "Fifa-poster.jpg",
+        "reviews": 
+        [
+            {
+                "username": "PVilla",
+                "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
+                "date": "18/01/18",
+                "rating": "5"
+            },
+            {
+                "username": "Minicrack:",
+                "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
+                "date": "10/06/24",
+                "rating": "3.5"
+            }
+        ]
     }
 ]

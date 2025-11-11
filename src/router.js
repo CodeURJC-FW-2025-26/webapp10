@@ -16,6 +16,13 @@ router.get('/', async (req, res) => {
     res.render('index', { posts });
 });
 
+router.get('/', async (req, res) => {
+
+    let post = await catalog.getPost(req.params.id);
+
+    res.render('minecraft', { post });
+});
+
 router.post('/post/new', upload.single('image'), async (req, res) => {
 
     let post = {
@@ -23,6 +30,7 @@ router.post('/post/new', upload.single('image'), async (req, res) => {
         price: req.body.price,
         rating: req.body.rating,
         imageFilename: req.file?.filename
+
     };
 
     await catalog.addPost(post);
