@@ -20,7 +20,7 @@
                 <header class="header flex-column flex-md-row">
                     <!-- On small sizes, it is positioned in a column; on sizes above medium, it goes in a row -->                    <a href="MoreForPlaying.html"> 
                         <img id="logoimg"
-                        src="Fotos/LogPhoto.png"
+                        src="images/LogPhoto.png"
                         alt="Logo MoreForPlaying" width="100" height="100" href="MoreForPlaying.html"></a>
                     <div class="header-content flex-column flex-md-row">
                         <div class="d-flex gap-3 flex-column flex-md-row"> <a href="MoreForPlaying.html">Tienda</a> <a
@@ -96,9 +96,9 @@
                             <!-- Game images -->
                             <div class="image-side col-12 col-md-6">
 
-                                <img src="Fotos/Minecraft-poster.webp"
+                                <img src="images/Minecraft-poster.webp"
                                     alt="Portada de Minecraft" height="200px">
-                                <img src="Fotos/CREATE_BuildAlmostAnything.jpg"
+                                <img src="images/CREATE_BuildAlmostAnything.jpg"
                                     alt="Portada de Minecraft" width="300px">
                             </div>
 
@@ -209,7 +209,11 @@
                                 </div>
                                 <!-- User reviews section -->
                                 <div id="reseñas" class="description overflow-x-auto">
-
+                                     <ul>
+                                        {{#posts}}
+                                    <li class="game-card col-12 col-sm-6 col-lg-3 mb-3">{{title}} {{imageFilename}} {{price}} {{rating}}</li>
+                                        {{/posts}}
+                                </ul>
                                     <h2>Reseñas de usuarios</h2>
                                     <!-- Individual user review with rating and images -->
                                     <h4>18/01/18 - PVilla: <i class="bi bi-person-check-fill text-info"></i>
@@ -231,9 +235,9 @@
                                         imborrable en la
                                         industria de los videojuegos." </p>
                                         <div>
-                                            <img src="Fotos/minecraft_2.jpg"
+                                            <img src="images/minecraft_2.jpg"
                                             alt="Portada de Minecraft" height="200px">
-                                            <img src="Fotos/minecraft_4.jpg"
+                                            <img src="images/minecraft_4.jpg"
                                             alt="Portada de Minecraft" height="200px">
                                         </div>
                                         <div class="m-3">
@@ -261,7 +265,7 @@
                                         mods hasta mapas personalizados. Minecraft es un juego que nunca deja de
                                         sorprender y entretener." </p>
                                         <div>
-                                            <img src="Fotos/minecraft_3.jpg"
+                                            <img src="images/minecraft_3.jpg"
                                             alt="Portada de Minecraft" height="200px">
                                         </div>
                                         <div class="m-3">
