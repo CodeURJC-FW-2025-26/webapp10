@@ -53,9 +53,15 @@ router.get('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
 
-    let game = await catalog.getPost(req.params.id);
+    let game = await catalog.getGame(req.params.id);
+    let pageSize = 6;
+    let numPage = parseInt(req.query.page);
 
-    res.render('index', { game });
+    let resultsPage = await customers.find()
+    .skip((numPage - 1) * pageSize)
+    .limit(pageSize);
+
+    res.render('index', { resultsPage });
 });
 
 router.post('/game/new', upload.single('image'), async (req, res) => {
