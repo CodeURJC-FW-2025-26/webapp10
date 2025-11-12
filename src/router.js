@@ -9,9 +9,7 @@ export default router;
 
 const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
-router.get('/', async (req, res) => {
-
-    function calcRating(rating) {   
+function calcRating(rating) {   
         let ratingt = Math.trunc(rating);
         let starFull = [];
         let starHalf = [];
@@ -37,7 +35,9 @@ router.get('/', async (req, res) => {
     
     return { starFull, starHalf, starEmpty };
     }
-   
+
+router.get('/', async (req, res) => {
+
     let games = await catalog.getGames();
 
     games = games.map(game => { // Map over each game to add stars property
@@ -71,8 +71,18 @@ router.post('/game/new', upload.single('image'), async (req, res) => {
 router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
+    let reviews = game.reviews;
+    
+    reviews = reviews.map(review => { // Map over each game to add stars property
+        return {
+            ...review, // Spread operator to copy existing properties
+            stars: calcRating(review.rating) // Add stars property with calculated stars
+        };
+    });
 
-    res.render('Minecraft', {game});
+    console.log(reviews);
+
+    res.render('Minecraft', {reviews});
 });
 
 router.get('/game/:id/delete', async (req, res) => {
