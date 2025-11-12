@@ -40,10 +40,10 @@ router.get('/', async (req, res) => {
    
     let games = await catalog.getGames();
 
-    games = games.map(game => {
+    games = games.map(game => { // Map over each game to add stars property
         return {
             ...game, // Spread operator to copy existing properties
-            stars: calcRating(game.rating || 0) // Add stars property with calculated stars
+            stars: calcRating(game.rating) // Add stars property with calculated stars
         };
     });
 
