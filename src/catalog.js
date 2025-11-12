@@ -26,9 +26,12 @@ export async function deleteGames(){
     return await games.deleteMany();
 }
 
-export async function getGames(){
+export async function getGames(pageSize, numPage){
 
-    return await games.find().toArray();
+    return await games.find()
+    .skip((numPage - 1) * pageSize)
+    .limit(pageSize)
+    .toArray();
 }
 
 export async function getGame(id){

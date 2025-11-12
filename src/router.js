@@ -36,9 +36,11 @@ router.get('/', async (req, res) => {
         }
     
     return { starFull, starHalf, starEmpty };
-}
-   
-    let games = await catalog.getGames();
+}   
+    let pageSize = 6;
+    let numPage = parseInt(req.query.page) || 1;
+    
+    let games = await catalog.getGames(pageSize, numPage);
 
     games = games.map(game => { // Map over each game to add stars property
         return {
@@ -49,19 +51,6 @@ router.get('/', async (req, res) => {
 
     res.render('index', { games });
 
-});
-
-router.get('/', async (req, res) => {
-
-    let game = await catalog.getGame(req.params.id);
-    let pageSize = 6;
-    let numPage = parseInt(req.query.page);
-
-    let resultsPage = await customers.find()
-    .skip((numPage - 1) * pageSize)
-    .limit(pageSize);
-
-    res.render('index', { resultsPage });
 });
 
 router.post('/game/new', upload.single('image'), async (req, res) => {
