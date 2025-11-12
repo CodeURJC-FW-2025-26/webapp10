@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
         }
     
     return { starFull, starHalf, starEmpty };
-}
+    }
    
     let games = await catalog.getGames();
 
@@ -51,12 +51,6 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/', async (req, res) => {
-
-    let game = await catalog.getPost(req.params.id);
-
-    res.render('index', { game });
-});
 
 router.post('/game/new', upload.single('image'), async (req, res) => {
 
@@ -78,7 +72,7 @@ router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    res.render('Minecraft', { game });
+    res.render('Minecraft', {game});
 });
 
 router.get('/game/:id/delete', async (req, res) => {
