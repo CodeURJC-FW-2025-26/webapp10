@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
         }
     
     return { starFull, starHalf, starEmpty };
-    }
+}
    
     let games = await catalog.getGames();
 
@@ -51,10 +51,17 @@ router.get('/', async (req, res) => {
 
 });
 
+router.get('/', async (req, res) => {
 
-router.get('/newgame', async (req, res) => {
-    
-    res.render('CreateGame');
+    let game = await catalog.getGame(req.params.id);
+    let pageSize = 6;
+    let numPage = parseInt(req.query.page);
+
+    let resultsPage = await customers.find()
+    .skip((numPage - 1) * pageSize)
+    .limit(pageSize);
+
+    res.render('index', { resultsPage });
 });
 
 router.post('/game/new', upload.single('image'), async (req, res) => {
@@ -77,7 +84,7 @@ router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    res.render('Minecraft', {game});
+    res.render('Minecraft', { game });
 });
 
 router.get('/game/:id/delete', async (req, res) => {
