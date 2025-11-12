@@ -18,16 +18,7 @@
             <!-- Header -->
             <div class="col-12 mb-3"> <!-- Takes the full width and the bottom margin is 3 -->
                 <header class="header flex-column flex-md-row">
-                    <!-- On small sizes, it is positioned in a column; on sizes above medium, it goes in a row -->                    
-                     <a href="/"> 
-                        <img id="logoimg"
-                        src="/images/LogPhoto.png"
-                        alt="Logo MoreForPlaying" width="100" height="100"></a>
-                    <div class="header-content flex-column flex-md-row">
-                        <div class="d-flex gap-3 flex-column flex-md-row"> <a href="/">Tienda</a> <a
-                                href="#">Comunidad</a> <a href="#">Soporte</a> </div>
-                        <form> <label for="Buscar">Buscar en la tienda</label> <input class="form-control"> </form>
-                    </div>
+                    {{>header}}
                 </header>
             </div>
         </div>
@@ -37,26 +28,7 @@
             <!-- Sidebar -->
             <div class="col-lg-2 md-2 mb-3">
                 <aside class="sidebar">
-
-                    <div class="category"><i class="bi bi-controller"></i> Categorías</div>
-                    <a href="#" class="sidebar-item"><i class="bi bi-bullseye"></i> Shooters</a>
-                    <a href="#" class="sidebar-item"> <i class="bi bi-globe2"></i> Mundo Abierto</a>
-                    <a href="#" class="sidebar-item"><i class="bi bi-heart-fill"></i> Indie</a>
-                    <a href="#" class="sidebar-item"><i class="bi bi-speedometer2"></i> Carreras</a>
-                    <a href="#" class="sidebar-item"><i class="bi bi-trophy-fill"></i> Deportes</a>
-                    <a href="#" class="sidebar-item"><i class="bi bi-shield-shaded"></i> RPG</a>
-
-                    <div class="category"><i class="bi bi-laptop"></i> Plataformas</div>
-                    <a href="#" class="sidebar-item"><i class="bi bi-windows text-primary"></i> PC</a>
-                    <a href="#" class="sidebar-item"><i class="bi bi-playstation text-info"></i> PlayStation</a>
-                    <a href="#" class="sidebar-item"><i class="bi bi-xbox text-success"></i> Xbox</a>
-                    <a href="#" class="sidebar-item"> <i class="bi bi-nintendo-switch text-danger"></i> Nintendo</a>
-
-                    <div class="category"><i class="bi bi-info-circle"></i> Información</div>
-                    <p class="sidebar-item">Juegos: 612</p>
-                    <p class="sidebar-item">Usuarios online: 3.3k</p>
-                    <p class="sidebar-item">GOTY: Elden Ring</p>
-
+                    {{>sidebar}}
                 </aside>
             </div>
 
@@ -78,7 +50,7 @@
                         <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
                                 <a href="#" class="btn btn-primary">Borrar juego</a>
                                 <a href="#" class="btn btn-primary">Editar juego</a>
-                                <a href="CreateGame.html" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
+                                <a href="Createhtml" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
                                     Crear tu propio juego</a>
                                 <a href="MoreForPlaying.html" class="btn btn-primary">Volver a página principal</a>
                         </div>
@@ -214,15 +186,32 @@
                                
                                     <h2>Reseñas de usuarios</h2>
                                     <!-- Individual user review with rating and /images -->
+                                    {{#reviews}}
+                                        <div class="game-title">{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
+                                        
+                                <div class="rating-stars">
+                                    <!-- Full stars -->
+                                    {{#stars.starFull}}
+                                    <i class="bi bi-star-fill text-danger"></i>
+                                    {{/stars.starFull}}
 
-                                    <ul>
-        
-                                        {{#reviews}}
-                                            <li class="game-card col-12 col-sm-6 col-lg-3 mb-3">{{username}}</li>
+                                    <!-- Half stars -->
+                                    {{#stars.starHalf}}
+                                    <i class="bi bi-star-half text-danger"></i>
+                                    {{/stars.starHalf}}
+
+                                    <!-- Empty stars -->
+                                    {{#stars.starEmpty}}
+                                    <i class="bi bi-star text-danger"></i>
+                                    {{/stars.starEmpty}}
+                                </div>
+                                        {{#imageFilename}}
+                                            <a href="/game/{{_id}}"><img class="game-image" src="/game/{{_id}}/image" alt="MC"
+                                            width="150px" height="200px"></a>
+                                        {{/imageFilename}}
                                         {{/reviews}}
  
-                                    </ul>
-
+                                    
                                     <h4>18/01/18 - PVilla: <i class="bi bi-person-check-fill text-info"></i>
                                                  <div class="game-rating"><i
                                                 class="bi bi-star-fill text-danger"></i><i
@@ -340,27 +329,7 @@
             <!-- Footer -->
             <div class="col-12">
                 <footer class="footer">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4 mb-3 mb-md-0"> <!-- mb-3 adds margin to the bottom on small screens; mb-md-0 removes it on medium and larger screens -->
-                                <h5>MoreForPlaying</h5>
-                                <p>&copy; 2024 MoreForPlaying. Todos los derechos reservados.</p>
-                            </div>
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <h5>Contacto</h5>
-                                <ul class="list-unstyled"> <!-- Removes default list styling -->
-                                    <li><i class="bi bi-envelope"></i> soporte@moreforplaying.com</li>
-                                    <li><i class="bi bi-telephone"></i> +34 123 456 789</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-4">
-                                <h5>Síguenos</h5>
-                                <a href="#" class="text-light me-2"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a> <!--me-2 adds margin to the right-->
-                                <a href="#" class="text-light me-2"><i class="bi bi-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    {{>footer}}
                 </footer>
             </div>
         </div>
