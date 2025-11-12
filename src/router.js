@@ -58,6 +58,11 @@ router.get('/', async (req, res) => {
     res.render('index', { game });
 });
 
+router.get('/newgame', async (req, res) => {
+    
+    res.render('CreateGame');
+});
+
 router.post('/game/new', upload.single('image'), async (req, res) => {
 
     let game = {
@@ -99,5 +104,3 @@ router.get('/game/:id/image', async (req, res) => {
     res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
 
 });
-
-
