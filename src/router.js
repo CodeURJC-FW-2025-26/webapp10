@@ -35,6 +35,9 @@ function calcRating(rating) {
     
     return { starFull, starHalf, starEmpty };
 }   
+
+    router.get('/', async (req, res) => {   
+
     let pageSize = 6;
     let numPage = parseInt(req.query.page) || 1;
     
