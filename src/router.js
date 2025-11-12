@@ -53,19 +53,19 @@ router.get('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
 
-    let post = await catalog.getPost(req.params.id);
+    let game = await catalog.getPost(req.params.id);
 
-    res.render('minecraft', { post });
+    res.render('index', { game });
 });
 
 router.post('/game/new', upload.single('image'), async (req, res) => {
 
     let game = {
+        object_id: new ObjectId(), 
         title: req.body.title,
         price: req.body.price,
         rating: req.body.rating,
         imageFilename: req.file?.filename
-
     };
 
     await catalog.addGame(game);
@@ -78,7 +78,7 @@ router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    res.render('show_game', { game });
+    res.render('Minecraft', { game });
 });
 
 router.get('/game/:id/delete', async (req, res) => {
