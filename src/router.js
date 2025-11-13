@@ -124,7 +124,7 @@ router.get('/game/:id/image', async (req, res) => {
 
 });
 
-router.post('/game/create', upload.single('image'), async (req, res) => {
+router.post('/game/create', upload.single('videogame_image'), async (req, res) => {
 
     let game_create = {
         videogame_name: req.body.videogame_name,
