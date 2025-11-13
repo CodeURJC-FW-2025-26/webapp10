@@ -42,3 +42,20 @@ export async function getGame(id){
 export async function countGames() {
     return await games.countDocuments();
 }
+    
+
+export async function searchGames(query, limit, page) {
+    const filter = { title: { $regex: query, $options: 'i' } };
+    
+    const result = await games.find(filter)
+               .skip((page - 1) * limit)
+               .limit(limit)
+               .toArray();
+    
+    return result;
+}
+
+export async function countSearchResults(query) {
+    if (!query) return 0;
+    return games.countDocuments({ title: { $regex: query, $options: 'i' } });
+}
