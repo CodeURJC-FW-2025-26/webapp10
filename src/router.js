@@ -67,9 +67,14 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.get('/newgame', async (req, res) => {
+router.get('/creategame', async (req, res) => {
 
     res.render('CreateGame');
+});
+
+router.get('/success', async (req, res) => {
+
+    res.render('Success');
 });
 
 router.post('/game/new', upload.single('image'), async (req, res) => {
