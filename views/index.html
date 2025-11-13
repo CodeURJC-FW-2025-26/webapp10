@@ -70,9 +70,11 @@
                             {{/games}}
                         </ul>
                         <div class="pagination">
+                            {{#hasPrev}}<a href="?page={{prevPage}}">&lt;</a>{{/hasPrev}}
                             {{#pages}}
                             <a href="?page={{.}}" class="{{#isCurrent}}active{{/isCurrent}}">{{.}}</a>
                             {{/pages}}
+                            {{#hasNext}}<a href="?page={{nextPage}}">&gt;</a>{{/hasNext}}
                         </div>
                     </div>
                 </main>
