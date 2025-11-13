@@ -39,3 +39,6 @@ export async function getGame(id){
     return await games.findOne({ _id: new ObjectId(id) });
 }
 
+export async function countGames() {
+    return await games.countDocuments();
+}

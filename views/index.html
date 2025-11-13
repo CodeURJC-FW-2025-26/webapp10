@@ -29,7 +29,7 @@
                 <aside class="sidebar">
                     {{>sidebar}}
                 </aside>
-            </div> 
+            </div>
             <!-- Content -->
             <div class="col-12 col-lg-10 md-10">
                 <main class="content">
@@ -69,6 +69,11 @@
                             </li>
                             {{/games}}
                         </ul>
+                        <div class="pagination">
+                            {{#pages}}
+                            <a href="?page={{.}}" class="{{#isCurrent}}active{{/isCurrent}}">{{.}}</a>
+                            {{/pages}}
+                        </div>
                     </div>
                 </main>
             </div>
