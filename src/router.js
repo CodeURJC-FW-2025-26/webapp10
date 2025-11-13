@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
         nextPage: numPage + 1,
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages
-    })
+    });
 });
 
 router.get('/newgame', async (req, res) => {
@@ -189,3 +189,37 @@ router.post('/game/create', upload.single('image'), async (req, res) => {
     res.render('saved_game', { _id: game_create._id.toString() });
 
 });
+
+router.post('/search', async (req, res) => {
+    let query = req.body.q || "";
+    let pageSize = 6;
+    let numPage = parseInt(req.query.page) || 1;
+
+    let games = await catalog.searchGames(query, pageSize, numPage);
+    let total = await catalog.countSearchResults(query);
+    let totalPages = Math.ceil(total / pageSize);
+
+    let pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+    }
+
+    games = games.map(game => {
+        return {
+            ...game,
+            stars: calcRating(game.rating)
+        };
+    });
+
+    res.render('index', {
+        games,
+        pages,
+        currentPage: numPage,
+        prevPage: numPage - 1,
+        nextPage: numPage + 1,
+        hasPrev: numPage > 1,
+        hasNext: numPage < totalPages,
+        query: query
+    });
+});
+

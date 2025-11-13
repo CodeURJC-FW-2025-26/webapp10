@@ -25,7 +25,8 @@
                         <!-- On small screens, positioned in a column; on medium and larger screens, in a row -->
                         <div class="d-flex gap-3 flex-column flex-md-row"> <a href="/">Tienda</a> <a
                                 href="/">Comunidad</a> <a href="/">Soporte</a> </div>
-                        <form> <label for="Buscar">Buscar en la tienda</label> <input class="form-control"> </form>
+                        <form action="/search" method="POST"> <label for="Buscar">Buscar en la tienda</label> <input class="form-control" type="text" name="q">
+                        </form>
                     </div>
 </body>
 
