@@ -1,6 +1,6 @@
 .header,
 .sidebar,
-.minecraft-p-content,
+.game-p-content,
 .content,
 .m-btn,
 .description,
@@ -143,9 +143,9 @@ form {
 }
 
 
-/* Minecraft Styles */
+/* game Styles */
 
-.minecraft-p-content {
+.game-p-content {
     margin-bottom: 20px;
 }
 

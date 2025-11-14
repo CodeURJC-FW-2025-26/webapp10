@@ -1,9 +1,8 @@
 import express from 'express';
 import multer from 'multer';
 import fs from 'node:fs/promises';
-
+import { ObjectId } from 'mongodb';
 import * as catalog from './catalog.js';
-
 const router = express.Router();
 export default router;
 
@@ -77,42 +76,21 @@ router.get('/success', async (req, res) => {
     res.render('Success');
 });
 
-router.post('/game/new', upload.single('image'), async (req, res) => {
-
-    let game = {
-        object_id: new ObjectId(),
-        title: req.body.title,
-        price: req.body.price,
-        rating: req.body.rating,
-        imageFilename: req.file?.filename
-    };
-
-    await catalog.addGame(game);
-
-    res.render('saved_game', { _id: game._id.toString() });
-
-});
-
 router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
-    let reviews = game.reviews;
 
-    reviews = reviews.map(review => { // Map over each game to add stars property
+    game.reviews = game.reviews.map(review => { // Map over each game to add stars property
         return {
             ...review, // Spread operator to copy existing properties
             stars: calcRating(review.rating) // Add stars property with calculated stars
         };
     });
 
-    res.render('Minecraft', { reviews });
-});
+    game.stars = calcRating(game.rating);
 
-router.get('/review_success', async (req, res) => {
-    
-    res.render('review_success');
+    res.render('game', game);
 });
-
 
 router.get('/game/:id/delete', async (req, res) => {
 
@@ -122,7 +100,7 @@ router.get('/game/:id/delete', async (req, res) => {
         await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
     }
 
-    res.render('deleted_game');
+    res.render('deleted');
 });
 
 router.get('/game/:id/image', async (req, res) => {
@@ -201,18 +179,20 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
 });
 
-router.post('/review/create', upload.single('videogame_image'), async (req, res) => {
+router.post('/game/:id/review/create', upload.single('videogame_image'), async (req, res) => {
     
+    let game_id = req.params.id;
     let review_create = {
-        review_id: new ObjectId(),
-        review_username: req.body.review_username,
-        review_text: req.body.review_text,
-        review_rating: req.body.review_rating,
-        review_date: new Date().toISOString().split('T')[0],
-        review_image: req.file?.imageFilename
+        username: req.body.user_name,
+        comment: req.body.comment_description,
+        rating: req.body.videogame_qualification,
+        date: new Date().toISOString().split('T')[0],
+        imageFilename: req.file ? req.file.filename : null
     };
-    let result =   await catalog.updateOne({$push: {reviews: review_create}});
-    res.render('review_success');
+
+    console.log(review_create);
+    await catalog.updateGame({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
+    res.render('Success');
 });
 
 router.post('/search', async (req, res) => {

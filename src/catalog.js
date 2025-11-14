@@ -16,6 +16,15 @@ export async function addGame(game) {
     return await games.insertOne(game);
 }
 
+export async function updateGame(query, update) {
+    console.log("Intentando actualizar con Query:", query); 
+    console.log("Con Update:", update);
+    // 1. La función recibe dos argumentos:
+    //    - query: Un objeto para encontrar el juego (ej: { _id: new ObjectID(id) })
+    //    - update: Un objeto con los cambios a aplicar (ej: { $push: { reviews: review_create } })
+    return await games.updateOne(query, update);
+}
+
 export async function deleteGame(id){
 
     return await games.findOneAndDelete({ _id: new ObjectId(id) });
