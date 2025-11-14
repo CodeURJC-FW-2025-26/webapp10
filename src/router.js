@@ -77,7 +77,6 @@ router.get('/success', async (req, res) => {
     res.render('Success');
 });
 
-
 router.post('/game/new', upload.single('image'), async (req, res) => {
 
     let game = {
@@ -191,12 +190,14 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
             genre_Indie: req.body.genre_Indie === 'on',
             genre_Shooters: req.body.genre_Shooters === 'on',
             genre_OpenWorld: req.body.genre_OpenWorld === 'on',
-        }
+        },
+
+        reviews: []
     };
 
     await catalog.addGame(game_create);
 
-    res.render('saved_game', { _id: game_create._id.toString() });
+    res.render('Success', { _id: game_create._id.toString() });
 
 });
 
