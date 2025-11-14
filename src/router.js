@@ -77,6 +77,7 @@ router.get('/success', async (req, res) => {
     res.render('Success');
 });
 
+
 router.post('/game/new', upload.single('image'), async (req, res) => {
 
     let game = {
@@ -105,10 +106,14 @@ router.get('/game/:id', async (req, res) => {
         };
     });
 
-    console.log(reviews);
-
-    res.render('Minecraft', { game });
+    res.render('Minecraft', { reviews });
 });
+
+router.get('/review_success', async (req, res) => {
+    
+    res.render('review_success');
+});
+
 
 router.get('/game/:id/delete', async (req, res) => {
 
@@ -193,6 +198,20 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
     res.render('saved_game', { _id: game_create._id.toString() });
 
+});
+
+router.post('/review/create', upload.single('videogame_image'), async (req, res) => {
+    
+    let review_create = {
+        review_id: new ObjectId(),
+        review_username: req.body.review_username,
+        review_text: req.body.review_text,
+        review_rating: req.body.review_rating,
+        review_date: new Date().toISOString().split('T')[0],
+        review_image: req.file?.imageFilename
+    };
+    let result =   await catalog.updateOne({$push: {reviews: review_create}});
+    res.render('review_success');
 });
 
 router.post('/search', async (req, res) => {

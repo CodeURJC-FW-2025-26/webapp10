@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import router from './router.js';
 import './load_data.js';
 
+
 const app = express();
 
 app.use(express.static('./public'));

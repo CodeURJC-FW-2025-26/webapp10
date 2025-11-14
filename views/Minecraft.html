@@ -183,98 +183,47 @@
                                 <!-- User reviews section -->
                                 <div id="reseñas" class="description overflow-x-auto">
                                      
-                               
                                     <h2>Reseñas de usuarios</h2>
                                     <!-- Individual user review with rating and /images -->
                                     {{#reviews}}
-                                        <div class="game-title">{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
+                                        <div class="game-title"><h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
                                         
-                                <div class="rating-stars">
-                                    <!-- Full stars -->
-                                    {{#stars.starFull}}
-                                    <i class="bi bi-star-fill text-danger"></i>
-                                    {{/stars.starFull}}
+                                        <div class="rating-stars">
+                                            <!-- Full stars -->
+                                            {{#stars.starFull}}
+                                            <i class="bi bi-star-fill text-danger"></i>
+                                            {{/stars.starFull}}
 
-                                    <!-- Half stars -->
-                                    {{#stars.starHalf}}
-                                    <i class="bi bi-star-half text-danger"></i>
-                                    {{/stars.starHalf}}
+                                            <!-- Half stars -->
+                                            {{#stars.starHalf}}
+                                            <i class="bi bi-star-half text-danger"></i>
+                                            {{/stars.starHalf}}
 
-                                    <!-- Empty stars -->
-                                    {{#stars.starEmpty}}
-                                    <i class="bi bi-star text-danger"></i>
-                                    {{/stars.starEmpty}}
-                                </div>
-                                        {{#imageFilename}}
-                                            <a href="/game/{{_id}}"><img class="game-image" src="/game/{{_id}}/image" alt="MC"
-                                            width="150px" height="200px"></a>
-                                        {{/imageFilename}}
-                                        {{/reviews}}
- 
-                                    
-                                    <h4>18/01/18 - PVilla: <i class="bi bi-person-check-fill text-info"></i>
-                                                 <div class="game-rating"><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-fill text-danger"></i>
-                                        </div>
-                                    </h4>
-                                    <p>"Minecraft es un juego increíblemente versátil que permite a los jugadores
-                                        expresar su creatividad de maneras infinitas. La libertad para construir,
-                                        explorar
-                                        y crear en un mundo generado por bloques es simplemente fascinante. Además, la
-                                        comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia
-                                        sea aún
-                                        más divertida. Sin duda, Minecraft es un juego que ha dejado una huella
-                                        imborrable en la
-                                        industria de los videojuegos." </p>
+                                            <!-- Empty stars -->
+                                            {{#stars.starEmpty}}
+                                            <i class="bi bi-star text-danger"></i>
+                                            {{/stars.starEmpty}}
+                                        </div></h4>
+                                        <p>{{comment}} </p>
+
                                         <div>
-                                            <img src="/images/minecraft_2.jpg"
-                                            alt="Portada de Minecraft" height="200px">
-                                            <img src="/images/minecraft_4.jpg"
-                                            alt="Portada de Minecraft" height="200px">
+                                            <img src="/images/{{imageFilename}}" alt="imagen reseña" width="300" height="200">
                                         </div>
+                                        
                                         <div class="m-3">
                                             <a href="#" class="btn btn-primary ">Borrar</a>
                                             <a href="#" class="btn btn-primary ">Editar</a>
                                         </div>
 
-                                    <h4>10/06/24 - Minicrack: <i class="bi bi-person-check-fill text-info"></i>
-                                        <div class="game-rating"><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-fill text-danger"></i><i
-                                                class="bi bi-star-half text-danger"></i><i
-                                                class="bi bi-star text-danger"></i>
-                                        </div>
-                                    </h4>
-                                    <p> "Minecraft es mucho más que un simple juego; es una plataforma para la
-                                        imaginación y la
-                                        colaboración. La capacidad de construir estructuras impresionantes, explorar
-                                        vastos mundos y
-                                        participar en aventuras emocionantes lo convierte en una experiencia única.
-                                        Además, la
-                                        comunidad creativa que rodea al juego ofrece una gran cantidad de contenido
-                                        adicional, desde
-                                        mods hasta mapas personalizados. Minecraft es un juego que nunca deja de
-                                        sorprender y entretener." </p>
-                                        <div>
-                                            <img src="/images/minecraft_3.jpg"
-                                            alt="Portada de Minecraft" height="200px">
-                                        </div>
-                                        <div class="m-3">
-                                            <a href="#" class="btn btn-primary">Borrar</a>
-                                            <a href="#" class="btn btn-primary">Editar</a>
-                                        </div>
-                                </div>
+                                    {{/reviews}}
 
+                                </div>
+                                <!-- Add new review form -->
                                 <div id="add_reseñas" class="description col-12 col-lg-12 md-12">
                                     <h2>Añadir Reseña</h2>
                                     <br>
 
-                                    <form class="d-grid ">
+                                    <form action="//review/create" method="POST" class="d-grid ">
                                         <!-- Row for the user name -->
                                         <div class="row mb-4">
                                             <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
@@ -307,9 +256,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-4 " id="submit_button">
+                                        <div class="row mb-4 " >
                                             <!-- "Button" to finish the comment and submit the data -->
-                                            <a href="Minecraft.html" class="btn btn-primary">
+                                            <input type="submit" value="Subir reseña" class="btn btn-primary">
+                                            <a href="/review_success" class="btn btn-primary">
                                                 <h1><i class="bi bi-chat-square-dots"></i> </h1> <!-- Add file icon -->
                                                 Subir reseña
                                             </a>
