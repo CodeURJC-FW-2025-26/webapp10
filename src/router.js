@@ -336,6 +336,20 @@ router.post('/game/:id/review/delete', async (req, res) => {
     res.render('deleted');
 });
 
+router.post('/game/:id/review/edit', async (req, res) => {
+
+   
+    let game_id = req.params.id;
+    let review_id = req.body.review_id;
+
+    console.log("Review ID to edit:", review_id);
+    console.log("Game ID:", game_id);
+    let game = await catalog.getGame(game_id);
+    let review = game.reviews.find(r => r._id.toString() === review_id);
+
+    res.render('review_editor', { game, review });
+});
+
 router.post('/search', async (req, res) => {
     let query = req.body.q || "";
     let pageSize = 6;

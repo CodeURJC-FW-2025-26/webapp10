@@ -71,15 +71,14 @@
 
                         <div class="p-information d-flex flex-column flex-md-row">
                             <!-- Game short description -->
-                            <div class="p-description col-12 col-md-6 "> {{videogame_short_description}}
+                            <div class="p-description col-12 col-md-9 "> {{videogame_short_description}}
                             </div>
                             <!-- Game /images -->
-                            <div class="image-side col-12 col-md-6">
+                            <div class="image-side col-12 col-md-3">
 
-                                <img src="/images/Minecraft-poster.webp"
+                                <img src="/images/{{videogame_image}}"
                                     alt="Portada de Minecraft" height="200px">
-                                <img src="/images/CREATE_BuildAlmostAnything.jpg"
-                                    alt="Portada de Minecraft" width="300px">
+                                
                             </div>
 
                         </div>
@@ -95,26 +94,7 @@
                                 <div id="videogame_description" class="description">
                                     <h2>Descripción</h2>
 
-                                    <p>{{videogame_description}}</p>
-                                  
-                                </div>
-                                 <!-- Game features list -->
-                                <div id="Características" class="description">
-                                    <h2>Características adicionales</h2>
-                                    <ul>
-                                        <li>Mundo abierto generado por bloques</li>
-                                        <li>Modos de juego: Supervivencia, Creativo, Aventura y Espectador</li>
-                                        <li>Generación procedural de terrenos</li>
-                                        <li>Construcción y destrucción de bloques en un entorno 3D</li>
-                                        <li>Interacción con criaturas y personajes no jugables (NPC)</li>
-                                        <li>Redstone y mecánicas de automatización</li>
-                                        <li>Personalización de personajes y skins</li>
-                                        <li>Creación de mods y contenido personalizado</li>
-                                        <li>Multijugador en línea y servidores personalizados</li>
-                                        <li>Actualizaciones regulares con nuevo contenido</li>
-                                        <li>Comunidad activa y creativa</li>
-                                    </ul>
-                                   
+                                    <p>{{videogame_description}}</p>  
                                 </div>
                                 <!-- Game information table -->
                                 <div id="information" class="description">
@@ -192,7 +172,7 @@
                                         <p>{{comment}} </p>
 
                                         <div>
-                                            <img src="/images/{{videogame_image}}" width="300" height="200">
+                                            <img src="/images/{{imageFilename}}" width="300" height="200">
                                         </div>
                                         
                                         <div class="m-3">
@@ -200,6 +180,10 @@
                                                 <input type="hidden" name="review_id" value="{{_id}}">
                                                 <input type="submit" class="btn btn-primary" value="Borrar">
                                             </form>
+                                                <form class= "d-flex justify-content-start" action="/game/{{game_id}}/review/edit" method="post" >
+                                                    <input type="hidden" name="review_id" value="{{_id}}">
+                                                    <input type="submit" class="btn btn-primary" value="Editar">
+                                                </form>
                                         </div>
 
                                     {{/reviews}}
