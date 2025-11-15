@@ -76,21 +76,7 @@ router.get('/success', async (req, res) => {
     res.render('Success');
 });
 
-router.get('/game/:id', async (req, res) => {
 
-    let game = await catalog.getGame(req.params.id);
-
-    game.reviews = game.reviews.map(review => { // Map over each game to add stars property
-        return {
-            ...review, // Spread operator to copy existing properties
-            stars: calcRating(review.rating) // Add stars property with calculated stars
-        };
-    });
-
-    game.stars = calcRating(game.rating);
-
-    res.render('game', game);
-});
 
 router.get('/game/:id/delete', async (req, res) => {
 
@@ -179,10 +165,28 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
 });
 
+router.get('/game/:id', async (req, res) => {
+
+    let game = await catalog.getGame(req.params.id);
+
+    game.reviews = game.reviews.map(review => { // Map over each game to add stars property
+        return {
+            ...review, // Spread operator to copy existing properties
+            stars: calcRating(review.rating), // Add stars property with calculated stars
+            game_id: req.params.id
+        };
+    });
+
+    game.stars = calcRating(game.rating);
+    
+    res.render('game', game);
+});
+
 router.post('/game/:id/review/create', upload.single('videogame_image'), async (req, res) => {
     
     let game_id = req.params.id;
     let review_create = {
+        _id: new ObjectId(),
         username: req.body.user_name,
         comment: req.body.comment_description,
         rating: req.body.videogame_qualification,
@@ -190,9 +194,23 @@ router.post('/game/:id/review/create', upload.single('videogame_image'), async (
         imageFilename: req.file ? req.file.filename : null
     };
 
-    console.log(review_create);
-    await catalog.updateGame({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
+    await catalog.addreview({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
+    console.log("Review added:", review_create);
     res.render('Success');
+});
+
+router.post('/game/:id/review/delete', async (req, res) => {
+
+   
+    let game_id = req.params.id;
+    let review_id = req.body.review_id;
+
+    console.log("Review ID to delete:", review_id);
+    console.log("Game ID:", game_id);
+
+    await catalog.deletereview({ _id: new ObjectId (game_id) }, {$pull: {reviews: {_id: new ObjectId (review_id)}}});
+
+    res.render('deleted');
 });
 
 router.post('/search', async (req, res) => {
