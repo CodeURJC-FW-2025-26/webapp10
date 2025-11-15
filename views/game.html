@@ -168,7 +168,9 @@
                                      
                                     <h2>Reseñas de usuarios</h2>
                                     <!-- Individual user review with rating and /images -->
+                                      {{_id}} <!-- Id juego -->
                                     {{#reviews}}
+                                         {{_id}} <!-- Id review -->
                                         <div class="game-title"><h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
                                         
                                         <div class="rating-stars">
@@ -190,12 +192,14 @@
                                         <p>{{comment}} </p>
 
                                         <div>
-                                            <img src="/images/{{videogame_image}}" alt="imagen reseña" width="300" height="200">
+                                            <img src="/images/{{videogame_image}}" width="300" height="200">
                                         </div>
                                         
                                         <div class="m-3">
-                                            <a href="#" class="btn btn-primary ">Borrar</a>
-                                            <a href="#" class="btn btn-primary ">Editar</a>
+                                            <form class= "d-flex justify-content-start" action="/game/{{game_id}}/review/delete" method="POST" >
+                                                <input type="hidden" name="review_id" value="{{_id}}">
+                                                <input type="submit" class="btn btn-primary" value="Borrar">
+                                            </form>
                                         </div>
 
                                     {{/reviews}}
