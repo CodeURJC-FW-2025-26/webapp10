@@ -26,7 +26,7 @@ const allGenres = [
 ];
 
 const allPlatforms = [
-    { value: 'PC', icon: 'bi-windows', color: 'text-primary', display: 'PC', useClass: true },
+    { value: 'PCs', icon: 'bi-windows', color: 'text-primary', display: 'PC', useClass: true },
     { value: 'Play Station', icon: 'bi-playstation', color: 'text-info', display: 'PlayStation', useClass: true },
     { value: 'XBox', icon: 'bi-xbox', color: 'text-success', display: 'Xbox', useClass: true },
     { value: 'Nintendo', icon: 'bi-nintendo-switch', color: 'text-danger', display: 'Nintendo', useClass: true },
@@ -224,9 +224,73 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
 });
 
+// Function to turn the videogame_platforms object into an array of selected platform names
+function getSelectedPlatforms(platforms) {
+    const labels = {
+        platform_PlayStation: "PlayStation",
+        platform_Xbox: "Xbox",
+        platform_Nintendo: "Nintendo",
+        platform_PCs: "PCs",
+        platform_Mobiles: "Móviles",
+        platform_VR: "Realidad Virtual (VR)",
+        platform_Arcade: "Máquinas Arcade"
+    };
+
+    return Object.keys(platforms)
+        .filter(key => platforms[key])   // What platforms are marked (true)
+        .map(key => labels[key]);        // Convert key into readable text
+};
+
+// Function to turn the videogame_modes object into an array of selected mode names
+function getSelectedModes(modes) {
+    const labels = {
+        mode_SinglePlayer: "Solitario",
+        mode_MultiPlayer: "Multijugador",
+        mode_Cooperative: "Cooperativo",
+        mode_Competitive: "Competitivo",
+        mode_Practice: "Práctica",
+        mode_Story: "Historia"
+    };
+
+    return Object.keys(modes)
+        .filter(key => modes[key])   // What modes are marked (true)
+        .map(key => labels[key]);        // Convert key into readable text
+};
+
+// Function to turn the videogame_genres object into an array of selected genre names
+function getSelectedGenres(genres) {
+    const labels = {
+        genre_Survival: "Survival",
+        genre_ActionAdventure: "Action Adventure",
+        genre_Strategy: "Strategy",
+        genre_Sandbox: "Sandbox",
+        genre_Sports: "Sports",
+        genre_Simulation: "Simulation",
+        genre_Puzzle: "Puzzle",
+        genre_RPG: "RPG",
+        genre_Horror: "Horror",
+        genre_BattleRoyale: "Battle Royale",
+        genre_Racing: "Racing",
+        genre_Indie: "Indie",
+        genre_Shooters: "Shooters",
+        genre_OpenWorld: "Open World"
+    };
+
+    return Object.keys(genres)
+        .filter(key => genres[key])   // What genres are marked (true)
+        .map(key => labels[key]);        // Convert key into readable text
+};
+
 router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
+
+    // Transforms videogame_platforms into an array of names
+    game.videogame_platforms = getSelectedPlatforms(game.videogame_platforms);
+    // Transforms videogame_modes into an array of names
+    game.videogame_modes = getSelectedModes(game.videogame_modes);
+    // Transforms videogame_genres into an array of names
+    game.videogame_genres = getSelectedGenres(game.videogame_genres);
 
     game.reviews = game.reviews.map(review => { // Map over each game to add stars property
         return {
