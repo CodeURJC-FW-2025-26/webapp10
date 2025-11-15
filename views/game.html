@@ -40,11 +40,22 @@
                         <!-- Game title and action buttons -->
                     <div class="row d-flex flex-column flex-md-row">
     
-                        <div class="title col-6"> {{title}} <div class="game-rating"><i
-                                    class="bi bi-star-fill text-danger"></i><i
-                                    class="bi bi-star-fill text-danger"></i><i
-                                    class="bi bi-star-fill text-danger"></i><i
-                                    class="bi bi-star-fill text-danger"></i><i class="bi bi-star-fill text-danger"></i>
+                        <div class="title col-6"> {{videogame_name}}
+                            <div class="rating-stars">
+                                <!-- Full stars -->
+                                {{#stars.starFull}}
+                                <i class="bi bi-star-fill text-danger"></i>
+                                {{/stars.starFull}}
+
+                                <!-- Half stars -->
+                                {{#stars.starHalf}}
+                                <i class="bi bi-star-half text-danger"></i>
+                                {{/stars.starHalf}}
+
+                                <!-- Empty stars -->
+                                {{#stars.starEmpty}}
+                                <i class="bi bi-star text-danger"></i>
+                                {{/stars.starEmpty}}
                             </div>
                         </div>
                         <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
@@ -60,7 +71,7 @@
 
                         <div class="p-information d-flex flex-column flex-md-row">
                             <!-- Game short description -->
-                            <div class="p-description col-12 col-md-6 "> {{smalldescription}}
+                            <div class="p-description col-12 col-md-6 "> {{videogame_short_description}}
                             </div>
                             <!-- Game /images -->
                             <div class="image-side col-12 col-md-6">
@@ -77,14 +88,14 @@
 
                             <div class="information col-12">    
                                 <!-- Game price -->
-                                <div id="price" class="description"> Precio: {{price}} €
+                                <div id="videogame_cost" class="description"> Precio: {{videogame_cost}} €
                                 
                                 </div>
                                 <!-- Detailed game description -->
-                                <div id="description" class="description">
+                                <div id="videogame_description" class="description">
                                     <h2>Descripción</h2>
 
-                                    <p>{{longdescription}}</p>
+                                    <p>{{videogame_description}}</p>
                                   
                                 </div>
                                  <!-- Game features list -->
@@ -111,32 +122,44 @@
                                     <table class="table-unstyled overflow-x-auto">
                                         <tr>
                                             <th>Desarrollador</th>
-                                            <td>{{desarrollador}}</td>
+                                            <td>{{videogame_developer}}</td>
                                         </tr>
                                         <tr>
                                             <th>Editor</th>
-                                            <td>{{editor}}</td>
+                                            <td>{{videogame_editor}}</td>
                                         </tr>
                                         <tr>
                                             <th>Fecha de lanzamiento</th>
-                                            <td>{{fechadecreacion}}</td>
+                                            <td>{{videogame_release_date}}</td>
                                         </tr>
                                         <tr>
                                             <th>Plataformas disponibles</th>
-                                            <td>{{plataformasdisponibles}}</td>
+                                            <td>
+                                                {{#videogame_platforms}}
+                                                    <span>{{.}}</span>
+                                                {{/videogame_platforms}}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Modos de juego</th>
-                                            <td>{{modosdejuegos}}</td>
+                                            <td>
+                                                {{#videogame_modes}}
+                                                    <span>{{.}}</span>
+                                                {{/videogame_modes}}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Clasificación por edades</th>
-                                            <td>PEGI {{pegi}}</td>
+                                            <td>PEGI {{age_classification}}</td>
                                         </tr>
                                         
                                         <tr>
                                             <th>Género</th>
-                                            <td>{{genero}}</td>
+                                            <td>
+                                                {{#videogame_genres}}
+                                                    <span>{{.}}</span>
+                                                {{/videogame_genres}}
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -167,7 +190,7 @@
                                         <p>{{comment}} </p>
 
                                         <div>
-                                            <img src="/images/{{imageFilename}}" alt="imagen reseña" width="300" height="200">
+                                            <img src="/images/{{videogame_image}}" alt="imagen reseña" width="300" height="200">
                                         </div>
                                         
                                         <div class="m-3">
@@ -200,11 +223,11 @@
                                             </div>
                                         </div>
 
-                                        <!-- Row for the videogame qualification -->
+                                        <!-- Row for the videogame rating -->
                                         <div class="row mb-4">
-                                            <label for="videogame_qualification" class="col-sm-3 col-form-label">Calificación:</label>
+                                            <label for="rating" class="col-sm-3 col-form-label">Calificación:</label>
                                             <div class="col-sm-5">
-                                                <input type="number" name="videogame_qualification" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
+                                                <input type="number" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
                                             </div>
                                         </div> 
                                         
@@ -222,12 +245,9 @@
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
-
                         </div>
-
-
+                    </div>
                 </main>
             </div>
         </div>

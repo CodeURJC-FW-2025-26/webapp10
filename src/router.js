@@ -96,8 +96,8 @@ router.get('/game/:id/delete', async (req, res) => {
 
     let game = await catalog.deleteGame(req.params.id);
 
-    if (game && game.imageFilename) {
-        await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+    if (game && game.videogame_image) {
+        await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.videogame_image);
     }
 
     res.render('deleted');
@@ -107,7 +107,7 @@ router.get('/game/:id/image', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+    res.download(catalog.UPLOADS_FOLDER + '/' + game.videogame_image);
 
 });
 
@@ -118,7 +118,7 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
         videogame_description: req.body.videogame_description,
 
-        videogame_secondary_description: req.body.videogame_secondary_description,
+        videogame_short_description: req.body.videogame_short_description,
 
         videogame_developer: req.body.videogame_developer,
 
@@ -151,7 +151,7 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
         age_classification: req.body.age_classification,
 
-        videogame_qualification: req.body.videogame_qualification,
+        rating: req.body.rating,
 
         videogame_genres: {
             genre_Survival: req.body.genre_Survival === 'on',
@@ -175,7 +175,10 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
     await catalog.addGame(game_create);
 
-    res.render('Success', { _id: game_create._id.toString() });
+    res.render('Success', {
+        _id: game_create._id.toString(),
+        new_game_added: true
+    });
 
 });
 
@@ -185,14 +188,14 @@ router.post('/game/:id/review/create', upload.single('videogame_image'), async (
     let review_create = {
         username: req.body.user_name,
         comment: req.body.comment_description,
-        rating: req.body.videogame_qualification,
+        rating: req.body.rating,
         date: new Date().toISOString().split('T')[0],
-        imageFilename: req.file ? req.file.filename : null
+        videogame_image: req.file ? req.file.filename : null
     };
 
     console.log(review_create);
     await catalog.updateGame({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
-    res.render('Success');
+    res.render('Success', { new_game_added: false });
 });
 
 router.post('/search', async (req, res) => {
