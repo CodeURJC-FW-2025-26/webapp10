@@ -224,6 +224,15 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
 });
 
+router.get('/image', (req, res) => {
+    let filename = req.query.filename;
+    // If filename has \ or / then path traversal attack is detected
+    if(/[\\/]/.test(filename)){
+    return res.status(400);
+    }
+    res.download('uploads/' + filename);
+});
+
 // Function to turn the videogame_platforms object into an array of selected platform names
 function getSelectedPlatforms(platforms) {
     const labels = {
