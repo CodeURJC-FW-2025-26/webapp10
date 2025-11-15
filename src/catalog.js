@@ -51,20 +51,44 @@ export async function getGame(id){
 export async function countGames() {
     return await games.countDocuments();
 }
-    
 
-export async function searchGames(query, limit, page) {
-    const filter = { title: { $regex: query, $options: 'i' } };
+export async function searchGames(query, genre, platform, pageSize, numPage) {
+    let filter = {};
+    
+    if (query) {
+        filter.title = { $regex: query, $options: 'i' };
+    }
+    
+    if (genre) {
+        filter.genre = genre;
+    }
+    
+    if (platform) {
+        filter.platform = platform;
+    }
     
     const result = await games.find(filter)
-               .skip((page - 1) * limit)
-               .limit(limit)
+               .skip((numPage - 1) * pageSize)
+               .limit(pageSize)
                .toArray();
     
     return result;
 }
 
-export async function countSearchResults(query) {
-    if (!query) return 0;
-    return games.countDocuments({ title: { $regex: query, $options: 'i' } });
+export async function countSearchResults(query, genre, platform) {
+    let filter = {};
+    
+    if (query) {
+        filter.title = { $regex: query, $options: 'i' };
+    }
+    
+    if (genre) {
+        filter.genre = genre;
+    }
+    
+    if (platform) {
+        filter.platform = platform;
+    }
+    
+    return games.countDocuments(filter);
 }

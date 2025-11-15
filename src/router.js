@@ -8,6 +8,33 @@ export default router;
 
 const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
+const allGenres = [
+    { value: 'Shooters', icon: 'bi-bullseye', display: 'Shooters' },
+    { value: 'Mundo Abierto', icon: 'bi-globe2', display: 'Mundo Abierto' },
+    { value: 'Indie', icon: 'bi-heart-fill', display: 'Indie' },
+    { value: 'Carreras', icon: 'bi-speedometer2', display: 'Carreras' },
+    { value: 'Deportes', icon: 'bi-trophy-fill', display: 'Deportes' },
+    { value: 'RPG', icon: 'bi-shield-shaded', display: 'RPG' },
+    { value: 'Supervivencia', icon: 'bi-tree-fill', display: 'Supervivencia' },
+    { value: 'Aventura', icon: 'bi-compass', display: 'Acción-Aventura' },
+    { value: 'Estrategia', icon: 'bi-diagram-3', display: 'Estrategia' },
+    { value: 'Sandbox', icon: 'bi-bucket', display: 'Sandbox' },
+    { value: 'Simulación', icon: 'bi-cpu', display: 'Simulación' },
+    { value: 'Puzles', icon: 'bi-puzzle', display: 'Puzles' },
+    { value: 'Terror', icon: 'bi-moon-stars', display: 'Terror' },
+    { value: 'Battle Royale', icon: 'bi-people', display: 'Battle Royale' }
+];
+
+const allPlatforms = [
+    { value: 'PC', icon: 'bi-windows', color: 'text-primary', display: 'PC', useClass: true },
+    { value: 'Play Station', icon: 'bi-playstation', color: 'text-info', display: 'PlayStation', useClass: true },
+    { value: 'XBox', icon: 'bi-xbox', color: 'text-success', display: 'Xbox', useClass: true },
+    { value: 'Nintendo', icon: 'bi-nintendo-switch', color: 'text-danger', display: 'Nintendo', useClass: true },
+    { value: 'Móvil', icon: 'bi-phone', color: 'text-warning', display: 'Móviles', useClass: true },
+    { value: 'Realidad Virtual', icon: 'bi-vr', color: 'purple', display: 'Realidad Virtual', useClass: false },
+    { value: 'Arcade', icon: 'bi-joystick', color: 'orangered', display: 'Arcade', useClass: false }
+];
+
 function calcRating(rating) {
     let ratingt = Math.trunc(rating);
     let starFull = [];
@@ -62,18 +89,26 @@ router.get('/', async (req, res) => {
         prevPage: numPage - 1,
         nextPage: numPage + 1,
         hasPrev: numPage > 1,
-        hasNext: numPage < totalPages
+        hasNext: numPage < totalPages,
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
 router.get('/creategame', async (req, res) => {
 
-    res.render('CreateGame');
+    res.render('CreateGame', {
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/success', async (req, res) => {
 
-    res.render('Success');
+    res.render('Success', {
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/game/:id', async (req, res) => {
@@ -89,7 +124,11 @@ router.get('/game/:id', async (req, res) => {
 
     game.stars = calcRating(game.rating);
 
-    res.render('game', game);
+    res.render('game', {
+        game,
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/game/:id/delete', async (req, res) => {
@@ -100,7 +139,10 @@ router.get('/game/:id/delete', async (req, res) => {
         await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
     }
 
-    res.render('deleted');
+    res.render('deleted', {
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/game/:id/image', async (req, res) => {
@@ -175,12 +217,16 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
     await catalog.addGame(game_create);
 
-    res.render('Success', { _id: game_create._id.toString() });
+    res.render('Success', {
+        _id: game_create._id.toString(),
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 
 });
 
 router.post('/game/:id/review/create', upload.single('videogame_image'), async (req, res) => {
-    
+
     let game_id = req.params.id;
     let review_create = {
         username: req.body.user_name,
@@ -191,8 +237,11 @@ router.post('/game/:id/review/create', upload.single('videogame_image'), async (
     };
 
     console.log(review_create);
-    await catalog.updateGame({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
-    res.render('Success');
+    await catalog.updateGame({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
+    res.render('Success', {
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.post('/search', async (req, res) => {
@@ -200,8 +249,8 @@ router.post('/search', async (req, res) => {
     let pageSize = 6;
     let numPage = parseInt(req.query.page) || 1;
 
-    let games = await catalog.searchGames(query, pageSize, numPage);
-    let total = await catalog.countSearchResults(query);
+    let games = await catalog.searchGames(query, "", "", pageSize, numPage);
+    let total = await catalog.countSearchResults(query, "", "");
     let totalPages = Math.ceil(total / pageSize);
 
     let pages = [];
@@ -220,11 +269,66 @@ router.post('/search', async (req, res) => {
         games,
         pages,
         currentPage: numPage,
+        isCurrent: function () {
+            return this === numPage;
+        },
         prevPage: numPage - 1,
         nextPage: numPage + 1,
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
-        query: query
+        query: query,
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
+});
+
+router.get('/category', async (req, res) => {
+    let query = req.query.q || "";
+    let pageSize = 6;
+    let numPage = parseInt(req.query.page) || 1;
+    let genre = req.query.genre || "";
+    let platform = req.query.platform || "";
+
+    let games = await catalog.searchGames(query, genre, platform, pageSize, numPage);
+    let total = await catalog.countSearchResults(query, genre, platform);
+    let totalPages = Math.ceil(total / pageSize);
+
+    let pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+    }
+
+    games = games.map(game => {
+        return {
+            ...game,
+            stars: calcRating(game.rating)
+        };
+    });
+
+    res.render('index', {
+        games,
+        pages,
+        currentPage: numPage,
+        isCurrent: function () {
+            return this === numPage;
+        },
+        prevPage: numPage - 1,
+        nextPage: numPage + 1,
+        hasPrev: numPage > 1,
+        hasNext: numPage < totalPages,
+        query: query,
+        genre: genre,
+        platform: platform,
+        genres: allGenres.map(g => ({
+            ...g,
+            active: genre === g.value
+        })),
+        platforms: allPlatforms.map(p => ({
+            ...p,
+            active: platform === p.value
+        })), 
+        activeGenre: genre,
+        activePlatform: platform
     });
 });
 
