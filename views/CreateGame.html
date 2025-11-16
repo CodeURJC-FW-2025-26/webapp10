@@ -44,7 +44,7 @@
                         <div class="row mb-4">
                             <label for="videogame_name" class="col-sm-3 col-form-label">Nombre del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="videogame_name" name="videogame_name" class="form-control" placeholder="Nombre" required>
+                                <input type="text" id="videogame_name" name="videogame_name" class="form-control" placeholder="Debe comenzar con mayúscula" required>
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                         <div class="row mb-4">
                             <label for="videogame_cost" class="col-sm-3 col-form-label">Coste del videojuego:</label>
                             <div class="col-sm-2">
-                                <input type="number" id="videogame_cost" name="videogame_cost" min="0" step="1" class="form-control" placeholder="Coste en €" required>
+                                <input type="number" id="videogame_cost" name="videogame_cost" min="0" max="1000" step="1" class="form-control" placeholder="Coste en €" required>
                             </div>
                             <label for="videogame_cost" class="col-sm-1 col-form-label">€</label>
                         </div>

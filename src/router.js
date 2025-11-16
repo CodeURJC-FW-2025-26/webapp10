@@ -152,75 +152,152 @@ router.get('/game/:id/image', async (req, res) => {
 
 router.post('/game/create', upload.single('videogame_image'), async (req, res) => {
 
-    let game_create = {
-        videogame_name: req.body.videogame_name,
+    const errors = [];
 
-        videogame_description: req.body.videogame_description,
+    // 1. Required fields
+    const requiredFields = [
+        "videogame_name",
+        "videogame_description",
+        "videogame_short_description",
+        "videogame_developer",
+        "videogame_editor",
+        "videogame_cost",
+        "videogame_release_date",
+        "age_classification",
+        "rating"
+    ];
 
-        videogame_short_description: req.body.videogame_short_description,
-
-        videogame_developer: req.body.videogame_developer,
-
-        videogame_editor: req.body.videogame_editor,
-
-        videogame_image: req.file?.filename,
-
-        videogame_cost: req.body.videogame_cost,
-
-        videogame_release_date: req.body.videogame_release_date,
-
-        videogame_platforms: {
-            platform_PlayStation: req.body.platform_PlayStation === 'on',
-            platform_Xbox: req.body.platform_Xbox === 'on',
-            platform_Nintendo: req.body.platform_Nintendo === 'on',
-            platform_PCs: req.body.platform_PCs === 'on',
-            platform_Mobiles: req.body.platform_Mobiles === 'on',
-            platform_VR: req.body.platform_VR === 'on',
-            platform_Arcade: req.body.platform_Arcade === 'on',
-        },
-
-        videogame_modes: {
-            mode_SinglePlayer: req.body.mode_SinglePlayer === 'on',
-            mode_MultiPlayer: req.body.mode_MultiPlayer === 'on',
-            mode_Cooperative: req.body.mode_Cooperative === 'on',
-            mode_Competitive: req.body.mode_Competitive === 'on',
-            mode_Practice: req.body.mode_Practice === 'on',
-            mode_Story: req.body.mode_Story === 'on',
-        },
-
-        age_classification: req.body.age_classification,
-
-        rating: req.body.rating,
-
-        videogame_genres: {
-            genre_Survival: req.body.genre_Survival === 'on',
-            genre_ActionAdventure: req.body.genre_ActionAdventure === 'on',
-            genre_Strategy: req.body.genre_Strategy === 'on',
-            genre_Sandbox: req.body.genre_Sandbox === 'on',
-            genre_Sports: req.body.genre_Sports === 'on',
-            genre_Simulation: req.body.genre_Simulation === 'on',
-            genre_Puzzle: req.body.genre_Puzzle === 'on',
-            genre_RPG: req.body.genre_RPG === 'on',
-            genre_Horror: req.body.genre_Horror === 'on',
-            genre_BattleRoyale: req.body.genre_BattleRoyale === 'on',
-            genre_Racing: req.body.genre_Racing === 'on',
-            genre_Indie: req.body.genre_Indie === 'on',
-            genre_Shooters: req.body.genre_Shooters === 'on',
-            genre_OpenWorld: req.body.genre_OpenWorld === 'on',
-        },
-
-        reviews: []
+    for (const field of requiredFields) {
+        if (!req.body[field] || req.body[field].trim() === "") {
+            errors.push(`El campo "${field}" es obligatorio.`);
+        }
+    };
+    
+    if (!req.file) {
+        errors.push("La imagen es obligatoria.");
     };
 
-    await catalog.addGame(game_create);
+    // 2. videogame_name starts with capital letter
+    if (req.body.videogame_name && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.videogame_name.trim())) {
+        errors.push("El nombre del videojuego debe comenzar con mayúscula.");
+    };
 
-    res.render('Success', {
-       
-        _id: game_create._id.toString(),
-        new_game_added: true,
-        genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
+    // 3. Validate videogame_release_date format
+    const date = new Date(req.body.videogame_release_date);
+    if (isNaN(date.getTime())) {
+        errors.push("La fecha de lanzamiento no es válida.");
+    };
+
+    // 4. Validate number in range (cost 0 to 1000)
+    const cost = Number(req.body.videogame_cost);
+    if (isNaN(cost) || cost < 0 || cost > 1000) {
+        errors.push("El coste debe ser un número entre 0 y 1000.");
+    };
+
+    // 5. Validate rating (0 to 5)
+    const rating = Number(req.body.rating);
+    if (isNaN(rating) || rating < 0 || rating > 5) {
+        errors.push("El rating debe estar entre 0 y 5.");
+    };
+
+    // 6. The descriptions size is adequate
+    if (req.body.videogame_description) {
+        if (req.body.videogame_description.length < 250 || req.body.videogame_description.length > 1500) {
+            errors.push("La descripción debe tener entre 250 y 1500 caracteres.");
+        }
+    };
+    if (req.body.videogame_short_description) {
+        if (req.body.videogame_short_description.length < 100 || req.body.videogame_short_description.length > 500) {
+            errors.push("La descripción corta debe tener entre 100 y 500 caracteres.");
+        }
+    };
+
+    // 7. Validate that the videogame_name is NOT repeated
+    const existing = await catalog.findGameByName(req.body.videogame_name.trim());
+    if (existing) {
+        errors.push("Ya existe un videojuego con ese nombre.");
+    };
+
+    // ---------------------------
+    // If there are errors: Show them and send back to form
+    if (errors.length > 0) {
+        return res.status(400).render("Error", {
+            errors
+        });
+    } else {
+        // ---------------------------
+        // If there are no errors: Create game
+        let game_create = {
+            videogame_name: req.body.videogame_name,
+
+            videogame_description: req.body.videogame_description,
+
+            videogame_short_description: req.body.videogame_short_description,
+
+            videogame_developer: req.body.videogame_developer,
+
+            videogame_editor: req.body.videogame_editor,
+
+            videogame_image: req.file?.filename,
+
+            videogame_cost: req.body.videogame_cost,
+
+            videogame_release_date: req.body.videogame_release_date,
+
+            videogame_platforms: {
+                platform_PlayStation: req.body.platform_PlayStation === 'on',
+                platform_Xbox: req.body.platform_Xbox === 'on',
+                platform_Nintendo: req.body.platform_Nintendo === 'on',
+                platform_PCs: req.body.platform_PCs === 'on',
+                platform_Mobiles: req.body.platform_Mobiles === 'on',
+                platform_VR: req.body.platform_VR === 'on',
+                platform_Arcade: req.body.platform_Arcade === 'on',
+            },
+
+            videogame_modes: {
+                mode_SinglePlayer: req.body.mode_SinglePlayer === 'on',
+                mode_MultiPlayer: req.body.mode_MultiPlayer === 'on',
+                mode_Cooperative: req.body.mode_Cooperative === 'on',
+                mode_Competitive: req.body.mode_Competitive === 'on',
+                mode_Practice: req.body.mode_Practice === 'on',
+                mode_Story: req.body.mode_Story === 'on',
+            },
+
+            age_classification: req.body.age_classification,
+
+            rating: req.body.rating,
+
+            videogame_genres: {
+                genre_Survival: req.body.genre_Survival === 'on',
+                genre_ActionAdventure: req.body.genre_ActionAdventure === 'on',
+                genre_Strategy: req.body.genre_Strategy === 'on',
+                genre_Sandbox: req.body.genre_Sandbox === 'on',
+                genre_Sports: req.body.genre_Sports === 'on',
+                genre_Simulation: req.body.genre_Simulation === 'on',
+                genre_Puzzle: req.body.genre_Puzzle === 'on',
+                genre_RPG: req.body.genre_RPG === 'on',
+                genre_Horror: req.body.genre_Horror === 'on',
+                genre_BattleRoyale: req.body.genre_BattleRoyale === 'on',
+                genre_Racing: req.body.genre_Racing === 'on',
+                genre_Indie: req.body.genre_Indie === 'on',
+                genre_Shooters: req.body.genre_Shooters === 'on',
+                genre_OpenWorld: req.body.genre_OpenWorld === 'on',
+            },
+
+            reviews: []
+        };
+    
+        await catalog.addGame(game_create);
+
+        res.render('Success', {
+        
+            _id: game_create._id.toString(),
+            new_game_added: true,
+            genres: allGenres.map(g => ({ ...g, active: false })),
+            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        });
+
+    };
 
 });
 
@@ -269,20 +346,20 @@ function getSelectedModes(modes) {
 // Function to turn the videogame_genres object into an array of selected genre names
 function getSelectedGenres(genres) {
     const labels = {
-        genre_Survival: "Survival",
-        genre_ActionAdventure: "Action Adventure",
-        genre_Strategy: "Strategy",
+        genre_Survival: "Supervivencia",
+        genre_ActionAdventure: "Acción/Aventura",
+        genre_Strategy: "Estrategia",
         genre_Sandbox: "Sandbox",
-        genre_Sports: "Sports",
-        genre_Simulation: "Simulation",
+        genre_Sports: "Deportes",
+        genre_Simulation: "Simulación",
         genre_Puzzle: "Puzzle",
         genre_RPG: "RPG",
         genre_Horror: "Horror",
         genre_BattleRoyale: "Battle Royale",
-        genre_Racing: "Racing",
+        genre_Racing: "Carreras",
         genre_Indie: "Indie",
         genre_Shooters: "Shooters",
-        genre_OpenWorld: "Open World"
+        genre_OpenWorld: "Mundo Abierto"
     };
 
     return Object.keys(genres)
@@ -446,4 +523,3 @@ router.get('/category', async (req, res) => {
         activePlatform: platform
     });
 });
-

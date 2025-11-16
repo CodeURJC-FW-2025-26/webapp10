@@ -26,6 +26,10 @@ export async function findGame(filter) {
     return item;
 }
 
+export async function findGameByName(videogame_name) {
+    return await games.findOne({ videogame_name: videogame_name });
+}
+
 export async function deletereview(query, update) {
     console.log("Intentando actualizar con Query:", query); 
     console.log("Con Update:", update);
