@@ -70,14 +70,23 @@
                             {{/games}}
                         </ul>
                         <div class="pagination">
-                            {{#hasPrev}}<a href="?page={{prevPage}}">&lt;</a>{{/hasPrev}}
+                            {{#hasPrev}}
+                            <a
+                                href="?page={{prevPage}}{{#query}}&q={{query}}{{/query}}{{#activeGenre}}&genre={{activeGenre}}{{/activeGenre}}{{#activePlatform}}&platform={{activePlatform}}{{/activePlatform}}">&lt;</a>
+                            {{/hasPrev}}
+
                             {{#pages}}
-                            <a href="?page={{.}}" class="{{#isCurrent}}active{{/isCurrent}}">{{.}}</a>
+                            <a href="?page={{.}}{{#query}}&q={{query}}{{/query}}{{#activeGenre}}&genre={{activeGenre}}{{/activeGenre}}{{#activePlatform}}&platform={{activePlatform}}{{/activePlatform}}"
+                                class="{{#isCurrent}}active{{/isCurrent}}">{{.}}</a>
                             {{/pages}}
-                            {{#hasNext}}<a href="?page={{nextPage}}">&gt;</a>{{/hasNext}}
+
+                            {{#hasNext}}
+                            <a
+                                href="?page={{nextPage}}{{#query}}&q={{query}}{{/query}}{{#activeGenre}}&genre={{activeGenre}}{{/activeGenre}}{{#activePlatform}}&platform={{activePlatform}}{{/activePlatform}}">&gt;</a>
+                            {{/hasNext}}
                         </div>
                     </div>
-                </main> 
+                </main>
             </div>
         </div>
         <div class="row"> <!-- Footer -->

@@ -328,9 +328,9 @@ router.get('/game/:id', async (req, res) => {
     game.stars = calcRating(game.rating);
 
     res.render('game', {
-        // Propiedades del juego
+        // Game properties
         ...game,
-        // Variables para el sidebar
+        // Sidebar data
         sidebarData: {
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
@@ -414,8 +414,8 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
     res.render('Success', { new_game_added: false });
 });
 
-router.post('/search', async (req, res) => {
-    let query = req.body.q || "";
+router.get('/search', async (req, res) => {
+    let query = req.query.q || "";
     let pageSize = 6;
     let numPage = parseInt(req.query.page) || 1;
 
@@ -447,6 +447,8 @@ router.post('/search', async (req, res) => {
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
         query: query,
+        activeGenre: "", 
+        activePlatform: "", 
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
