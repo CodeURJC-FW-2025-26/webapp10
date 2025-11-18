@@ -45,7 +45,7 @@
         "gamemod": [],
         "age_classification": "12",
         "genre": [],
-        "platform": [],
+        "platform": ["Play Station"],
         "short_description": "",
         "description": "",
         "reviews": []
@@ -96,7 +96,7 @@
         "gamemod": [],
         "age_classification": "12",
         "genre": [],
-        "platform": [],
+        "platform": ["Play Station"],
         "short_description": "",
         "description": "",
         "reviews": []
@@ -113,7 +113,7 @@
         "gamemod": [],
         "age_classification": "7",
         "genre": [],
-        "platform": [],
+        "platform": ["Play Station"],
         "short_description": "",
         "description": "",
         "reviews": []
@@ -130,7 +130,7 @@
         "gamemod": [],
         "age_classification": "18",
         "genre": [],
-        "platform": [],
+        "platform": ["Play Station"],
         "short_description": "",
         "description": "",
         "reviews": []
@@ -147,7 +147,7 @@
         "gamemod": [],
         "age_classification": "12",
         "genre": [],
-        "platform": [],
+        "platform": ["Play Station"],
         "short_description": "",
         "description": "",
         "reviews": []
@@ -164,7 +164,7 @@
         "gamemod": [],
         "age_classification": "3",
         "genre": [],
-        "platform": [],
+        "platform": ["Play Station"],
         "short_description": "",
         "description": "",
         "reviews": []
