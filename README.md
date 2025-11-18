@@ -199,11 +199,11 @@ Page indicating that the review or game has been successfully saved
 I was in charge of the details page: my job was to generalize the information on the details page, as well as implement the creation, deletion and editing of its reviews, working with game.html, editing the data.json and creating forms such as review_editor.
 
 * 5 best commits:
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [static review editor added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/ab5d4dfe12ed8849c8e70068ca35552599da145d)
+  2. [reviews db](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/88edd850d3bc50f6f1dbbf4fc69b2a8f404723e8)
+  3. [minecraft review stars](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/fc927e6bb05945631fd04785e6bccc33a305c4dc)
+  4. [trying review](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/28f4b37594883489e2de1f3fa7acdec756203182)
+  5. [id_bd](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/c4b72ad1788167a0b3f81bdefdfffb1457a790d5)
  
 * 5 files most participated:
   1. [game.html](./game.html)
