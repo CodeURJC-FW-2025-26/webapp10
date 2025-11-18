@@ -42,12 +42,12 @@
                         <h2>Editar Reseña</h2>
                         <br>
 
-                        <form action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
+                        <form action="/game/{{game_id}}/review_editor/{{_id}}/edit" method="POST" enctype="multipart/form-data" class="d-grid ">
                             <!-- Row for the user name -->
                             <div class="row mb-4">
                                 <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="user_name" value="{{review.username}}" class="form-control" placeholder="Nombre" required>
+                                        <input type="text" id="user_name" name="user_name" placeholder="{{review.username}}" class="form-control" >
                                     </div>
                             </div>
 
@@ -55,7 +55,7 @@
                             <div class="row mb-4">
                                 <label for="comment_description" class="col-sm-3 col-form-label">Introduzca aquí su comentario:</label>
                                     <div class="col-sm-9">
-                                        <textarea name="comment_description" class="form-control" rows="4" placeholder="Descripción" required>{{review.comment}}</textarea>
+                                        <textarea name="comment" class="form-control" rows="4" placeholder="Descripción">{{review.comment}}</textarea>
                                     </div>
                             </div>
 
@@ -78,7 +78,7 @@
                             
                             <!-- "Button" to finish the comment and submit the data -->
                             <div class="row mb-4">
-                                <input type="submit" value="Subir reseña" class="btn btn-primary">
+                                <input type="submit" value="Editar reseña" class="btn btn-primary">
                             </div>
                         </form>
                     </div>

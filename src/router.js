@@ -392,6 +392,15 @@ router.get('/game/:id', async (req, res) => {
     res.render('game', game);
 });
 
+router.get('/game/:id/review/:_id/image', async (req, res) => {
+
+    let game = await catalog.getGame(req.params.id);
+    let review = game.reviews.find(r => r._id.toString() === req.params._id);
+
+    res.download(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
+
+});
+
 router.post('/game/:id/review/create', upload.single('imageFilename'), async (req, res) => {
 
     let game_id = req.params.id;
@@ -403,38 +412,54 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         date: new Date().toISOString().split('T')[0],
         imageFilename: req.file ? req.file.filename : null
     };
-
+    console.log("review_creada:",review_create);
     await catalog.addreview({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
-    console.log("Review added:", review_create);
     res.render('Success', { new_game_added: false });
 });
 
 router.post('/game/:id/review/delete', async (req, res) => {
 
-   
     let game_id = req.params.id;
     let review_id = req.body.review_id;
-
-    console.log("Review ID to delete:", review_id);
-    console.log("Game ID:", game_id);
 
     await catalog.deletereview({ _id: new ObjectId (game_id) }, {$pull: {reviews: {_id: new ObjectId (review_id)}}});
 
     res.render('deleted', { game_deleted: false });
 });
 
-router.post('/game/:id/review/edit', async (req, res) => {
+router.get('/game/:id/review_editor/:_id', async (req, res) => {
 
-   
     let game_id = req.params.id;
-    let review_id = req.body.review_id;
-
-    console.log("Review ID to edit:", review_id);
-    console.log("Game ID:", game_id);
+    let review_id = req.params._id; 
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    res.render('review_editor', { game, review });
+    res.render('review_editor', {game, review, game_id, _id: review_id});
+});
+
+router.post('/game/:id/review_editor/:_id/edit', async (req, res) => {
+
+    let game_id = req.params.id;
+    let review_id = req.params._id; 
+
+    let game = await catalog.getGame(game_id);
+    let review = game.reviews.find(r => r._id.toString() === review_id);
+
+    console.log("review que entra en el editor:", review);
+
+    let review_edit = {
+        _id: new ObjectId(),
+        username: req.body.user_name,
+        comment: req.body.comment,
+        rating: req.body.rating,
+        date: new Date().toISOString().split('T')[0],
+        videogame_image: req.file ? req.file.filename : game.reviews.find(r => r._id.toString() === review_id).videogame_image
+    }; 
+    console.log("review_editada:",review_edit);
+
+    await catalog.updatereview({ _id: new ObjectId (game_id), "reviews._id": new ObjectId (review_id) }, { $set: { "reviews.$": review_edit } });
+
+    res.render('Success', { new_game_added: false });
 });
 
 router.post('/search', async (req, res) => {

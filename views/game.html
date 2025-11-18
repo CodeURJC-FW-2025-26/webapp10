@@ -145,9 +145,9 @@
                                      
                                     <h2>Reseñas de usuarios</h2>
                                     <!-- Individual user review with rating and /images -->
-                                      {{_id}} <!-- Id juego -->
+   
                                     {{#reviews}}
-                                         {{_id}} <!-- Id review -->
+                                       
                                         <div class="game-title"><h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
                                         
                                         <div class="rating-stars">
@@ -169,20 +169,18 @@
                                         <p>{{comment}} </p>
 
                                         <div>
-                                            <img src="/images/{{imageFilename}}" width="300" height="200">
+                                            <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
                                         </div>
                                         
-                                        <div class="m-3">
-                                            <form class= "d-flex justify-content-start" action="/game/{{game_id}}/review/delete" method="POST" >
+                                        <div class="m-3 justify-content-start d-flex">
+                                            <form  action="/game/{{game_id}}/review/delete" method="POST" >
                                                 <input type="hidden" name="review_id" value="{{_id}}">
                                                 <input type="submit" class="btn btn-primary" value="Borrar">
+                                                <a href="/game/{{game_id}}/review_editor/{{_id}}" class="btn" >Editar</a>
                                             </form>
-                                                <form class= "d-flex justify-content-start" action="/game/{{game_id}}/review/edit" method="post" >
-                                                    <input type="hidden" name="review_id" value="{{_id}}">
-                                                    <input type="submit" class="btn btn-primary" value="Editar">
-                                                </form>
+                                            
                                         </div>
-
+                                        
                                     {{/reviews}}
 
                                 </div>
@@ -220,7 +218,7 @@
                                         <div class="row mb-4">
                                             <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                                             <div class="col-sm-9">
-                                                <input type="file" name="imageFilename" class="form-control" accept="image/*">
+                                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*">
                                             </div>
                                         </div>
 
