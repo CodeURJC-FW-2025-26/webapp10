@@ -3,20 +3,24 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Añadir Nuevo Videojuego</title>
+    <title>Editar Videojuego</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="MoreForPlaying.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/MoreForPlaying.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
     <link href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid"> <!-- Container for the whole page -->
+
         <div class="row">
             <!-- Header -->
-            <div class="col-12 mb-3"> <!-- Takes full width and has a bottom margin of 3 -->
+            <div class="col-12 mb-3"> <!-- Occupies the entire width and has a bottom margin of 3 -->
                 <header class="header flex-column flex-md-row">
                     {{>header}}
                 </header>
@@ -35,10 +39,10 @@
             <div class="col-12 col-lg-10 md-10">
                 <main class="content">
 
-                    <h1>Añade un nuevo videojuego al catálogo</h1>
+                    <h1>Editar el videojuego del catálogo</h1>
                     <br>
 
-                    <form method="post" action="/game/create" enctype="multipart/form-data" class="d-grid">
+                    <form method="post" action="/game/edit/{{_id}}" enctype="multipart/form-data" class="d-grid">
 
                         <!-- Row for the videogame name -->
                         <div class="row mb-4">
@@ -92,7 +96,7 @@
                         <div class="row mb-4">
                             <label for="price" class="col-sm-3 col-form-label">Coste del videojuego:</label>
                             <div class="col-sm-2">
-                                <input type="number" id="price" name="price" min="0" max="1000" step="0.01" class="form-control" placeholder="Coste en €" required>
+                                <input type="number" id="price" name="price" min="0" max="1000" step="1" class="form-control" placeholder="Coste en €" required>
                             </div>
                             <label for="price" class="col-sm-1 col-form-label">€</label>
                         </div>
@@ -111,7 +115,7 @@
                             <div id="platforms" class="col-sm-9">
                                 <!-- Checkbox for PlayStation platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_PlayStation" name="platform[]" value="Play Station">
+                                    <input class="form-check-input" type="checkbox" id="platform_PlayStation" name="platform_PlayStation">
                                     <label class="form-check-label" for="platform_PlayStation">
                                         PlayStation
                                     </label>
@@ -119,7 +123,7 @@
 
                                 <!-- Checkbox for Xbox platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_Xbox" name="platform[]" value="Xbox">
+                                    <input class="form-check-input" type="checkbox" id="platform_Xbox" name="platform_Xbox">
                                     <label class="form-check-label" for="platform_Xbox">
                                         Xbox
                                     </label>
@@ -127,7 +131,7 @@
 
                                 <!-- Checkbox for Nintendo platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_Nintendo" name="platform[]" value="Nintendo">
+                                    <input class="form-check-input" type="checkbox" id="platform_Nintendo" name="platform_Nintendo">
                                     <label class="form-check-label" for="platform_Nintendo">
                                         Nintendo
                                     </label>
@@ -135,7 +139,7 @@
 
                                 <!-- Checkbox for PCs platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_PCs" name="platform[]" value="PC">
+                                    <input class="form-check-input" type="checkbox" id="platform_PCs" name="platform_PCs">
                                     <label class="form-check-label" for="platform_PCs">
                                         PCs
                                     </label>
@@ -143,7 +147,7 @@
 
                                 <!-- Checkbox for Mobile platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_Mobiles" name="platform[]" value="Móvil">
+                                    <input class="form-check-input" type="checkbox" id="platform_Mobiles" name="platform_Mobiles">
                                     <label class="form-check-label" for="platform_Mobiles">
                                         Móviles (Smartphones y Tablets)
                                     </label>
@@ -151,7 +155,7 @@
 
                                 <!-- Checkbox for VR platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_VR" name="platform[]" value="Realidad Virtual">
+                                    <input class="form-check-input" type="checkbox" id="platform_VR" name="platform_VR">
                                     <label class="form-check-label" for="platform_VR">
                                         Realidad Virtual (VR)
                                     </label>
@@ -159,7 +163,7 @@
 
                                 <!-- Checkbox for Arcade platform -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_Arcade" name="platform[]" value="Arcade">
+                                    <input class="form-check-input" type="checkbox" id="platform_Arcade" name="platform_Arcade">
                                     <label class="form-check-label" for="platform_Arcade">
                                         Máquinas Arcade
                                     </label>
@@ -173,7 +177,7 @@
                             <div id="modes" class="col-sm-9">
                                 <!-- Checkbox for Single Player mode -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mode_SinglePlayer" name="gamemod[]" value="Un jugador">
+                                    <input class="form-check-input" type="checkbox" id="mode_SinglePlayer" name="mode_SinglePlayer">
                                     <label class="form-check-label" for="mode_SinglePlayer">
                                         Un jugador
                                     </label>
@@ -181,7 +185,7 @@
 
                                 <!-- Checkbox for Multiplayer mode -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mode_Multiplayer" name="gamemod[]" value="Multijugador">
+                                    <input class="form-check-input" type="checkbox" id="mode_Multiplayer" name="mode_Multiplayer">
                                     <label class="form-check-label" for="mode_Multiplayer">
                                         Multijugador
                                     </label>
@@ -189,7 +193,7 @@
 
                                 <!-- Checkbox for Cooperative mode -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mode_Cooperative" name="gamemod[]" value="Cooperativo">
+                                    <input class="form-check-input" type="checkbox" id="mode_Cooperative" name="mode_Cooperative">
                                     <label class="form-check-label" for="mode_Cooperative">
                                         Cooperativo
                                     </label>
@@ -197,7 +201,7 @@
 
                                 <!-- Checkbox for Competitive mode -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mode_Competitive" name="gamemod[]" value="Competitivo">
+                                    <input class="form-check-input" type="checkbox" id="mode_Competitive" name="mode_Competitive">
                                     <label class="form-check-label" for="mode_Competitive">
                                         Competitivo
                                     </label>
@@ -205,7 +209,7 @@
 
                                 <!-- Checkbox for Practice/Training mode -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mode_Practice" name="gamemod[]" value="Práctica/Entrenamiento">
+                                    <input class="form-check-input" type="checkbox" id="mode_Practice" name="mode_Practice">
                                     <label class="form-check-label" for="mode_Practice">
                                         Práctica/Entrenamiento
                                     </label>
@@ -213,7 +217,7 @@
 
                                 <!-- Checkbox for Story/Campaign mode -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mode_Story" name="gamemod[]" value="Historia">
+                                    <input class="form-check-input" type="checkbox" id="mode_Story" name="mode_Story">
                                     <label class="form-check-label" for="mode_Story">
                                         Historia/Campaña
                                     </label>
@@ -248,7 +252,7 @@
                             <div id="genres" class="col-sm-9">
                                 <!-- Checkbox for Survival genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Survival" name="genre[]" value="Supervivencia">
+                                    <input class="form-check-input" type="checkbox" id="genre_Survival" name="genre_Survival">
                                     <label class="form-check-label" for="genre_Survival">
                                         Supervivencia
                                     </label>
@@ -256,7 +260,7 @@
 
                                 <!-- Checkbox for Action-Adventure genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_ActionAdventure" name="genre[]" value="Acción-Aventura">
+                                    <input class="form-check-input" type="checkbox" id="genre_ActionAdventure" name="genre_ActionAdventure">
                                     <label class="form-check-label" for="genre_ActionAdventure">
                                         Acción-Aventura
                                     </label>
@@ -264,7 +268,7 @@
 
                                 <!-- Checkbox for Strategy genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Strategy" name="genre[]" value="Estrategia">
+                                    <input class="form-check-input" type="checkbox" id="genre_Strategy" name="genre_Strategy">
                                     <label class="form-check-label" for="genre_Strategy">
                                         Estrategia
                                     </label>
@@ -272,7 +276,7 @@
 
                                 <!-- Checkbox for Sandbox genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Sandbox" name="genre[]" value="Sandbox">
+                                    <input class="form-check-input" type="checkbox" id="genre_Sandbox" name="genre_Sandbox">
                                     <label class="form-check-label" for="genre_Sandbox">
                                         Sandbox
                                     </label>
@@ -280,7 +284,7 @@
 
                                 <!-- Checkbox for Sports genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Sports" name="genre[]" value="Deportes">
+                                    <input class="form-check-input" type="checkbox" id="genre_Sports" name="genre_Sports">
                                     <label class="form-check-label" for="genre_Sports">
                                         Deportes
                                     </label>
@@ -288,7 +292,7 @@
 
                                 <!-- Checkbox for Simulation genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Simulation" name="genre[]" value="Simulación">
+                                    <input class="form-check-input" type="checkbox" id="genre_Simulation" name="genre_Simulation">
                                     <label class="form-check-label" for="genre_Simulation">
                                         Simulación
                                     </label>
@@ -296,7 +300,7 @@
 
                                 <!-- Checkbox for Puzzle genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Puzzle" name="genre[]" value="Puzles">
+                                    <input class="form-check-input" type="checkbox" id="genre_Puzzle" name="genre_Puzzle">
                                     <label class="form-check-label" for="genre_Puzzle">
                                         Puzles
                                     </label>
@@ -304,7 +308,7 @@
 
                                 <!-- Checkbox for RPG genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_RPG" name="genre[]" value="RPG">
+                                    <input class="form-check-input" type="checkbox" id="genre_RPG" name="genre_RPG">
                                     <label class="form-check-label" for="genre_RPG">
                                         Rol (RPG)
                                     </label>
@@ -312,7 +316,7 @@
 
                                 <!-- Checkbox for Horror genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Horror" name="genre[]" value="Terror">
+                                    <input class="form-check-input" type="checkbox" id="genre_Horror" name="genre_Horror">
                                     <label class="form-check-label" for="genre_Horror">
                                         Terror
                                     </label>
@@ -320,7 +324,7 @@
 
                                 <!-- Checkbox for Battle Royale genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_BattleRoyale" name="genre[]" value="Battle Royale">
+                                    <input class="form-check-input" type="checkbox" id="genre_BattleRoyale" name="genre_BattleRoyale">
                                     <label class="form-check-label" for="genre_BattleRoyale">
                                         Battle Royale
                                     </label>
@@ -328,7 +332,7 @@
 
                                 <!-- Checkbox for Racing genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Racing" name="genre[]" value="Carreras">
+                                    <input class="form-check-input" type="checkbox" id="genre_Racing" name="genre_Racing">
                                     <label class="form-check-label" for="genre_Racing">
                                         Carreras
                                     </label>
@@ -336,7 +340,7 @@
 
                                 <!-- Checkbox for Indie genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Indie" name="genre[]" value="Indie">
+                                    <input class="form-check-input" type="checkbox" id="genre_Indie" name="genre_Indie">
                                     <label class="form-check-label" for="genre_Indie">
                                         Indie
                                     </label>
@@ -344,7 +348,7 @@
 
                                 <!-- Checkbox for Shooters genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_Shooters" name="genre[]" value="Shooters">
+                                    <input class="form-check-input" type="checkbox" id="genre_Shooters" name="genre_Shooters">
                                     <label class="form-check-label" for="genre_Shooters">
                                         Shooters
                                     </label>
@@ -352,7 +356,7 @@
 
                                 <!-- Checkbox for Open World genre -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_OpenWorld" name="genre[]" value="Mundo Abierto">
+                                    <input class="form-check-input" type="checkbox" id="genre_OpenWorld" name="genre_OpenWorld">
                                     <label class="form-check-label" for="genre_OpenWorld">
                                         Mundo Abierto
                                     </label>
@@ -363,17 +367,17 @@
                         <!-- Row for the "buttons" -->
                         <div class="row mb-4" id="form_buttons">
                             <!-- "Button" to cancel the form and return to the main page -->
-                            <a href="/" class="btn col-sm-3">
+                            <a href="/game/{{_id}}" class="btn col-sm-3">
                                 <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
                                 Cancelar
                             </a>
 
                             <!-- "Button" to complete the form and submit the data -->
-                            <div class="btn col-sm-3" role="button" tabindex="0" aria-label="Registrar Videojuego"
+                            <div class="btn col-sm-3" role="button" tabindex="0" aria-label="Completar edición del Videojuego"
                                 onclick="(function(f){ if(f.requestSubmit) f.requestSubmit(); else f.submit(); })(this.closest('form')); return false;"
                                 onkeydown="if(event.key==='Enter'||event.key===' '){ event.preventDefault(); (function(f){ if(f.requestSubmit) f.requestSubmit(); else f.submit(); })(this.closest('form')); }">
                                 <h1><i class="bi bi-file-plus"></i></h1>
-                                Registrar Videojuego
+                                Completar edición del Videojuego
                             </div>
                         </div>
                     </form>
@@ -381,14 +385,15 @@
             </div>
         </div>
 
+        <!-- Footer -->
         <div class="row">
-            <!-- Footer -->
             <div class="col-12">
                 <footer class="footer">
                     {{>footer}}
                 </footer>
             </div>
         </div>
+
     </div>
 </body>
 

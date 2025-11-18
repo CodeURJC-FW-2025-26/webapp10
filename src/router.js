@@ -245,53 +245,20 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
             release_date: req.body.release_date,
 
-            platform: {
-                platform_PlayStation: req.body.platform_PlayStation === 'on',
-                platform_Xbox: req.body.platform_Xbox === 'on',
-                platform_Nintendo: req.body.platform_Nintendo === 'on',
-                platform_PCs: req.body.platform_PCs === 'on',
-                platform_Mobiles: req.body.platform_Mobiles === 'on',
-                platform_VR: req.body.platform_VR === 'on',
-                platform_Arcade: req.body.platform_Arcade === 'on',
-            },
+            platform: Array.isArray(req.body.platform)? req.body.platform: [req.body.platform].filter(Boolean),
 
-            gamemod: {
-                mode_SinglePlayer: req.body.mode_SinglePlayer === 'on',
-                mode_MultiPlayer: req.body.mode_MultiPlayer === 'on',
-                mode_Cooperative: req.body.mode_Cooperative === 'on',
-                mode_Competitive: req.body.mode_Competitive === 'on',
-                mode_Practice: req.body.mode_Practice === 'on',
-                mode_Story: req.body.mode_Story === 'on',
-            },
+            gamemod: Array.isArray(req.body.gamemod)? req.body.gamemod: [req.body.gamemod].filter(Boolean),
 
             age_classification: req.body.age_classification,
 
             rating: req.body.rating,
 
-            genre: {
-                genre_Survival: req.body.genre_Survival === 'on',
-                genre_ActionAdventure: req.body.genre_ActionAdventure === 'on',
-                genre_Strategy: req.body.genre_Strategy === 'on',
-                genre_Sandbox: req.body.genre_Sandbox === 'on',
-                genre_Sports: req.body.genre_Sports === 'on',
-                genre_Simulation: req.body.genre_Simulation === 'on',
-                genre_Puzzle: req.body.genre_Puzzle === 'on',
-                genre_RPG: req.body.genre_RPG === 'on',
-                genre_Horror: req.body.genre_Horror === 'on',
-                genre_BattleRoyale: req.body.genre_BattleRoyale === 'on',
-                genre_Racing: req.body.genre_Racing === 'on',
-                genre_Indie: req.body.genre_Indie === 'on',
-                genre_Shooters: req.body.genre_Shooters === 'on',
-                genre_OpenWorld: req.body.genre_OpenWorld === 'on',
-            },
+            genre: Array.isArray(req.body.genre)? req.body.genre: [req.body.genre].filter(Boolean),
 
             reviews: []
         };
 
-        await catalog.addGame(game_create,
-            {$push: {gamemod: game_create.gamemod}},
-            {$push: {platform: game_create.platform}},
-            {$push: {genre: game_create.genre}});
+        await catalog.addGame(game_create);
 
         res.render('Success', {
             _id: game_create._id.toString(),
@@ -328,6 +295,14 @@ router.get('/game/:id', async (req, res) => {
     game.stars = calcRating(game.rating);
     
     res.render('game', game);
+});
+
+router.get('/editgame', async (req, res) => {
+
+    res.render('CreateGame_editor', {
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/game/:id/review/:_id/image', async (req, res) => {

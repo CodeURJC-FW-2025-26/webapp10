@@ -50,17 +50,17 @@
 
                     <!-- Row for the "buttons" -->
                     <div class="row mb-4" id="form_buttons">
-                        <!-- "Button" to cancel the form and return to the main page -->
+                        <!-- "Button" to return to the main page -->
                         <a href="/" class="btn revbtn col-sm-3">
                             <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
                             Volver a la página principal
                         </a>
 
-                            <!-- "Button" to complete the form and submit the data -->
-                            <a href="/game/{{game._id}}" class="btn revbtn col-sm-3">
-                                <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
-                                Ver página de detalle del videojuego
-                            </a>                      
+                        <!-- "Button" to view the details of the created game -->
+                        <a href="/game/{{_id}}" class="btn revbtn col-sm-3">
+                            <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
+                            Ver página de detalle del videojuego
+                        </a>
                     </div>
                 </main>
             </div>
