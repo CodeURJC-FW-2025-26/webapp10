@@ -43,12 +43,12 @@
                             {{#games}}
                             <li class="game-card col-12 col-sm-6 col-lg-3 mb-3">
 
-                                <div class="game-title">{{videogame_name}}</div>
-                                {{#videogame_image}}
+                                <div class="game-title">{{title}}</div>
+                                {{#imageFilename}}
                                 <a href="/game/{{_id}}"><img class="game-image" src="/game/{{_id}}/image" alt="MC"
                                         width="150px" height="200px"></a>
-                                {{/videogame_image}}
-                                <div class="game-price">{{videogame_cost}}€</div>
+                                {{/imageFilename}}
+                                <div class="game-price">{{price}}€</div>
                                 <div class="rating-stars">
                                     <!-- Full stars -->
                                     {{#stars.starFull}}

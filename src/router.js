@@ -132,8 +132,8 @@ router.get('/game/:id/delete', async (req, res) => {
 
     let game = await catalog.deleteGame(req.params.id);
 
-    if (game && game.videogame_image) {
-        await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.videogame_image);
+    if (game && game.imageFilename) {
+        await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
     }
 
     res.render('deleted', {
@@ -146,23 +146,23 @@ router.get('/game/:id/image', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    res.download(catalog.UPLOADS_FOLDER + '/' + game.videogame_image);
+    res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
 
 });
 
-router.post('/game/create', upload.single('videogame_image'), async (req, res) => {
+router.post('/game/create', upload.single('imageFilename'), async (req, res) => {
 
     const errors = [];
 
     // 1. Required fields
     const requiredFields = [
-        "videogame_name",
-        "videogame_description",
-        "videogame_short_description",
-        "videogame_developer",
-        "videogame_editor",
-        "videogame_cost",
-        "videogame_release_date",
+        "title",
+        "description",
+        "short_description",
+        "developer",
+        "editor",
+        "price",
+        "release_date",
         "age_classification",
         "rating"
     ];
@@ -177,19 +177,19 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
         errors.push("La imagen es obligatoria.");
     };
 
-    // 2. videogame_name starts with capital letter
-    if (req.body.videogame_name && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.videogame_name.trim())) {
+    // 2. title starts with capital letter
+    if (req.body.title && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.title.trim())) {
         errors.push("El nombre del videojuego debe comenzar con mayúscula.");
     };
 
-    // 3. Validate videogame_release_date format
-    const date = new Date(req.body.videogame_release_date);
+    // 3. Validate release_date format
+    const date = new Date(req.body.release_date);
     if (isNaN(date.getTime())) {
         errors.push("La fecha de lanzamiento no es válida.");
     };
 
     // 4. Validate number in range (cost 0 to 1000)
-    const cost = Number(req.body.videogame_cost);
+    const cost = Number(req.body.price);
     if (isNaN(cost) || cost < 0 || cost > 1000) {
         errors.push("El coste debe ser un número entre 0 y 1000.");
     };
@@ -201,19 +201,19 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
     };
 
     // 6. The descriptions size is adequate
-    if (req.body.videogame_description) {
-        if (req.body.videogame_description.length < 250 || req.body.videogame_description.length > 1500) {
+    if (req.body.description) {
+        if (req.body.description.length < 250 || req.body.description.length > 1500) {
             errors.push("La descripción debe tener entre 250 y 1500 caracteres.");
         }
     };
-    if (req.body.videogame_short_description) {
-        if (req.body.videogame_short_description.length < 100 || req.body.videogame_short_description.length > 500) {
+    if (req.body.short_description) {
+        if (req.body.short_description.length < 100 || req.body.short_description.length > 500) {
             errors.push("La descripción corta debe tener entre 100 y 500 caracteres.");
         }
     };
 
-    // 7. Validate that the videogame_name is NOT repeated
-    const existing = await catalog.findGameByName(req.body.videogame_name.trim());
+    // 7. Validate that the title is NOT repeated
+    const existing = await catalog.findGameByName(req.body.title.trim());
     if (existing) {
         errors.push("Ya existe un videojuego con ese nombre.");
     };
@@ -228,23 +228,23 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
         // ---------------------------
         // If there are no errors: Create game
         let game_create = {
-            videogame_name: req.body.videogame_name,
+            title: req.body.title,
 
-            videogame_description: req.body.videogame_description,
+            description: req.body.description,
 
-            videogame_short_description: req.body.videogame_short_description,
+            short_description: req.body.short_description,
 
-            videogame_developer: req.body.videogame_developer,
+            developer: req.body.developer,
 
-            videogame_editor: req.body.videogame_editor,
+            editor: req.body.editor,
 
-            videogame_image: req.file?.filename,
+            imageFilename: req.file?.filename,
 
-            videogame_cost: req.body.videogame_cost,
+            price: req.body.price,
 
-            videogame_release_date: req.body.videogame_release_date,
+            release_date: req.body.release_date,
 
-            videogame_platforms: {
+            platforms: {
                 platform_PlayStation: req.body.platform_PlayStation === 'on',
                 platform_Xbox: req.body.platform_Xbox === 'on',
                 platform_Nintendo: req.body.platform_Nintendo === 'on',
@@ -254,7 +254,7 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
                 platform_Arcade: req.body.platform_Arcade === 'on',
             },
 
-            videogame_modes: {
+            modes: {
                 mode_SinglePlayer: req.body.mode_SinglePlayer === 'on',
                 mode_MultiPlayer: req.body.mode_MultiPlayer === 'on',
                 mode_Cooperative: req.body.mode_Cooperative === 'on',
@@ -267,7 +267,7 @@ router.post('/game/create', upload.single('videogame_image'), async (req, res) =
 
             rating: req.body.rating,
 
-            videogame_genres: {
+            genres: {
                 genre_Survival: req.body.genre_Survival === 'on',
                 genre_ActionAdventure: req.body.genre_ActionAdventure === 'on',
                 genre_Strategy: req.body.genre_Strategy === 'on',
@@ -310,7 +310,7 @@ router.get('/image', (req, res) => {
     res.download('uploads/' + filename);
 });
 
-// Function to turn the videogame_platforms object into an array of selected platform names
+// Function to turn the platforms object into an array of selected platform names
 function getSelectedPlatforms(platforms) {
     const labels = {
         platform_PlayStation: "PlayStation",
@@ -327,7 +327,7 @@ function getSelectedPlatforms(platforms) {
         .map(key => labels[key]);        // Convert key into readable text
 };
 
-// Function to turn the videogame_modes object into an array of selected mode names
+// Function to turn the modes object into an array of selected mode names
 function getSelectedModes(modes) {
     const labels = {
         mode_SinglePlayer: "Solitario",
@@ -343,7 +343,7 @@ function getSelectedModes(modes) {
         .map(key => labels[key]);        // Convert key into readable text
 };
 
-// Function to turn the videogame_genres object into an array of selected genre names
+// Function to turn the genres object into an array of selected genre names
 function getSelectedGenres(genres) {
     const labels = {
         genre_Survival: "Supervivencia",
@@ -371,12 +371,12 @@ router.get('/game/:id', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    // Transforms videogame_platforms into an array of names
-    game.videogame_platforms = getSelectedPlatforms(game.videogame_platforms);
-    // Transforms videogame_modes into an array of names
-    game.videogame_modes = getSelectedModes(game.videogame_modes);
-    // Transforms videogame_genres into an array of names
-    game.videogame_genres = getSelectedGenres(game.videogame_genres);
+    // Transforms platforms into an array of names
+    game.platforms = getSelectedPlatforms(game.platforms);
+    // Transforms modes into an array of names
+    game.modes = getSelectedModes(game.modes);
+    // Transforms genres into an array of names
+    game.genres = getSelectedGenres(game.genres);
 
     game.reviews = game.reviews.map(review => { // Map over each game to add stars property
         return {
