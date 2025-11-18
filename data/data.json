@@ -168,56 +168,5 @@
         "short_description": "",
         "description": "",
         "reviews": []
-    }, 
-
-    {   
-        "title": "M1",
-        "price": "69.99",
-        "rating": "4",
-        "imageFilename": "Fifa-poster.jpg",
-        "developer": "Electronic Arts",
-        "editor": "Electronic Arts",
-        "release_date": "27 de septiembre de 2024",
-        "gamemod": [],
-        "age_classification": "3",
-        "genre": [],
-        "platform": ["Play Station"],
-        "short_description": "",
-        "description": "",
-        "reviews": []
-    }, 
-
-    {   
-        "title": "M2",
-        "price": "69.99",
-        "rating": "4",
-        "imageFilename": "Fifa-poster.jpg",
-        "developer": "Electronic Arts",
-        "editor": "Electronic Arts",
-        "release_date": "27 de septiembre de 2024",
-        "gamemod": [],
-        "age_classification": "3",
-        "genre": [],
-        "platform": ["Play Station"],
-        "short_description": "",
-        "description": "",
-        "reviews": []
-    }, 
-
-    {   
-        "title": "M3",
-        "price": "69.99",
-        "rating": "4",
-        "imageFilename": "Fifa-poster.jpg",
-        "developer": "Electronic Arts",
-        "editor": "Electronic Arts",
-        "release_date": "27 de septiembre de 2024",
-        "gamemod": [],
-        "age_classification": "3",
-        "genre": [],
-        "platform": ["Play Station"],
-        "short_description": "",
-        "description": "",
-        "reviews": []
     }
 ]
