@@ -35,7 +35,8 @@ Attributes:
 * username
 * comment
 * date
-* ratingimageFilename
+* rating
+* imageFilename
 
 
 ### Images
