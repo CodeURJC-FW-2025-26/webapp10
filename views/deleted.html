@@ -39,32 +39,29 @@
             <div class="col-12 col-lg-10 md-10">
                 <main class="content">
                     {{#game_deleted}}
-                        <h1>Videojuego borrado del catálogo con éxito</h1>
-                        <h5>El juego ha sido borrado correctamente.</h5>
+                    <h1>Videojuego borrado del catálogo con éxito</h1>
+                    <h5>El juego ha sido borrado correctamente.</h5>
                     {{/game_deleted}}
 
                     {{^game_deleted}}
-                        <h1>Reseña borrada con éxito</h1>
-                        <h5>La reseña ha sido borrada correctamente.</h5>
+                    <h1>Reseña borrada con éxito</h1>
+                    <h5>La reseña ha sido borrada correctamente.</h5>
                     {{/game_deleted}}
 
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+
 
                     <!-- Row for the "buttons" -->
                     <div class="row mb-4" id="form_buttons">
                         <!-- "Button" to cancel the form and return to the main page -->
-                        <a href="/game/{{game._id}}" class="btn col-sm-3">
+                        <a href="/" class="btn revbtn col-sm-3">
                             <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
-                            Volver a la página de detalle
+                            Volver a la página principal
+                        </a>
+
+                        <!-- "Button" to complete the form and submit the data -->
+                        <a href="/game/{{game._id}}" class="btn revbtn col-sm-3">
+                            <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
+                            Ver página de detalle del videojuego
                         </a>
                     </div>
                 </main>
