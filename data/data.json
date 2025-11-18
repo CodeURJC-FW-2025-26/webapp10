@@ -46,15 +46,15 @@
         "reviews":
         [
             {
-                "_id":1,
+                
                 "username": "PVilla",
                 "comment": "Minecraft es un juego increíblemente versátil que permite a los jugadores expresar su creatividad de maneras infinitas. La libertad para construir, explorar y crear en un mundo generado por bloques es simplemente fascinante. Además, la comunidad activa y la posibilidad de jugar con amigos hacen que la experiencia sea aún más divertida. Sin duda, Minecraft es un juego que ha dejado una huella imborrable en la industria de los videojuegos.",
                 "date": "18/01/18",
                 "rating": "4.5",
                 "imageFilename": "minecraft_2.jpg"
             },
+            
             {
-                "_id":2,
                 "username": "Minicrack",
                 "comment": "Minecraft es mucho más que un simple juego; es una plataforma para la imaginación y la colaboración. La capacidad de construir estructuras impresionantes, explorar vastos mundos y participar en aventuras emocionantes lo convierte en una experiencia única. Además, la comunidad creativa que rodea al juego ofrece una gran cantidad de contenido adicional, desde mods hasta mapas personalizados. Minecraft es un juego que nunca deja de sorprender y entretener.",
                 "date": "10/06/24",
