@@ -11,9 +11,9 @@ const games = db.collection('games');
 
 export const UPLOADS_FOLDER = './uploads';
 
-export async function addGame(game) {
+export async function addGame(query, update) {
 
-    return await games.insertOne(game);
+    return await games.insertOne(query, update);
 }
 
 export async function findGame(filter) {

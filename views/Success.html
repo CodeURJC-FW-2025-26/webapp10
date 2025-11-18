@@ -48,32 +48,19 @@
                         <h5>Tu reseña ha sido registrada correctamente. Gracias por compartir tu opinión.</h5>
                     {{/new_game_added}}
 
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-
                     <!-- Row for the "buttons" -->
                     <div class="row mb-4" id="form_buttons">
                         <!-- "Button" to cancel the form and return to the main page -->
-                        <a href="/" class="btn col-sm-3">
+                        <a href="/" class="btn revbtn col-sm-3">
                             <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
                             Volver a la página principal
                         </a>
 
-                        {{#new_game_added}}
                             <!-- "Button" to complete the form and submit the data -->
-                            <a href="/game/{{_id}}" class="btn col-sm-3">
+                            <a href="/game/{{game._id}}" class="btn revbtn col-sm-3">
                                 <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
                                 Ver página de detalle del videojuego
-                            </a>
-                        {{/new_game_added}}
+                            </a>                      
                     </div>
                 </main>
             </div>

@@ -26,7 +26,7 @@ const allGenres = [
 ];
 
 const allPlatforms = [
-    { value: 'PCs', icon: 'bi-windows', color: 'text-primary', display: 'PC', useClass: true },
+    { value: 'PC', icon: 'bi-windows', color: 'text-primary', display: 'PCs', useClass: true },
     { value: 'Play Station', icon: 'bi-playstation', color: 'text-info', display: 'PlayStation', useClass: true },
     { value: 'XBox', icon: 'bi-xbox', color: 'text-success', display: 'Xbox', useClass: true },
     { value: 'Nintendo', icon: 'bi-nintendo-switch', color: 'text-danger', display: 'Nintendo', useClass: true },
@@ -245,7 +245,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
             release_date: req.body.release_date,
 
-            platforms: {
+            platform: {
                 platform_PlayStation: req.body.platform_PlayStation === 'on',
                 platform_Xbox: req.body.platform_Xbox === 'on',
                 platform_Nintendo: req.body.platform_Nintendo === 'on',
@@ -255,7 +255,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
                 platform_Arcade: req.body.platform_Arcade === 'on',
             },
 
-            modes: {
+            gamemod: {
                 mode_SinglePlayer: req.body.mode_SinglePlayer === 'on',
                 mode_MultiPlayer: req.body.mode_MultiPlayer === 'on',
                 mode_Cooperative: req.body.mode_Cooperative === 'on',
@@ -268,7 +268,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
             rating: req.body.rating,
 
-            genres: {
+            genre: {
                 genre_Survival: req.body.genre_Survival === 'on',
                 genre_ActionAdventure: req.body.genre_ActionAdventure === 'on',
                 genre_Strategy: req.body.genre_Strategy === 'on',
@@ -287,11 +287,13 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
             reviews: []
         };
-    
-        await catalog.addGame(game_create);
+
+        await catalog.addGame(game_create,
+            {$push: {gamemod: game_create.gamemod}},
+            {$push: {platform: game_create.platform}},
+            {$push: {genre: game_create.genre}});
 
         res.render('Success', {
-        
             _id: game_create._id.toString(),
             new_game_added: true,
             genres: allGenres.map(g => ({ ...g, active: false })),
@@ -311,73 +313,9 @@ router.get('/image', (req, res) => {
     res.download('uploads/' + filename);
 });
 
-// Function to turn the platforms object into an array of selected platform names
-function getSelectedPlatforms(platforms) {
-    const labels = {
-        platform_PlayStation: "PlayStation",
-        platform_Xbox: "Xbox",
-        platform_Nintendo: "Nintendo",
-        platform_PCs: "PCs",
-        platform_Mobiles: "Móviles",
-        platform_VR: "Realidad Virtual (VR)",
-        platform_Arcade: "Máquinas Arcade"
-    };
-
-    return Object.keys(platforms)
-        .filter(key => platforms[key])   // What platforms are marked (true)
-        .map(key => labels[key]);        // Convert key into readable text
-};
-
-// Function to turn the modes object into an array of selected mode names
-function getSelectedModes(modes) {
-    const labels = {
-        mode_SinglePlayer: "Solitario",
-        mode_MultiPlayer: "Multijugador",
-        mode_Cooperative: "Cooperativo",
-        mode_Competitive: "Competitivo",
-        mode_Practice: "Práctica",
-        mode_Story: "Historia"
-    };
-
-    return Object.keys(modes)
-        .filter(key => modes[key])   // What modes are marked (true)
-        .map(key => labels[key]);        // Convert key into readable text
-};
-
-// Function to turn the genres object into an array of selected genre names
-function getSelectedGenres(genres) {
-    const labels = {
-        genre_Survival: "Supervivencia",
-        genre_ActionAdventure: "Acción/Aventura",
-        genre_Strategy: "Estrategia",
-        genre_Sandbox: "Sandbox",
-        genre_Sports: "Deportes",
-        genre_Simulation: "Simulación",
-        genre_Puzzle: "Puzzle",
-        genre_RPG: "RPG",
-        genre_Horror: "Horror",
-        genre_BattleRoyale: "Battle Royale",
-        genre_Racing: "Carreras",
-        genre_Indie: "Indie",
-        genre_Shooters: "Shooters",
-        genre_OpenWorld: "Mundo Abierto"
-    };
-
-    return Object.keys(genres)
-        .filter(key => genres[key])   // What genres are marked (true)
-        .map(key => labels[key]);        // Convert key into readable text
-};
-
 router.get('/game/:id', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
-
-    // Transforms platforms into an array of names
-    game.platforms = getSelectedPlatforms(game.platforms);
-    // Transforms modes into an array of names
-    game.modes = getSelectedModes(game.modes);
-    // Transforms genres into an array of names
-    game.genres = getSelectedGenres(game.genres);
 
     game.reviews = game.reviews.map(review => { // Map over each game to add stars property
         return {
@@ -405,6 +343,7 @@ router.get('/game/:id/review/:_id/image', async (req, res) => {
 
 router.post('/game/:id/review/create', upload.single('imageFilename'), async (req, res) => {
 
+    let game = await catalog.getGame(req.params.id);
     let game_id = req.params.id;
     let review_create = {
         _id: new ObjectId(),
@@ -416,7 +355,7 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
     };
 
     await catalog.addreview({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
-    res.render('Success', { new_game_added: false });
+    res.render('Success', { new_game_added: false, game });
 });
 
 router.post('/game/:id/review/delete', async (req, res) => {
@@ -426,7 +365,9 @@ router.post('/game/:id/review/delete', async (req, res) => {
 
     await catalog.deletereview({ _id: new ObjectId (game_id) }, {$pull: {reviews: {_id: new ObjectId (review_id)}}});
 
-    res.render('deleted', { game_deleted: false });
+    let game = await catalog.getGame(game_id);
+
+    res.render('deleted', { game_deleted: false, game });
 });
 
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
