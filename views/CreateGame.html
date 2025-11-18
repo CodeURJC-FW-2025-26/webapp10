@@ -42,73 +42,73 @@
 
                         <!-- Row for the videogame name -->
                         <div class="row mb-4">
-                            <label for="videogame_name" class="col-sm-3 col-form-label">Nombre del videojuego:</label>
+                            <label for="title" class="col-sm-3 col-form-label">Nombre del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="videogame_name" name="videogame_name" class="form-control" placeholder="Debe comenzar con mayúscula" required>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="Debe comenzar con mayúscula" required>
                             </div>
                         </div>
 
                         <!-- Row for the videogame description -->
                         <div class="row mb-4">
-                            <label for="videogame_description" class="col-sm-3 col-form-label">Descripción del videojuego:</label>
+                            <label for="description" class="col-sm-3 col-form-label">Descripción del videojuego:</label>
                             <div class="col-sm-9">
-                                <textarea id="videogame_description" name="videogame_description" class="form-control" rows="4" placeholder="Mínimo de caracteres: 250. Máximo de caracteres: 1500." minlength="250" maxlength="1500" required></textarea>
+                                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Mínimo de caracteres: 250. Máximo de caracteres: 1500." minlength="250" maxlength="1500" required></textarea>
                             </div>
                         </div>
 
                         <!-- Row for the videogame short description -->
                         <div class="row mb-4">
-                            <label for="videogame_short_description" class="col-sm-3 col-form-label">Descripción corta del videojuego:</label>
+                            <label for="short_description" class="col-sm-3 col-form-label">Descripción corta del videojuego:</label>
                             <div class="col-sm-9">
-                                <textarea id="videogame_short_description" name="videogame_short_description" class="form-control" rows="3" placeholder="Mínimo de caracteres: 100. Máximo de caracteres: 500." minlength="100" maxlength="500" required></textarea>
+                                <textarea id="short_description" name="short_description" class="form-control" rows="3" placeholder="Mínimo de caracteres: 100. Máximo de caracteres: 500." minlength="100" maxlength="500" required></textarea>
                             </div>
                         </div>
 
                         <!-- Row for the videogame developer -->
                         <div class="row mb-4">
-                            <label for="videogame_developer" class="col-sm-3 col-form-label">Desarrollador del videojuego:</label>
+                            <label for="developer" class="col-sm-3 col-form-label">Desarrollador del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="videogame_developer" name="videogame_developer" class="form-control" placeholder="Desarrollador" required>
+                                <input type="text" id="developer" name="developer" class="form-control" placeholder="Desarrollador" required>
                             </div>
                         </div>
 
                         <!-- Row for the videogame editor -->
                         <div class="row mb-4">
-                            <label for="videogame_editor" class="col-sm-3 col-form-label">Editor del videojuego:</label>
+                            <label for="editor" class="col-sm-3 col-form-label">Editor del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="videogame_editor" name="videogame_editor" class="form-control" placeholder="Editor" required>
+                                <input type="text" id="editor" name="editor" class="form-control" placeholder="Editor" required>
                             </div>
                         </div>
 
                         <!-- Row for the videogame image -->
                         <div class="row mb-4">
-                            <label for="videogame_image" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
+                            <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="file" id="videogame_image" name="videogame_image" class="form-control" accept="image/*" required>
+                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*" required>
                             </div>
                         </div>
 
                         <!-- Row for the videogame cost -->
                         <div class="row mb-4">
-                            <label for="videogame_cost" class="col-sm-3 col-form-label">Coste del videojuego:</label>
+                            <label for="price" class="col-sm-3 col-form-label">Coste del videojuego:</label>
                             <div class="col-sm-2">
-                                <input type="number" id="videogame_cost" name="videogame_cost" min="0" max="1000" step="1" class="form-control" placeholder="Coste en €" required>
+                                <input type="number" id="price" name="price" min="0" max="1000" step="1" class="form-control" placeholder="Coste en €" required>
                             </div>
-                            <label for="videogame_cost" class="col-sm-1 col-form-label">€</label>
+                            <label for="price" class="col-sm-1 col-form-label">€</label>
                         </div>
 
                         <!-- Row for the videogame release date -->
                         <div class="row mb-4">
-                            <label for="videogame_release_date" class="col-sm-3 col-form-label">Fecha de lanzamiento del videojuego:</label>
+                            <label for="release_date" class="col-sm-3 col-form-label">Fecha de lanzamiento del videojuego:</label>
                             <div class="col-sm-3">
-                                <input type="date" id="videogame_release_date" name="videogame_release_date" class="form-control" required>
+                                <input type="date" id="release_date" name="release_date" class="form-control" required>
                             </div>
                         </div>
 
                         <!-- Row for the videogame platforms -->
                         <div class="row mb-4">
-                            <label for="videogame_platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
-                            <div id="videogame_platforms" class="col-sm-9">
+                            <label for="platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
+                            <div id="platforms" class="col-sm-9">
                                 <!-- Checkbox for PlayStation platform -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="platform_PlayStation" name="platform_PlayStation">
@@ -169,8 +169,8 @@
 
                         <!-- Row for the videogame modes -->
                         <div class="row mb-4">
-                            <label for="videogame_modes" class="col-sm-3 col-form-label">Modos de juego disponibles:</label>
-                            <div id="videogame_modes" class="col-sm-9">
+                            <label for="modes" class="col-sm-3 col-form-label">Modos de juego disponibles:</label>
+                            <div id="modes" class="col-sm-9">
                                 <!-- Checkbox for Single Player mode -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="mode_SinglePlayer" name="mode_SinglePlayer">
@@ -242,10 +242,10 @@
                             </div>
                         </div>
 
-                        <!-- Row for the videogame videogame_genres -->
+                        <!-- Row for the videogame genres -->
                         <div class="row mb-4">
-                            <label for="videogame_genres" class="col-sm-3 col-form-label">Género/s principales del videojuego:</label>
-                            <div id="videogame_genres" class="col-sm-9">
+                            <label for="genres" class="col-sm-3 col-form-label">Género/s principales del videojuego:</label>
+                            <div id="genres" class="col-sm-9">
                                 <!-- Checkbox for Survival genre -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="genre_Survival" name="genre_Survival">

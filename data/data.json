@@ -1,12 +1,12 @@
 [
     {   
-        "videogame_name": "Minecraft",
-        "videogame_cost": "26.95",
+        "title": "Minecraft",
+        "price": "26.95",
         "rating": "5",
-        "videogame_developer": "Mojang Studios",
-        "videogame_editor": "Mojang Studios, Xbox Game Studios",
-        "videogame_release_date": "18 de noviembre de 2011",
-        "videogame_modes": {
+        "developer": "Mojang Studios",
+        "editor": "Mojang Studios, Xbox Game Studios",
+        "release_date": "18 de noviembre de 2011",
+        "modes": {
             "mode_SinglePlayer": true,
             "mode_MultiPlayer": true,
             "mode_Cooperative": false,
@@ -15,7 +15,7 @@
             "mode_Story": false
         },
         "age_classification": "7",
-        "videogame_genres": {
+        "genres": {
             "genre_Survival": true,
             "genre_ActionAdventure": true,
             "genre_Strategy": false,
@@ -29,9 +29,9 @@
             "genre_Racing": false,
             "genre_Indie": false,
             "genre_Shooters": false,
-            "genre_OpenWorld": false
+            "genre_OpenWorld": true
         },
-        "videogame_platforms": {
+        "platforms": {
             "platform_PlayStation": true,
             "platform_Xbox": true,
             "platform_Nintendo": true,
@@ -40,9 +40,9 @@
             "platform_VR": false,
             "platform_Arcade": false
         },
-        "videogame_image": "Minecraft-poster.webp",
-        "videogame_short_description": "Crea todo lo que puedas imaginar, descubre misterios espeluznantes y sobrevive a la noche en el juego de aventura tipo sandbox definitivo. En Minecraft, cada partida es diferente y te esperan aventuras inolvidables a la vuelta de la esquina. Explora y crea tu camino a un mundo infinito al que le puedes dar forma bloque a bloque.",
-        "videogame_description": "Minecraft es un juego de mundo abierto, y no tiene un fin claramente definido (aunque sí que tiene una dimensión llamada a sí misma 'The End', o en español 'El Final' en donde después de entrar y matar a la dragona aparecen los créditos del juego y un poema). Esto permite una gran libertad en cuanto a la elección de su forma de jugar. A pesar de ello, el juego posee un sistema que otorga logros por completar ciertas acciones. La cámara es en primera persona, aunque los jugadores tienen la posibilidad de cambiarla a una perspectiva de tercera persona en cualquier momento.El jugador tiene la libertad de definir la dificultad del juego, siendo el modo más tranquilo el pacífico, que a diferencia de las demás dificultades, no permite que aparezcan monstruos en el juego que puedan herir al jugador.",
+        "imageFilename": "Minecraft-poster.webp",
+        "short_description": "Crea todo lo que puedas imaginar, descubre misterios espeluznantes y sobrevive a la noche en el juego de aventura tipo sandbox definitivo. En Minecraft, cada partida es diferente y te esperan aventuras inolvidables a la vuelta de la esquina. Explora y crea tu camino a un mundo infinito al que le puedes dar forma bloque a bloque.",
+        "description": "Minecraft es un juego de mundo abierto, y no tiene un fin claramente definido (aunque sí que tiene una dimensión llamada a sí misma 'The End', o en español 'El Final' en donde después de entrar y matar a la dragona aparecen los créditos del juego y un poema). Esto permite una gran libertad en cuanto a la elección de su forma de jugar. A pesar de ello, el juego posee un sistema que otorga logros por completar ciertas acciones. La cámara es en primera persona, aunque los jugadores tienen la posibilidad de cambiarla a una perspectiva de tercera persona en cualquier momento.El jugador tiene la libertad de definir la dificultad del juego, siendo el modo más tranquilo el pacífico, que a diferencia de las demás dificultades, no permite que aparezcan monstruos en el juego que puedan herir al jugador.",
         "reviews":
         [
             {
@@ -63,52 +63,380 @@
             }
         ]
     },
+
     {   
-        "videogame_name": "The Legend of Zelda",
-        "videogame_cost": "8.99",
+        "title": "The Legend of Zelda",
+        "price": "8.99",
         "rating": "4.5",
-        "videogame_image": "Zelda-poster.png"        
+        "imageFilename": "Zelda-poster.png",
+        "developer": "Nintendo Entertainment Planning & Development",
+        "editor": "Nintendo Entertainment Planning & Development",
+        "release_date": "3 de marzo de 2017",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": false,
+            "mode_Cooperative": false,
+            "mode_Competitive": false,
+            "mode_Practice": false,
+            "mode_Story": true
+        },
+        "age_classification": "12",
+        "genres": {
+            "genre_Survival": true,
+            "genre_ActionAdventure": true,
+            "genre_Strategy": true,
+            "genre_Sandbox": false,
+            "genre_Sports": false,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": true
+        },
+        "platforms": {
+            "platform_PlayStation": false,
+            "platform_Xbox": false,
+            "platform_Nintendo": true,
+            "platform_PCs": false,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "Super Mario Bros",
-        "videogame_cost": "24.95",
+        "title": "Super Mario Bros",
+        "price": "24.95",
         "rating": "4",
-        "videogame_image": "SuperMario-poster.jpg"
+        "imageFilename": "SuperMario-poster.jpg",
+        "developer": "Nintendo Entertainment Planning & Development",
+        "editor": "Nintendo Entertainment Planning & Development",
+        "release_date": "11 de enero de 2019",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": true,
+            "mode_Cooperative": true,
+            "mode_Competitive": false,
+            "mode_Practice": false,
+            "mode_Story": false
+        },
+        "age_classification": "3",
+        "genres": {
+            "genre_Survival": true,
+            "genre_ActionAdventure": true,
+            "genre_Strategy": false,
+            "genre_Sandbox": false,
+            "genre_Sports": false,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": false
+        },
+        "platforms": {
+            "platform_PlayStation": false,
+            "platform_Xbox": false,
+            "platform_Nintendo": true,
+            "platform_PCs": false,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "Animal Crossing",
-        "videogame_cost": "14.95",
+        "title": "Animal Crossing",
+        "price": "14.95",
         "rating": "4.5",
-        "videogame_image": "Animal Crossing-poster.webp"
+        "imageFilename": "Animal Crossing-poster.webp",
+        "developer": "Nintendo Entertainment Planning & Development",
+        "editor": "Nintendo Entertainment Planning & Development",
+        "release_date": "20 de marzo de 2020",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": false,
+            "mode_Cooperative": true,
+            "mode_Competitive": false,
+            "mode_Practice": false,
+            "mode_Story": true
+        },
+        "age_classification": "3",
+        "genres": {
+            "genre_Survival": false,
+            "genre_ActionAdventure": false,
+            "genre_Strategy": false,
+            "genre_Sandbox": true,
+            "genre_Sports": false,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": true
+        },
+        "platforms": {
+            "platform_PlayStation": false,
+            "platform_Xbox": false,
+            "platform_Nintendo": true,
+            "platform_PCs": false,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "Fortnite",
-        "videogame_cost": "GRATIS",
+        "title": "Fortnite",
+        "price": "GRATIS",
         "rating": "4.5",
-        "videogame_image": "Fortnite-poster.jpg"
+        "imageFilename": "Fortnite-poster.jpg",
+        "developer": "Epic Games",
+        "editor": "Epic Games",
+        "release_date": "26 de septiembre de 2017",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": true,
+            "mode_Cooperative": true,
+            "mode_Competitive": true,
+            "mode_Practice": false,
+            "mode_Story": false
+        },
+        "age_classification": "12",
+        "genres": {
+            "genre_Survival": true,
+            "genre_ActionAdventure": true,
+            "genre_Strategy": true,
+            "genre_Sandbox": false,
+            "genre_Sports": false,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": true,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": true,
+            "genre_OpenWorld": true
+        },
+        "platforms": {
+            "platform_PlayStation": true,
+            "platform_Xbox": true,
+            "platform_Nintendo": true,
+            "platform_PCs": true,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "Hollow Knight",
-        "videogame_cost": "12.95",
+        "title": "Hollow Knight",
+        "price": "12.95",
         "rating": "5",
-        "videogame_image": "Hollow-poster.png"
+        "imageFilename": "Hollow-poster.png",
+        "developer": "Team Cherry",
+        "editor": "Team Cherry",
+        "release_date": "24 de febrero de 2017",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": false,
+            "mode_Cooperative": false,
+            "mode_Competitive": false,
+            "mode_Practice": false,
+            "mode_Story": true
+        },
+        "age_classification": "7",
+        "genres": {
+            "genre_Survival": true,
+            "genre_ActionAdventure": true,
+            "genre_Strategy": false,
+            "genre_Sandbox": false,
+            "genre_Sports": false,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": true
+        },
+        "platforms": {
+            "platform_PlayStation": true,
+            "platform_Xbox": true,
+            "platform_Nintendo": true,
+            "platform_PCs": true,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "GTA V",
-        "videogame_cost": "19.99",
+        "title": "GTA V",
+        "price": "19.99",
         "rating": "5",
-        "videogame_image": "GTA-poster.png"
+        "imageFilename": "GTA-poster.png",
+        "developer": "Rockstar Games",
+        "editor": "Rockstar Games",
+        "release_date": "17 de septiembre de 2013",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": false,
+            "mode_Cooperative": false,
+            "mode_Competitive": true,
+            "mode_Practice": false,
+            "mode_Story": false
+        },
+        "age_classification": "18",
+        "genres": {
+            "genre_Survival": true,
+            "genre_ActionAdventure": true,
+            "genre_Strategy": true,
+            "genre_Sandbox": false,
+            "genre_Sports": false,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": true
+        },
+        "platforms": {
+            "platform_PlayStation": true,
+            "platform_Xbox": true,
+            "platform_Nintendo": false,
+            "platform_PCs": true,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "Sims",
-        "videogame_cost": "4.99",
+        "title": "Sims",
+        "price": "4.99",
         "rating": "3.5",
-        "videogame_image": "TheSims-poster.webp"
+        "imageFilename": "TheSims-poster.webp",
+        "developer": "Electronic Arts",
+        "editor": "Electronic Arts",
+        "release_date": "2 de septiembre de 2014",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": false,
+            "mode_Cooperative": false,
+            "mode_Competitive": false,
+            "mode_Practice": false,
+            "mode_Story": false
+        },
+        "age_classification": "12",
+        "genres": {
+            "genre_Survival": false,
+            "genre_ActionAdventure": false,
+            "genre_Strategy": false,
+            "genre_Sandbox": false,
+            "genre_Sports": false,
+            "genre_Simulation": true,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": false
+        },
+        "platforms": {
+            "platform_PlayStation": true,
+            "platform_Xbox": true,
+            "platform_Nintendo": false,
+            "platform_PCs": true,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     },
+
     {   
-        "videogame_name": "FIFA",
-        "videogame_cost": "69.99",
+        "title": "FIFA",
+        "price": "69.99",
         "rating": "4",
-        "videogame_image": "Fifa-poster.jpg"
+        "imageFilename": "Fifa-poster.jpg",
+        "developer": "Electronic Arts",
+        "editor": "Electronic Arts",
+        "release_date": "27 de septiembre de 2024",
+        "modes": {
+            "mode_SinglePlayer": true,
+            "mode_MultiPlayer": false,
+            "mode_Cooperative": false,
+            "mode_Competitive": true,
+            "mode_Practice": true,
+            "mode_Story": false
+        },
+        "age_classification": "3",
+        "genres": {
+            "genre_Survival": false,
+            "genre_ActionAdventure": false,
+            "genre_Strategy": false,
+            "genre_Sandbox": false,
+            "genre_Sports": true,
+            "genre_Simulation": false,
+            "genre_Puzzle": false,
+            "genre_RPG": false,
+            "genre_Horror": false,
+            "genre_BattleRoyale": false,
+            "genre_Racing": false,
+            "genre_Indie": false,
+            "genre_Shooters": false,
+            "genre_OpenWorld": false
+        },
+        "platforms": {
+            "platform_PlayStation": true,
+            "platform_Xbox": true,
+            "platform_Nintendo": false,
+            "platform_PCs": true,
+            "platform_Mobiles": false,
+            "platform_VR": false,
+            "platform_Arcade": false
+        },
+        "short_description": "",
+        "description": "",
+        "reviews": []
     }
 ]
