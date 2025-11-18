@@ -14,22 +14,29 @@
 #### Main entity (Videogame):
 Attributes:
 
-* id: Unique identifier 
-* name: Product name
-* short description: Product short description 
-* long description: Product description 
-* price: Product price 
-* characteristics: Product characteristics
-* information: Product information
+* title
+* price
+* rating
+* imageFilename
+* developer
+* editor
+* release_date
+* gamemods
+* age_classification
+* genres
+* platforms
+* short_description
+* description
+* reviews
 
 #### Secondary entity (Review):
 Attributes:
 
-* review_test: Review content 
-* rating: Score from 1 to 5 
-* author: Review author name 
-* review_date: Review date 
-* is_verified: Verified purchase flag 
+* username
+* comment
+* date
+* ratingimageFilename
+
 
 ### Images
 * Entities will have associated images:
