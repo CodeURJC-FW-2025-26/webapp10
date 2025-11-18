@@ -42,7 +42,7 @@
                         <h2>Editar Reseña</h2>
                         <br>
 
-                        <form action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
+                        <form action="/game/{{_id}}/review_editor/:_id/edit" method="POST" enctype="multipart/form-data" class="d-grid ">
                             <!-- Row for the user name -->
                             <div class="row mb-4">
                                 <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
@@ -78,7 +78,7 @@
                             
                             <!-- "Button" to finish the comment and submit the data -->
                             <div class="row mb-4">
-                                <input type="submit" value="Subir reseña" class="btn btn-primary">
+                                <input type="submit" value="Editar reseña" class="btn btn-primary">
                             </div>
                         </form>
                     </div>
