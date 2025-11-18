@@ -436,7 +436,7 @@ router.get('/game/:id/review_editor/:_id', async (req, res) => {
     res.render('review_editor', {game, review, game_id, _id: review_id});
 });
 
-router.post('/game/:id/review_editor/:_id/edit', async (req, res) => {
+router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'), async (req, res) => {
 
     let game_id = req.params.id;
     let review_id = req.params._id; 
@@ -449,14 +449,14 @@ router.post('/game/:id/review_editor/:_id/edit', async (req, res) => {
     let review_edit = {
         _id: new ObjectId(),
         username: req.body.user_name,
-        comment: req.body.comment,
+        comment: req.body.comment_description,
         rating: req.body.rating,
         date: new Date().toISOString().split('T')[0],
         videogame_image: req.file ? req.file.filename : game.reviews.find(r => r._id.toString() === review_id).videogame_image
     }; 
     console.log("review_editada:",review_edit);
 
-    await catalog.updatereview({ _id: new ObjectId (game_id), "reviews._id": new ObjectId (review_id) }, { $set: { "reviews.$": review_edit } });
+    await catalog.editreview({ _id: new ObjectId (game_id), "reviews._id": new ObjectId (review_id) }, { $set: { "reviews.$": review_edit } });
 
     res.render('Success', { new_game_added: false });
 });
