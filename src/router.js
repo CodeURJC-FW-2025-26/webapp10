@@ -403,6 +403,7 @@ router.get('/game/:id/review/:_id/image', async (req, res) => {
 
 router.post('/game/:id/review/create', upload.single('imageFilename'), async (req, res) => {
 
+    let game = await catalog.getGame(req.params.id);
     let game_id = req.params.id;
     let review_create = {
         _id: new ObjectId(),
@@ -414,7 +415,7 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
     };
     console.log("review_creada:",review_create);
     await catalog.addreview({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
-    res.render('Success', { new_game_added: false });
+    res.render('Success', { new_game_added: false, game });
 });
 
 router.post('/game/:id/review/delete', async (req, res) => {
@@ -424,7 +425,9 @@ router.post('/game/:id/review/delete', async (req, res) => {
 
     await catalog.deletereview({ _id: new ObjectId (game_id) }, {$pull: {reviews: {_id: new ObjectId (review_id)}}});
 
-    res.render('deleted', { game_deleted: false });
+    let game = await catalog.getGame(game_id);
+
+    res.render('deleted', { game_deleted: false, game });
 });
 
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
