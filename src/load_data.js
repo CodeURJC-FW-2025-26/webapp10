@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import * as catalog from './catalog.js';
+import { ObjectId } from 'mongodb';
 
 const UPLOADS_FOLDER = './uploads';
 const DATA_FOLDER = './data';
@@ -12,6 +13,10 @@ const games = JSON.parse(dataString);
 
 await catalog.deleteGames();
 for(let game of games){
+    for (let review of game.reviews){
+        review._id = new ObjectId();
+    }
+
     await catalog.addGame(game);
 }
 

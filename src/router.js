@@ -314,26 +314,28 @@ router.get('/image', (req, res) => {
 });
 
 router.get('/game/:id', async (req, res) => {
-
-    let game = await catalog.getGame(req.params.id);
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
 
     game.reviews = game.reviews.map(review => { // Map over each game to add stars property
         return {
             ...review, // Spread operator to copy existing properties
             stars: calcRating(review.rating), // Add stars property with calculated stars
-            game_id: req.params.id
+            game_id: game_id
         };
     });
 
     game.stars = calcRating(game.rating);
-    
+
     res.render('game', game);
 });
 
 router.get('/game/:id/review/:_id/image', async (req, res) => {
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
+    let review_id = req.params._id;
+    let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    let game = await catalog.getGame(req.params.id);
-    let review = game.reviews.find(r => r._id.toString() === req.params._id);
 
     res.download(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
 
@@ -351,7 +353,7 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         date: new Date().toISOString().split('T')[0],
         imageFilename: req.file ? req.file.filename : null
     };
-    console.log("review_creada:",review_create);
+
     await catalog.addreview({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
     res.render('Success', { new_game_added: false, game });
 });
@@ -373,7 +375,7 @@ router.get('/game/:id/review_editor/:_id', async (req, res) => {
     let game_id = req.params.id;
     let review_id = req.params._id; 
     let game = await catalog.getGame(game_id);
-    let review = game.reviews.find(r => r._id.toString() === review_id);
+    let review = game.reviews.find(r => r._id === review_id);
 
     res.render('review_editor', {game, review, game_id, _id: review_id});
 });
@@ -390,12 +392,13 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
 
     let review_edit = {
         _id: new ObjectId(),
-        username: req.body.user_name,
-        comment: req.body.comment_description,
-        rating: req.body.rating,
+        username: req.body ? req.body.user_name : review.username,
+        comment: req.body ? req.body.comment_description : review.comment,
+        rating: req.body ? req.body.rating : review.rating,
         date: new Date().toISOString().split('T')[0],
-        videogame_image: req.file ? req.file.filename : game.reviews.find(r => r._id.toString() === review_id).videogame_image
+        imageFilename: req.file ? req.file.filename : review.imageFilename
     }; 
+    
     console.log("review_editada:",review_edit);
 
     await catalog.editreview({ _id: new ObjectId (game_id), "reviews._id": new ObjectId (review_id) }, { $set: { "reviews.$": review_edit } });
