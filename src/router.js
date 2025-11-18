@@ -138,7 +138,8 @@ router.get('/game/:id/delete', async (req, res) => {
 
     res.render('deleted', {
         genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        platforms: allPlatforms.map(p => ({ ...p, active: false })),
+        game_deleted: true
     });
 });
 
@@ -423,7 +424,7 @@ router.post('/game/:id/review/delete', async (req, res) => {
 
     await catalog.deletereview({ _id: new ObjectId (game_id) }, {$pull: {reviews: {_id: new ObjectId (review_id)}}});
 
-    res.render('deleted');
+    res.render('deleted', { game_deleted: false });
 });
 
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
