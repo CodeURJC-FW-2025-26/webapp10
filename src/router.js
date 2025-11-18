@@ -8,7 +8,7 @@ export default router;
 
 const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
-const allgenre = [
+const allGenres = [
     { value: 'Shooters', icon: 'bi-bullseye', display: 'Shooters' },
     { value: 'Mundo Abierto', icon: 'bi-globe2', display: 'Mundo Abierto' },
     { value: 'Indie', icon: 'bi-heart-fill', display: 'Indie' },
@@ -25,8 +25,8 @@ const allgenre = [
     { value: 'Battle Royale', icon: 'bi-people', display: 'Battle Royale' }
 ];
 
-const allplatform = [
-    { value: 'PCs', icon: 'bi-windows', color: 'text-primary', display: 'PCs', useClass: true },
+const allPlatforms = [
+    { value: 'PC', icon: 'bi-windows', color: 'text-primary', display: 'PCs', useClass: true },
     { value: 'Play Station', icon: 'bi-playstation', color: 'text-info', display: 'PlayStation', useClass: true },
     { value: 'XBox', icon: 'bi-xbox', color: 'text-success', display: 'Xbox', useClass: true },
     { value: 'Nintendo', icon: 'bi-nintendo-switch', color: 'text-danger', display: 'Nintendo', useClass: true },
@@ -90,24 +90,24 @@ router.get('/', async (req, res) => {
         nextPage: numPage + 1,
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
-        genre: allgenre.map(g => ({ ...g, active: false })),
-        platform: allplatform.map(p => ({ ...p, active: false }))
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
 router.get('/creategame', async (req, res) => {
 
     res.render('CreateGame', {
-        genre: allgenre.map(g => ({ ...g, active: false })),
-        platform: allplatform.map(p => ({ ...p, active: false }))
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
 router.get('/success', async (req, res) => {
 
     res.render('Success', {
-        genre: allgenre.map(g => ({ ...g, active: false })),
-        platform: allplatform.map(p => ({ ...p, active: false }))
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 
     let game = await catalog.getGame(req.params.id);
@@ -123,8 +123,8 @@ router.get('/success', async (req, res) => {
 
     res.render('game', {
         game,
-        genre: allgenre.map(g => ({ ...g, active: false })),
-        platform: allplatform.map(p => ({ ...p, active: false }))
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
@@ -137,8 +137,8 @@ router.get('/game/:id/delete', async (req, res) => {
     }
 
     res.render('deleted', {
-        genre: allgenre.map(g => ({ ...g, active: false })),
-        platform: allplatform.map(p => ({ ...p, active: false })),
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false })),
         game_deleted: true
     });
 });
@@ -296,8 +296,8 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
         res.render('Success', {
             _id: game_create._id.toString(),
             new_game_added: true,
-            genre: allgenre.map(g => ({ ...g, active: false })),
-            platform: allplatform.map(p => ({ ...p, active: false }))
+            genres: allGenres.map(g => ({ ...g, active: false })),
+            platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
 
     };
@@ -436,8 +436,8 @@ router.post('/search', async (req, res) => {
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
         query: query,
-        genre: allgenre.map(g => ({ ...g, active: false })),
-        platform: allplatform.map(p => ({ ...p, active: false }))
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
@@ -478,11 +478,11 @@ router.get('/category', async (req, res) => {
         query: query,
         genre: genre,
         platform: platform,
-        genre: allgenre.map(g => ({
+        genres: allGenres.map(g => ({
             ...g,
             active: genre === g.value
         })),
-        platform: allplatform.map(p => ({
+        platforms: allPlatforms.map(p => ({
             ...p,
             active: platform === p.value
         })), 
