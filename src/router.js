@@ -139,7 +139,8 @@ router.get('/game/:id/delete', async (req, res) => {
     res.render('deleted', {
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false })),
-        game_deleted: true
+        game_deleted: true,
+        game_id: req.params.id
     });
 });
 
@@ -383,9 +384,12 @@ router.get('/game/:id/review_editor/:_id', async (req, res) => {
     let game_id = req.params.id;
     let review_id = req.params._id;
     let game = await catalog.getGame(game_id);
-    let review = game.reviews.find(r => r._id === review_id);
+    let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    res.render('review_editor', { game, review, game_id, _id: review_id });
+    res.render('review_editor', {
+        game, review, game_id, _id: review_id, genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'), async (req, res) => {
@@ -396,10 +400,8 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    console.log("review que entra en el editor:", review);
-
     let review_edit = {
-        _id: new ObjectId(),
+        _id: new ObjectId(review_id),
         username: req.body ? req.body.user_name : review.username,
         comment: req.body ? req.body.comment_description : review.comment,
         rating: req.body ? req.body.rating : review.rating,
@@ -407,11 +409,12 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         imageFilename: req.file ? req.file.filename : review.imageFilename
     };
 
-    console.log("review_editada:", review_edit);
-
     await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
-    res.render('Success', { new_game_added: false });
+    res.render('Success', { new_game_added: false, game_id, review_id, 
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+     });
 });
 
 router.get('/search', async (req, res) => {
@@ -447,8 +450,8 @@ router.get('/search', async (req, res) => {
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
         query: query,
-        activeGenre: "", 
-        activePlatform: "", 
+        activeGenre: "",
+        activePlatform: "",
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });

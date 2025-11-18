@@ -39,13 +39,14 @@
             <div class="col-12 col-lg-10 md-10">
                 <main class="content">
                     {{#new_game_added}}
-                        <h1>Videojuego añadido al catálogo con éxito</h1>
-                        <h5>Tu juego ha sido registrado correctamente. Puedes ver los detalles del juego creado a continuación:</h5>
+                    <h1>Videojuego añadido al catálogo con éxito</h1>
+                    <h5>Tu juego ha sido registrado correctamente. Puedes ver los detalles del juego creado a
+                        continuación:</h5>
                     {{/new_game_added}}
 
                     {{^new_game_added}}
-                        <h1>Reseña añadida con éxito</h1>
-                        <h5>Tu reseña ha sido registrada correctamente. Gracias por compartir tu opinión.</h5>
+                    <h1>Reseña añadida con éxito</h1>
+                    <h5>Tu reseña ha sido registrada correctamente. Gracias por compartir tu opinión.</h5>
                     {{/new_game_added}}
 
                     <!-- Row for the "buttons" -->
@@ -56,11 +57,11 @@
                             Volver a la página principal
                         </a>
 
-                            <!-- "Button" to complete the form and submit the data -->
-                            <a href="/game/{{game._id}}" class="btn revbtn col-sm-3">
-                                <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
-                                Ver página de detalle del videojuego
-                            </a>                      
+                        <!-- "Button" to complete the form and submit the data -->
+                        <a href="/game/{{game_id}}" class="btn revbtn col-sm-3">
+                            <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
+                            Ver página de detalle del videojuego
+                        </a>
                     </div>
                 </main>
             </div>
