@@ -59,29 +59,29 @@ Attributes:
 
 ### Capturas de la web
 #### Main page
-![](Fotos/screenshotmain1.png)
+![](/data/images/screenshotmain1.png)
 #####
-![](Fotos/screenshotmain2.png)
+![](/data/images/screenshotmain2.png)
 #####
-![](Fotos/screenshotmain3.png)
+![](/data/images/screenshotmain3.png)
 #####
-![](Fotos/screenshotmain4.png)
+![](/data/images/screenshotmain4.png)
 #####
-![](Fotos/screenshotmain5.png)
+![](/data/images/screenshotmain5.png)
 
 #### Detail page
-![](Fotos/screenshotsmc1.png)
+![](/data/images/screenshotsmc1.png)
 #####
-![](Fotos/screenshotsmc2.png)
+![](/data/images/screenshotsmc2.png)
 #####
-![](Fotos/screenshotsmc3.png)
+![](/data/images/screenshotsmc3.png)
 
 #### New element page
-![](Fotos/screenshotsmc4.png)
+![](/data/images/screenshotsmc4.png)
 #####
-![](Fotos/screenshotsmc5.png)
+![](/data/images/screenshotsmc5.png)
 #####
-![](Fotos/screenshotsmc6.png)
+![](/data/images/screenshotsmc6.png)
 
 ### History
 #### Paula De La Fuente
@@ -97,11 +97,11 @@ Attributes:
   5. [css comment](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/914076644557927efda24015338bfc7e5800d37a) 
  
 * 5 files most participated:
-  1. [Minecraft.html](./Minecraft.html)
-  2. [MoreForPlaying.css](./MoreForPlaying.css)
-  3. [MoreForPlaying.html](./MoreForPlaying.html)
+  1. [Minecraft.html](./views/game.html)
+  2. [MoreForPlaying.css](./public/MoreForPlaying.css)
+  3. [MoreForPlaying.html](./views/index.html)
   4. [Readme.md](#moreforplaying)
-  5. [CreateGame.html](./CreateGame.html)
+  5. [CreateGame.html](./views/CreateGame.html)
 
 #### Marcos Vidal 
 
@@ -116,15 +116,15 @@ Attributes:
   5. [Content scroll](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/7d4c91615e7f7b91ca4fe7feb3190e37a5878c26)
   
 * 5 files most participated:
-  1. [MoreForPlaying.html](./MoreForPlaying.html)
-  2. [MoreForPlaying.css](./MoreForPlaying.css)
+  1. [MoreForPlaying.html](./views/index.html)
+  2. [MoreForPlaying.css](./public/MoreForPlaying.css)
   3. [Readme.md](#moreforplaying)
-  4. [Minecraft.html](./Minecraft.html)
-  5. [CreateGame.html](./CreateGame.html)
+  4. [Minecraft.html](./views/game.html)
+  5. [CreateGame.html](./views/CreateGame.html)
 
 #### Fran García
 * Description of my tasks during the practice:
-  I was responsible for creating the forms on the website. I started with the [CreateGame.html](./CreateGame.html) file, as it was the longest and most complex one. Once I finished it, I moved on to the reviews form in the [Minecraft.html](./Minecraft.html) file. I also made several small improvements and adjustments to other files, and contributed ideas for the website’s design to enhance the overall appearance.
+  I was responsible for creating the forms on the website. I started with the [CreateGame.html](./views/CreateGame.html) file, as it was the longest and most complex one. Once I finished it, I moved on to the reviews form in the [Minecraft.html](./views/game.html) file. I also made several small improvements and adjustments to other files, and contributed ideas for the website’s design to enhance the overall appearance.
 
 * 5 best commits:
   1. [Add form file](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/259a680dd422c788c3bb64688aaa05487387b1eb)
@@ -134,10 +134,10 @@ Attributes:
   5. [Changed the Minecraft form to make it prettier](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/2dd0d319cb70b99070de850c2e3350ff56542274) 
   
 * 5 files most participated:
-  1. [CreateGame.html](./CreateGame.html)
-  2. [Minecraft.html](./Minecraft.html)
-  3. [MoreForPlaying.css](./MoreForPlaying.css)
-  4. [MoreForPlaying.html](./MoreForPlaying.html)
+  1. [CreateGame.html](./views/CreateGame.html)
+  2. [Minecraft.html](./views/game.html)
+  3. [MoreForPlaying.css](./public/MoreForPlaying.css)
+  4. [MoreForPlaying.html](./views/index.html)
   5. [README.md](#moreforplaying)
  
 
@@ -206,11 +206,11 @@ I was in charge of the details page: my job was to generalize the information on
   5. [id_bd](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/c4b72ad1788167a0b3f81bdefdfffb1457a790d5)
  
 * 5 files most participated:
-  1. [game.html](./game.html)
-  2. [review_editor.html](./review_editor.js)
-  3. [router.js](./router.js)
+  1. [game.html](./views/game.html)
+  2. [review_editor.html](./views/review_editor.js)
+  3. [router.js](./src/router.js)
   4. [Readme.md](#moreforplaying)
-  5. [data.json](./data.json)
+  5. [data.json](./data/data.json)
 
 #### Marcos Vidal 
 
