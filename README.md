@@ -139,4 +139,113 @@ Attributes:
   3. [MoreForPlaying.css](./MoreForPlaying.css)
   4. [MoreForPlaying.html](./MoreForPlaying.html)
   5. [README.md](#moreforplaying)
+ 
+
+
+## Practica 1
+
+
+###
+
+### Video de la web
+
+
+### Files description
+#### data.json
+It is the static database that is loaded when the web page starts
+
+#### app.js
+It is the central hub that brings together the Express framework, necessary external modules, and custom routing logic before finally launching the web server.
+
+#### catalog.js
+main data access module
+
+#### load_data.js
+Its main function is to initialize the application with demo data, ensuring that the system has base content each time it runs.
+
+#### router.js
+It manages the workflow of user requests, deciding what to do with them, how to interact with the data (via catalog.js), and what response to send (rendering views from views/).
+
+#### CreateGame.html
+It is the form to create a new game.
+
+#### deleted.html
+It is the page that indicates that a game or review has been deleted.
+
+#### Error.html
+This page indicates that the game has not been saved and shows the errors that were made during its creation.
+
+#### footer.html, header.html and sidebar.html
+Parts of the website common to all pages
+
+#### game.html
+general details page for all games created
+
+#### index.html
+Main page where the covers of all the games created are displayed
+
+#### review_editor.html
+Review editing form
+
+#### Success.html
+Page indicating that the review or game has been successfully saved
+
+
+
+### History
+#### Paula De La Fuente
+
+ * Description of my tasks during the practice:
+I was in charge of the details page: my job was to generalize the information on the details page, as well as implement the creation, deletion and editing of its reviews, working with game.html, editing the data.json and creating forms such as review_editor.
+
+* 5 best commits:
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+ 
+* 5 files most participated:
+  1. [game.html](./game.html)
+  2. [review_editor.html](./review_editor.js)
+  3. [router.js](./router.js)
+  4. [Readme.md](#moreforplaying)
+  5. [data.json](./data.json)
+
+#### Marcos Vidal 
+
+* Description of my tasks during the practice:
+
+
+* 5 best commits:
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+  
+* 5 files most participated:
+  1.
+  2. 
+  3. 
+  4. 
+  5. 
+
+#### Fran García
+* Description of my tasks during the practice:
+
+
+* 5 best commits:
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+
+* 5 files most participated:
+  1. 
+  2.
+  3.
+  4.
+  5.
   
