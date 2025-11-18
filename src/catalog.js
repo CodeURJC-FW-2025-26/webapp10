@@ -44,7 +44,7 @@ export async function addreview(query, update) {
     return await games.updateOne(query, update);
 }
 
-export async function deleteGame(id){
+export async function deleteGame(id) {
 
     return await games.findOneAndDelete({ _id: new ObjectId(id) });
 }
