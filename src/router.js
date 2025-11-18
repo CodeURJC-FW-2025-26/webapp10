@@ -139,7 +139,8 @@ router.get('/game/:id/delete', async (req, res) => {
     res.render('deleted', {
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false })),
-        game_deleted: true
+        game_deleted: true,
+        game_id: req.params.id
     });
 });
 
@@ -173,7 +174,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
             errors.push(`El campo "${field}" es obligatorio.`);
         }
     };
-    
+
     if (!req.file) {
         errors.push("La imagen es obligatoria.");
     };
@@ -274,27 +275,43 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 router.get('/image', (req, res) => {
     let filename = req.query.filename;
     // If filename has \ or / then path traversal attack is detected
-    if(/[\\/]/.test(filename)){
-    return res.status(400);
+    if (/[\\/]/.test(filename)) {
+        return res.status(400);
     }
     res.download('uploads/' + filename);
 });
 
 router.get('/game/:id', async (req, res) => {
-
-    let game = await catalog.getGame(req.params.id);
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
 
     game.reviews = game.reviews.map(review => { // Map over each game to add stars property
         return {
             ...review, // Spread operator to copy existing properties
             stars: calcRating(review.rating), // Add stars property with calculated stars
-            game_id: req.params.id
+            game_id: game_id
         };
     });
 
     game.stars = calcRating(game.rating);
-    
-    res.render('game', game);
+
+    res.render('game', {
+        // Game properties
+        ...game,
+        // Sidebar data
+        sidebarData: {
+            genres: allGenres.map(g => ({ ...g, active: false })),
+            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        }
+    });
+});
+
+router.get('/editgame', async (req, res) => {
+
+    res.render('CreateGame_editor', {
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/editgame', async (req, res) => {
@@ -306,9 +323,11 @@ router.get('/editgame', async (req, res) => {
 });
 
 router.get('/game/:id/review/:_id/image', async (req, res) => {
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
+    let review_id = req.params._id;
+    let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    let game = await catalog.getGame(req.params.id);
-    let review = game.reviews.find(r => r._id.toString() === req.params._id);
 
     res.download(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
 
@@ -326,8 +345,8 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         date: new Date().toISOString().split('T')[0],
         imageFilename: req.file ? req.file.filename : null
     };
-    console.log("review_creada:",review_create);
-    await catalog.addreview({ _id: new ObjectId (game_id) }, {$push: {reviews: review_create}});
+
+    await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
     res.render('Success', { new_game_added: false, game });
 });
 
@@ -336,7 +355,7 @@ router.post('/game/:id/review/delete', async (req, res) => {
     let game_id = req.params.id;
     let review_id = req.body.review_id;
 
-    await catalog.deletereview({ _id: new ObjectId (game_id) }, {$pull: {reviews: {_id: new ObjectId (review_id)}}});
+    await catalog.deletereview({ _id: new ObjectId(game_id) }, { $pull: { reviews: { _id: new ObjectId(review_id) } } });
 
     let game = await catalog.getGame(game_id);
 
@@ -346,40 +365,43 @@ router.post('/game/:id/review/delete', async (req, res) => {
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
 
     let game_id = req.params.id;
-    let review_id = req.params._id; 
+    let review_id = req.params._id;
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    res.render('review_editor', {game, review, game_id, _id: review_id});
+    res.render('review_editor', {
+        game, review, game_id, _id: review_id, genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'), async (req, res) => {
 
     let game_id = req.params.id;
-    let review_id = req.params._id; 
+    let review_id = req.params._id;
 
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    console.log("review que entra en el editor:", review);
-
     let review_edit = {
-        _id: new ObjectId(),
-        username: req.body.user_name,
-        comment: req.body.comment_description,
-        rating: req.body.rating,
+        _id: new ObjectId(review_id),
+        username: req.body ? req.body.user_name : review.username,
+        comment: req.body ? req.body.comment_description : review.comment,
+        rating: req.body ? req.body.rating : review.rating,
         date: new Date().toISOString().split('T')[0],
-        videogame_image: req.file ? req.file.filename : game.reviews.find(r => r._id.toString() === review_id).videogame_image
-    }; 
-    console.log("review_editada:",review_edit);
+        imageFilename: req.file ? req.file.filename : review.imageFilename
+    };
 
-    await catalog.editreview({ _id: new ObjectId (game_id), "reviews._id": new ObjectId (review_id) }, { $set: { "reviews.$": review_edit } });
+    await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
-    res.render('Success', { new_game_added: false });
+    res.render('Success', { new_game_added: false, game_id, review_id, 
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+     });
 });
 
-router.post('/search', async (req, res) => {
-    let query = req.body.q || "";
+router.get('/search', async (req, res) => {
+    let query = req.query.q || "";
     let pageSize = 6;
     let numPage = parseInt(req.query.page) || 1;
 
@@ -411,6 +433,8 @@ router.post('/search', async (req, res) => {
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
         query: query,
+        activeGenre: "",
+        activePlatform: "",
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
@@ -460,7 +484,7 @@ router.get('/category', async (req, res) => {
         platforms: allPlatforms.map(p => ({
             ...p,
             active: platform === p.value
-        })), 
+        })),
         activeGenre: genre,
         activePlatform: platform
     });

@@ -27,18 +27,37 @@
     </a>
     {{/genres}}
 
-    <!-- Platforms -->
-    <div class="category"><i class="bi bi-laptop"></i> Platforms</div>
+    {{#sidebarData.genres}}
+    <a href="/category?genre={{value}}{{#activePlatform}}&platform={{activePlatform}}{{/activePlatform}}"
+        class="sidebar-item {{#active}}active{{/active}}">
+        <i class="bi {{icon}}"></i> {{display}}
+    </a>
+    {{/sidebarData.genres}}
 
+    <div class="category"><i class="bi bi-laptop"></i> Plataformas</div>
+
+    <!-- Platforms -->
     {{#platforms}}
-<a href="/category?platform={{value}}{{#activeGenre}}&genre={{activeGenre}}{{/activeGenre}}"
-    class="sidebar-item {{#active}}active{{/active}}">
-    {{#useClass}}
-    <i class="bi {{icon}} {{color}}"></i> {{display}}
-    {{/useClass}}
-    {{^useClass}}
-    <i class="bi {{icon}}" style="color: {{color}}"></i> {{display}}
-    {{/useClass}}
-</a>
-{{/platforms}}
+    <a href="/category?platform={{value}}{{#activeGenre}}&genre={{activeGenre}}{{/activeGenre}}"
+        class="sidebar-item {{#active}}active{{/active}}">
+        {{#useClass}}
+        <i class="bi {{icon}} {{color}}"></i> {{display}}
+        {{/useClass}}
+        {{^useClass}}
+        <i class="bi {{icon}}" style="color: {{color}}"></i> {{display}}
+        {{/useClass}}
+    </a>
+    {{/platforms}}
+
+    {{#sidebarData.platforms}}
+    <a href="/category?platform={{value}}{{#activeGenre}}&genre={{activeGenre}}{{/activeGenre}}"
+        class="sidebar-item {{#active}}active{{/active}}">
+        {{#useClass}}
+        <i class="bi {{icon}} {{color}}"></i> {{display}}
+        {{/useClass}}
+        {{^useClass}}
+        <i class="bi {{icon}}" style="color: {{color}}"></i> {{display}}
+        {{/useClass}}
+    </a>
+    {{/sidebarData.platforms}}
 </body>
