@@ -59,11 +59,13 @@
                             Volver a la página principal
                         </a>
 
-                        <!-- "Button" to return to the form page -->
-                        <a href="/creategame" class="btn col-sm-3">
-                            <h1><i class="bi bi-arrow-return-left"></i> </h1> <!-- Add file icon -->
-                            Volver a la página de crear un videojuego
-                        </a>
+                        {{#having_errors}}
+                            <!-- "Button" to return to the form page -->
+                            <a href="/creategame" class="btn col-sm-3">
+                                <h1><i class="bi bi-arrow-return-left"></i> </h1> <!-- Add file icon -->
+                                Volver a la página de crear un videojuego
+                            </a>
+                        {{/having_errors}}
                     </div>
                 </main>
             </div>

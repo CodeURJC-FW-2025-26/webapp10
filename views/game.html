@@ -166,11 +166,11 @@
                                             {{/stars.starEmpty}}
                                         </div></h4>
                                         <p>{{comment}} </p>
-
+                                        <!-- Review image -->
                                         <div>
                                             <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
                                         </div>
-                                        
+                                        <!-- Edit and delete buttons for the review -->
                                         <div class="m-3 justify-content-start d-flex">
                                             <form  action="/game/{{game_id}}/review/delete" method="POST" >
                                                 <input type="hidden" name="review_id" value="{{_id}}">
@@ -193,7 +193,7 @@
                                         <div class="row mb-4">
                                             <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="user_name" class="form-control" placeholder="Nombre" required>
+                                                <input type="text" name="user_name" class="form-control" maxlength="50" placeholder="Nombre" required>
                                             </div>
                                         </div>
 
@@ -201,7 +201,7 @@
                                         <div class="row mb-4">
                                             <label for="comment_description" class="col-sm-3 col-form-label">Introduzca aquí su comentario:</label>
                                             <div class="col-sm-9">
-                                                <textarea name="comment_description" class="form-control" rows="4" placeholder="Descripción" required></textarea>
+                                                <textarea name="comment_description" class="form-control" rows="4" placeholder="Descripción" minlength="25" maxlength="200" required></textarea>
                                             </div>
                                         </div>
 
@@ -209,7 +209,7 @@
                                         <div class="row mb-4">
                                             <label for="rating" class="col-sm-3 col-form-label">Calificación:</label>
                                             <div class="col-sm-5">
-                                                <input type="number" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5">
+                                                <input type="number" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5" required>
                                             </div>
                                         </div> 
                                         
@@ -217,7 +217,7 @@
                                         <div class="row mb-4">
                                             <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                                             <div class="col-sm-9">
-                                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*">
+                                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*" required>
                                             </div>
                                         </div>
 

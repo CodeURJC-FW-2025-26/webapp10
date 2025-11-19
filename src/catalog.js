@@ -33,9 +33,9 @@ export async function findGameByName(title) {
 export async function deletereview(query, update) {
     console.log("Intentando actualizar con Query:", query); 
     console.log("Con Update:", update);
-    // 1. La función recibe dos argumentos:
-    //    - query: Un objeto para encontrar el juego (ej: { _id: new ObjectID(id) })
-    //    - update: Un objeto con los cambios a aplicar (ej: { $pull: { reviews: {_id: new ObjectId(taskId)} } })
+    // 1. The function receives two arguments:
+    //    - query: An object to find the game (e.g., { _id: new ObjectID(id) })
+    //    - update: An object with the changes to apply (e.g., { $pull: { reviews: {_id: new ObjectId(taskId)} } })
     return await games.updateOne(query, update);
 }
 
