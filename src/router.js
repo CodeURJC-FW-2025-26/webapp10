@@ -269,11 +269,11 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
             imageFilename: req.file?.filename,
             price: req.body.price,
             release_date: req.body.release_date,
-            platform: Array.isArray(req.body.platform)? req.body.platform: [req.body.platform].filter(Boolean),
-            gamemod: Array.isArray(req.body.gamemod)? req.body.gamemod: [req.body.gamemod].filter(Boolean),
+            platform: Array.isArray(req.body.platform) ? req.body.platform : [req.body.platform].filter(Boolean),
+            gamemod: Array.isArray(req.body.gamemod) ? req.body.gamemod : [req.body.gamemod].filter(Boolean),
             age_classification: req.body.age_classification,
             rating: req.body.rating,
-            genre: Array.isArray(req.body.genre)? req.body.genre: [req.body.genre].filter(Boolean),
+            genre: Array.isArray(req.body.genre) ? req.body.genre : [req.body.genre].filter(Boolean),
             reviews: []
         };
 
@@ -333,7 +333,7 @@ router.post('/game/:id/delete', async (req, res) => {
 
     let game = await catalog.getGame(game_id);
 
-    res.render('deleted', { game_deleted: true, game, _id: game_id});
+    res.render('deleted', { game_deleted: true, game, _id: game_id });
 });
 
 router.get('/editgame/:id', async (req, res) => {
@@ -364,20 +364,21 @@ router.post('/game/edit/:id', upload.single('imageFilename'), async (req, res) =
         imageFilename: req.file ? req.file.filename : game.imageFilename,
         price: req.body.price || game.price,
         release_date: req.body.release_date || game.release_date,
-        platform: Array.isArray(req.body.platform)? req.body.platform: [req.body.platform].filter(Boolean),
-        gamemod: Array.isArray(req.body.gamemod)? req.body.gamemod: [req.body.gamemod].filter(Boolean),
+        platform: Array.isArray(req.body.platform) ? req.body.platform : [req.body.platform].filter(Boolean),
+        gamemod: Array.isArray(req.body.gamemod) ? req.body.gamemod : [req.body.gamemod].filter(Boolean),
         age_classification: req.body.age_classification || game.age_classification,
         rating: req.body.rating || game.rating,
-        genre: Array.isArray(req.body.genre)? req.body.genre: [req.body.genre].filter(Boolean),
+        genre: Array.isArray(req.body.genre) ? req.body.genre : [req.body.genre].filter(Boolean),
     };
 
     await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_update });
 
-    res.render('Success', { new_game_added: true,
+    res.render('Success', {
+        new_game_added: true,
         _id: game_id,
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
-     });
+    });
 });
 
 router.get('/game/:id/review/:_id/image', async (req, res) => {
@@ -452,7 +453,11 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         };
 
         await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
-        res.render('Success', { new_game_added: false, game, _id: game_id,});
+        res.render('Success', {
+        new_game_added: false, game, _id: game_id,
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 
     };
 
@@ -467,7 +472,10 @@ router.post('/game/:id/review/delete', async (req, res) => {
 
     let game = await catalog.getGame(game_id);
 
-    res.render('deleted', { game_deleted: false, game, _id: game_id});
+    res.render('deleted', {
+        game_deleted: false, game, _id: game_id, genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
@@ -502,10 +510,11 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
 
     await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
-    res.render('Success', { new_game_added: false, game_id, review_id, _id: game_id, 
+    res.render('Success', {
+        new_game_added: false, game_id, review_id, _id: game_id,
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
-     });
+    });
 });
 
 router.get('/search', async (req, res) => {

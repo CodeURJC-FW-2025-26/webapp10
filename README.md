@@ -150,7 +150,7 @@ Attributes:
  
 
 
-## Practica 1
+## Practica 2
 
 
 ###
@@ -230,18 +230,18 @@ I was in charge of the details page: my job was to generalize the information on
 
 
 * 5 best commits:
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [Db working](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/92a5091dcefe452693fe0512b63d9412a4718303)
+  2. [index template](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/2719962b435e7ccb621efd6b29d536963c72796f)
+  3. [rating in stars working](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/eaf900d0315cf19b9a2f91e8c11455f080b78742)
+  4. [working pagination](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/2a47babad51f0b67bee3cf03678405574e6ceed6)
+  5. [categories and more changes](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/10149fa915e59743f8ea2a0d9421327b152ae79e)
   
 * 5 files most participated:
-  1.
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [router.js](./src/router.js)
+  2. [data.json](./data/data.json)
+  3. [index.html](./views/index.html)
+  4. [catalog.js](./src/catalog.js)
+  5. [sidebar.html](./views/sidebar.html)
 
 #### Fran García
 * Description of my tasks during the practice:
