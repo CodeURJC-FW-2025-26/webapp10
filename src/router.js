@@ -362,7 +362,7 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
     };
 
     await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
-    res.render('Success', { new_game_added: false, game });
+    res.render('Success', { new_game_added: false, game, _id: game_id,});
 });
 
 router.post('/game/:id/review/delete', async (req, res) => {
@@ -374,7 +374,7 @@ router.post('/game/:id/review/delete', async (req, res) => {
 
     let game = await catalog.getGame(game_id);
 
-    res.render('deleted', { game_deleted: false, game });
+    res.render('deleted', { game_deleted: false, game, _id: game_id});
 });
 
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
@@ -409,7 +409,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
 
     await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
-    res.render('Success', { new_game_added: false, game_id, review_id, 
+    res.render('Success', { new_game_added: false, game_id, review_id, _id: game_id, 
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
      });
