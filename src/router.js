@@ -224,7 +224,8 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
     // If there are errors: Show them and send back to form
     if (errors.length > 0) {
         return res.status(400).render("Error", {
-            errors
+            errors, genres: allGenres.map(g => ({ ...g, active: false })),
+            platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
     } else {
         // ---------------------------
