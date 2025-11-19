@@ -168,7 +168,7 @@ Attributes:
 ```bash
 npm install
 git clone https://github.com/CodeURJC-FW-2025-26/webapp10.git
-cd MoreForPlaying
+cd webapp10
 npm run watch
 ```
 
