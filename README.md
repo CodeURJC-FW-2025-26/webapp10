@@ -245,19 +245,20 @@ I was in charge of the details page: my job was to generalize the information on
 
 #### Fran García
 * Description of my tasks during the practice:
+I was responsible for making the create game form work on the website. I started with the [CreateGame.html](./views/CreateGame.html) file and the [router.js](./src/router.js), as it was the principal one. I also created the [Succes.html](./views/Success.html) and the [Error.html](./views/Error.html) files. Once I finished it, I made the server validations. At the end, I also made the reviews form validations and added the descriptions to all the videogames in the [data.json](./data/data.json) file. I also made several small improvements and adjustments to other files.
 
 
 * 5 best commits:
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [Fixed a problem with the names, and added to the data.json the info to all the other games, not only Minecraft.](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/a48b291a50adc6fe2a8a2bf82208cb96b39fe3e3)
+  2. [Adding express to the form](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/b7bad7cc532a9868284a6fae67ed1d1914712c50)
+  3. [Compleatly resolved the problem with the filters and the checkbox fields of the videogames. Edit game also added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/4f5f79bfeec8f13adcc7d5444b9485cf78d31048)
+  4. [New server validation options and new error page to show them](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/6dbeb8d4c417338dc40e75cd47fc2aa513cd3714)
+  5. [Now the created games are being saved, but there are still thing to improve](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/89235677a711c50b246ececea7bc64967fc053a1)
 
 * 5 files most participated:
-  1. 
-  2.
-  3.
-  4.
-  5.
+  1. [CreateGame.html](./views/CreateGame.html)
+  2. [router.js](./src/router.js)
+  3. [data.json](./data/data.json)
+  4. [CreateGame_editor.html](./views/CreateGame_editor.html)
+  5. [Success.html](./views/Success.html)
   
