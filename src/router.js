@@ -293,6 +293,18 @@ router.get('/game/:id', async (req, res) => {
     });
 });
 
+
+router.post('/game/:id/delete', async (req, res) => {
+    let game_id = req.params.id;
+    let review_id = req.body.review_id;
+
+    await catalog.deleteGame(game_id);
+
+    let game = await catalog.getGame(game_id);
+
+    res.render('deleted', { game_deleted: true, game, _id: game_id});
+});
+
 router.get('/editgame/:id', async (req, res) => {
 
     let game_id = req.params.id;

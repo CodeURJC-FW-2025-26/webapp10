@@ -58,11 +58,13 @@
                             Volver a la página principal
                         </a>
 
-                        <!-- "Button" to view the details of the deleted game -->
-                        <a href="/game/{{_id}}" class="btn revbtn col-sm-3">
-                            <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
-                            Ver página de detalle del videojuego
-                        </a>
+                        {{^game_deleted}}
+                            <!-- "Button" to view the details of the deleted game -->
+                            <a href="/game/{{_id}}" class="btn revbtn col-sm-3">
+                                <h1><i class="bi bi-file-plus"></i> </h1> <!-- Add file icon -->
+                                Ver página de detalle del videojuego
+                            </a>
+                        {{/game_deleted}}
                     </div>
                 </main>
             </div>
