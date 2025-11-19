@@ -164,8 +164,7 @@ Attributes:
 - Node.js 
 - MongoDB
 - npm
-
-### 1. Clonar el repositorio
+ 
 ```bash
 npm install
 git clone https://github.com/CodeURJC-FW-2025-26/webapp10.git
