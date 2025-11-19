@@ -214,17 +214,23 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
     // 4. Validate price is a number within allowed range (0 - 1000)
     const cost = Number(req.body.price);
-    if (isNaN(cost) || cost < 0 || cost > 1000) {
-        errors.push("El coste debe ser un número entre 0 y 1000.");
+    if (isNaN(cost) || cost < 0 || cost > 1000 || Math.round(cost * 100) !== cost * 100) {
+        errors.push("El coste debe ser un número entre 0 y 1000, con hasta dos decimales.");
     };
 
     // 5. Validate rating is between 0 and 5
     const rating = Number(req.body.rating);
-    if (isNaN(rating) || rating < 0 || rating > 5) {
-        errors.push("El rating debe estar entre 0 y 5.");
+    if (isNaN(rating) || rating < 0 || rating > 5 || rating % 0.5 !== 0) {
+        errors.push("El rating debe estar entre 0 y 5, y en incrementos de 0,5.");
     };
 
     // 6. Validate text length constraints for descriptions, developer, editor
+    // 6. The name, descriptions, developer and editor sizes are adequate
+    if (req.body.title) {
+        if (req.body.title.length < 1 || req.body.title.length > 75) {
+            errors.push("El nombre debe tener entre 1 y 75 caracteres.");
+        }
+    };
     if (req.body.description) {
         if (req.body.description.length < 250 || req.body.description.length > 1500) {
             errors.push("La descripción debe tener entre 250 y 1500 caracteres.");
@@ -266,7 +272,9 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
     // If validation failed, render Error template with the errors
     if (errors.length > 0) {
         return res.status(400).render("Error", {
-            errors, genres: allGenres.map(g => ({ ...g, active: false })),
+            errors,
+            having_errors: true,
+            genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
     } else {
@@ -417,13 +425,69 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
 
     let game = await catalog.getGame(req.params.id);
     let game_id = req.params.id;
-    let review_create = {
-        _id: new ObjectId(),
-        username: req.body.user_name,
-        comment: req.body.comment_description,
-        rating: req.body.rating,
-        date: new Date().toISOString().split('T')[0],
-        imageFilename: req.file ? req.file.filename : null
+
+    const errors = [];
+
+    // 1. Required fields
+    const requiredFields = [
+        "user_name",
+        "comment_description",
+        "rating"
+    ];
+
+    for (const field of requiredFields) {
+        if (!req.body[field] || req.body[field].trim() === "") {
+            errors.push(`El campo "${field}" es obligatorio.`);
+        }
+    };
+
+    if (!req.file) {
+        errors.push("La imagen es obligatoria.");
+    };
+
+    // 2. Validate rating (0 to 5)
+    const rating = Number(req.body.rating);
+    if (isNaN(rating) || rating < 0 || rating > 5 || rating % 0.5 !== 0) {
+        errors.push("El rating debe estar entre 0 y 5, y en incrementos de 0,5.");
+    };
+
+    // 3. The name and comment sizes are adequate
+    if (req.body.user_name) {
+        if (req.body.user_name.length < 1 || req.body.user_name.length > 50) {
+            errors.push("El nombre de usuario debe tener entre 1 y 50 caracteres.");
+        }
+    };
+    if (req.body.comment_description) {
+        if (req.body.comment_description.length < 25 || req.body.comment_description.length > 200) {
+            errors.push("La descripción debe tener entre 25 y 200 caracteres.");
+        }
+    };
+
+    // ---------------------------
+    // If there are errors: Show them and send back to form
+    if (errors.length > 0) {
+        return res.status(400).render("Error", {
+            errors
+        });
+    } else {
+        // ---------------------------
+        // If there are no errors: Create game
+        let review_create = {
+            _id: new ObjectId(),
+            username: req.body.user_name,
+            comment: req.body.comment_description,
+            rating: req.body.rating,
+            date: new Date().toISOString().split('T')[0],
+            imageFilename: req.file ? req.file.filename : null
+        };
+
+        await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
+        res.render('Success', {
+            new_game_added: false, game, _id: game_id,
+            genres: allGenres.map(g => ({ ...g, active: false })),
+            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        });
+
     };
 
     // Push the new review into the game's reviews array
