@@ -42,13 +42,13 @@
                     <h1>Editar el videojuego del catálogo</h1>
                     <br>
 
-                    <form method="post" action="/game/edit/{{_id}}" enctype="multipart/form-data" class="d-grid">
+                    <form method="post" action="/game/edit/{{game_id}}" enctype="multipart/form-data" class="d-grid">
 
                         <!-- Row for the videogame name -->
                         <div class="row mb-4">
                             <label for="title" class="col-sm-3 col-form-label">Nombre del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="title" name="title" class="form-control" placeholder="Debe comenzar con mayúscula" required>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="Debe comenzar con mayúscula" value="{{game.title}}" required>
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@
                         <div class="row mb-4">
                             <label for="description" class="col-sm-3 col-form-label">Descripción del videojuego:</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Mínimo de caracteres: 250. Máximo de caracteres: 1500." minlength="250" maxlength="1500" required></textarea>
+                                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Mínimo de caracteres: 250. Máximo de caracteres: 1500." minlength="250" maxlength="1500" required>{{game.description}}</textarea>
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@
                         <div class="row mb-4">
                             <label for="short_description" class="col-sm-3 col-form-label">Descripción corta del videojuego:</label>
                             <div class="col-sm-9">
-                                <textarea id="short_description" name="short_description" class="form-control" rows="3" placeholder="Mínimo de caracteres: 100. Máximo de caracteres: 500." minlength="100" maxlength="500" required></textarea>
+                                <textarea id="short_description" name="short_description" class="form-control" rows="3" placeholder="Mínimo de caracteres: 100. Máximo de caracteres: 500." minlength="100" maxlength="500" required>{{game.short_description}}</textarea>
                             </div>
                         </div>
 
@@ -72,7 +72,7 @@
                         <div class="row mb-4">
                             <label for="developer" class="col-sm-3 col-form-label">Desarrollador del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="developer" name="developer" class="form-control" placeholder="Desarrollador" maxlength="50" required>
+                                <input type="text" id="developer" name="developer" class="form-control" placeholder="Desarrollador" value="{{game.developer}}" maxlength="50" required>
                             </div>
                         </div>
 
@@ -80,7 +80,7 @@
                         <div class="row mb-4">
                             <label for="editor" class="col-sm-3 col-form-label">Editor del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="editor" name="editor" class="form-control" placeholder="Editor" maxlength="50" required>
+                                <input type="text" id="editor" name="editor" class="form-control" placeholder="Editor" value="{{game.editor}}" maxlength="50" required>
                             </div>
                         </div>
 
@@ -88,7 +88,8 @@
                         <div class="row mb-4">
                             <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                             <div class="col-sm-9">
-                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*" required>
+                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*">
+                                <span>Archivo actual: <img src="/game/{{game._id}}/image" width="300" height="300"> </span>
                             </div>
                         </div>
 
@@ -96,7 +97,7 @@
                         <div class="row mb-4">
                             <label for="price" class="col-sm-3 col-form-label">Coste del videojuego:</label>
                             <div class="col-sm-2">
-                                <input type="number" id="price" name="price" min="0" max="1000" step="1" class="form-control" placeholder="Coste en €" required>
+                                <input type="number" id="price" name="price" min="0" max="1000" step="0.01" class="form-control" placeholder="Coste en €" value="{{game.price}}" required>
                             </div>
                             <label for="price" class="col-sm-1 col-form-label">€</label>
                         </div>
@@ -105,7 +106,7 @@
                         <div class="row mb-4">
                             <label for="release_date" class="col-sm-3 col-form-label">Fecha de lanzamiento del videojuego:</label>
                             <div class="col-sm-3">
-                                <input type="date" id="release_date" name="release_date" class="form-control" required>
+                                <input type="date" id="release_date" name="release_date" class="form-control" value="{{game.release_date}}" required>
                             </div>
                         </div>
 
@@ -229,7 +230,7 @@
                         <div class="row mb-4">
                             <label for="age_classification" class="col-sm-3 col-form-label">Clasificación PEGI por edades:</label>
                             <select id="age_classification" name="age_classification" class="form-select col-sm-9" required>
-                                <option value="" disabled selected>Elija una opción</option>
+                                <option value="{{game.age_classification}}" selected>{{game.age_classification}}</option>
                                 <option value="3">3</option>
                                 <option value="7">7</option>
                                 <option value="12">12</option>
@@ -242,7 +243,7 @@
                         <div class="row mb-4">
                             <label for="rating" class="col-sm-3 col-form-label">Calificación del videojuego:</label>
                             <div class="col-sm-3">
-                                <input type="number" id="rating" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5" required>
+                                <input type="number" id="rating" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5" value="{{game.rating}}" required>
                             </div>
                         </div>
 
@@ -367,7 +368,7 @@
                         <!-- Row for the "buttons" -->
                         <div class="row mb-4" id="form_buttons">
                             <!-- "Button" to cancel the form and return to the main page -->
-                            <a href="/game/{{_id}}" class="btn col-sm-3">
+                            <a href="/game/{{game_id}}" class="btn col-sm-3">
                                 <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
                                 Cancelar
                             </a>

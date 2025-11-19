@@ -231,31 +231,18 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
         // If there are no errors: Create game
         let game_create = {
             title: req.body.title,
-
             description: req.body.description,
-
             short_description: req.body.short_description,
-
             developer: req.body.developer,
-
             editor: req.body.editor,
-
             imageFilename: req.file?.filename,
-
             price: req.body.price,
-
             release_date: req.body.release_date,
-
             platform: Array.isArray(req.body.platform)? req.body.platform: [req.body.platform].filter(Boolean),
-
             gamemod: Array.isArray(req.body.gamemod)? req.body.gamemod: [req.body.gamemod].filter(Boolean),
-
             age_classification: req.body.age_classification,
-
             rating: req.body.rating,
-
             genre: Array.isArray(req.body.genre)? req.body.genre: [req.body.genre].filter(Boolean),
-
             reviews: []
         };
 
@@ -306,20 +293,48 @@ router.get('/game/:id', async (req, res) => {
     });
 });
 
-router.get('/editgame', async (req, res) => {
+router.get('/editgame/:id', async (req, res) => {
+
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
 
     res.render('CreateGame_editor', {
+        game,
+        game_id,
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
-router.get('/editgame', async (req, res) => {
+router.post('/game/edit/:id', upload.single('imageFilename'), async (req, res) => {
 
-    res.render('CreateGame_editor', {
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
+
+    // New object with updated data
+    let game_update = {
+        title: req.body ? req.body.title : game.title,
+        description: req.body ? req.body.description : game.description,
+        short_description: req.body ? req.body.short_description : game.short_description,
+        developer: req.body ? req.body.developer : game.developer,
+        editor: req.body ? req.body.editor : game.editor,
+        imageFilename: req.file ? req.file.filename : game.imageFilename,
+        price: req.body ? req.body.price : game.price,
+        release_date: req.body ? req.body.release_date : game.release_date,
+        platform: Array.isArray(req.body.platform)? req.body.platform: [req.body.platform].filter(Boolean),
+        gamemod: Array.isArray(req.body.gamemod)? req.body.gamemod: [req.body.gamemod].filter(Boolean),
+        age_classification: req.body.age_classification,
+        rating: req.body ? req.body.rating : game.rating,
+        genre: Array.isArray(req.body.genre)? req.body.genre: [req.body.genre].filter(Boolean),
+    };
+
+    await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_update });
+
+    res.render('Success', { new_game_added: true,
+        _id: game_id,
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
+     });
 });
 
 router.get('/game/:id/review/:_id/image', async (req, res) => {
