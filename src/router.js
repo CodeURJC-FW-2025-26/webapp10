@@ -85,7 +85,7 @@ router.get('/', async (req, res) => {
     // Add stars representation to each game for templates
     games = games.map(game => {
         return {
-            ...game,
+            ...game, // Spread the existing game properties
             stars: calcRating(game.rating)
         };
     });
@@ -100,7 +100,7 @@ router.get('/', async (req, res) => {
         nextPage: numPage + 1,
         hasPrev: numPage > 1,
         hasNext: numPage < totalPages,
-        genres: allGenres.map(g => ({ ...g, active: false })),
+        genres: allGenres.map(g => ({ ...g, active: false })),  
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
