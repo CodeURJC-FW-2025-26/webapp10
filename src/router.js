@@ -490,13 +490,6 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
 
     };
 
-    // Push the new review into the game's reviews array
-    await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
-    res.render('Success', {
-        new_game_added: false, game, _id: game_id,
-        genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
 });
 
 // Route: Delete a specific review from a game
