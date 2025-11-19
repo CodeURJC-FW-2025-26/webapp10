@@ -160,6 +160,17 @@ Attributes:
 
 ### Execution instructions
 
+## Requirements
+- Node.js 
+- MongoDB
+- npm
+ 
+```bash
+npm install
+git clone https://github.com/CodeURJC-FW-2025-26/webapp10.git
+cd webapp10
+npm run watch
+```
 
 
 ### Files description
@@ -227,7 +238,7 @@ I was in charge of the details page: my job was to generalize the information on
 #### Marcos Vidal 
 
 * Description of my tasks during the practice:
-
+I adapted the example exercise to our web, modified index.html into a mustache template, created files for the header, footer and sidebar, made some functions in router.js and cataloj.js in order to add pagination, filters by categories and a searchbar. Finally I helped to fix some errors.
 
 * 5 best commits:
   1. [Db working](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/92a5091dcefe452693fe0512b63d9412a4718303)

@@ -6,8 +6,11 @@ import * as catalog from './catalog.js';
 const router = express.Router();
 export default router;
 
+// Configure multer to store uploads in the uploads folder defined by catalog
 const upload = multer({ dest: catalog.UPLOADS_FOLDER })
 
+// Static lists used to render filters / sidebar. Each item has value, icon and display.
+// These are hard-coded application constants representing genres and platforms.
 const allGenres = [
     { value: 'Shooters', icon: 'bi-bullseye', display: 'Shooters' },
     { value: 'Mundo Abierto', icon: 'bi-globe2', display: 'Mundo Abierto' },
@@ -35,23 +38,26 @@ const allPlatforms = [
     { value: 'Arcade', icon: 'bi-joystick', color: 'orangered', display: 'Arcade', useClass: false }
 ];
 
+// calcRating: convert a numeric rating into arrays representing full, half and empty stars.
+// Returns an object { starFull, starHalf, starEmpty } where each array contains placeholders
+// used by the template to render the correct number of star icons.
 function calcRating(rating) {
     let ratingt = Math.trunc(rating);
     let starFull = [];
     let starHalf = [];
     let starEmpty = [];
 
-    // Full stars
+    // Full stars based on integer part
     for (let i = 0; i < ratingt; i++) {
         starFull.push('1');
     }
 
-    // Half star
+    // If there is a fractional part, add one half star
     if (rating % 1 !== 0) {
         starHalf.push('1');
     }
 
-    // Empty stars = 5 - (full stars + half star)
+    // Calculate empty stars to reach 5 stars total
     const totalFilled = starFull.length + starHalf.length;
     const emptyCount = 5 - totalFilled;
 
@@ -62,6 +68,7 @@ function calcRating(rating) {
     return { starFull, starHalf, starEmpty };
 }
 
+// Route: Home page - list games with pagination
 router.get('/', async (req, res) => {
 
     let pageSize = 6;
@@ -72,15 +79,18 @@ router.get('/', async (req, res) => {
         pages.push(i);
     }
 
+    // Fetch games for the current page
     let games = await catalog.getGames(pageSize, numPage);
 
-    games = games.map(game => { // Map over each game to add stars property
+    // Add stars representation to each game for templates
+    games = games.map(game => {
         return {
-            ...game, // Spread operator to copy existing properties
-            stars: calcRating(game.rating) // Add stars property with calculated stars
+            ...game,
+            stars: calcRating(game.rating)
         };
     });
 
+    // Render index template with games and sidebar/filter data
     res.render('index', {
         games, pages, currentPage: numPage,
         isCurrent: function () {
@@ -95,6 +105,7 @@ router.get('/', async (req, res) => {
     });
 });
 
+// Route: Show create game form
 router.get('/creategame', async (req, res) => {
 
     res.render('CreateGame', {
@@ -103,19 +114,24 @@ router.get('/creategame', async (req, res) => {
     });
 });
 
+// Route: Success page (NOTE: this route contains unreachable code - see comments below)
 router.get('/success', async (req, res) => {
 
+    // Render a generic success page first
     res.render('Success', {
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 
+    // The code below will never run in normal flow because a response has already been sent above.
+    // It appears intended to render a specific game page; consider removing the first render or
+    // restructuring this route.
     let game = await catalog.getGame(req.params.id);
 
-    game.reviews = game.reviews.map(review => { // Map over each game to add stars property
+    game.reviews = game.reviews.map(review => {
         return {
-            ...review, // Spread operator to copy existing properties
-            stars: calcRating(review.rating) // Add stars property with calculated stars
+            ...review,
+            stars: calcRating(review.rating)
         };
     });
 
@@ -128,10 +144,12 @@ router.get('/success', async (req, res) => {
     });
 });
 
+// Route: Delete a game (GET) - deletes and renders deleted confirmation
 router.get('/game/:id/delete', async (req, res) => {
 
     let game = await catalog.deleteGame(req.params.id);
 
+    // Remove uploaded image file if present
     if (game && game.imageFilename) {
         await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
     }
@@ -144,6 +162,7 @@ router.get('/game/:id/delete', async (req, res) => {
     });
 });
 
+// Route: Download the main game image
 router.get('/game/:id/image', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
@@ -152,11 +171,12 @@ router.get('/game/:id/image', async (req, res) => {
 
 });
 
+// Route: Create a new game (POST) with file upload
 router.post('/game/create', upload.single('imageFilename'), async (req, res) => {
 
     const errors = [];
 
-    // 1. Required fields
+    // 1. Required fields list
     const requiredFields = [
         "title",
         "description",
@@ -169,39 +189,42 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
         "rating"
     ];
 
+    // Validate required fields
     for (const field of requiredFields) {
         if (!req.body[field] || req.body[field].trim() === "") {
             errors.push(`El campo "${field}" es obligatorio.`);
         }
     };
 
+    // Image is required
     if (!req.file) {
         errors.push("La imagen es obligatoria.");
     };
 
-    // 2. title starts with capital letter
+    // 2. Title must start with uppercase (locale insensitive regex includes accented uppercase)
     if (req.body.title && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.title.trim())) {
         errors.push("El nombre del videojuego debe comenzar con mayúscula.");
     };
 
-    // 3. Validate release_date format
+    // 3. Validate release_date is a valid date
     const date = new Date(req.body.release_date);
     if (isNaN(date.getTime())) {
         errors.push("La fecha de lanzamiento no es válida.");
     };
 
-    // 4. Validate number in range (cost 0 to 1000)
+    // 4. Validate price is a number within allowed range (0 - 1000)
     const cost = Number(req.body.price);
     if (isNaN(cost) || cost < 0 || cost > 1000 || Math.round(cost * 100) !== cost * 100) {
         errors.push("El coste debe ser un número entre 0 y 1000, con hasta dos decimales.");
     };
 
-    // 5. Validate rating (0 to 5)
+    // 5. Validate rating is between 0 and 5
     const rating = Number(req.body.rating);
     if (isNaN(rating) || rating < 0 || rating > 5 || rating % 0.5 !== 0) {
         errors.push("El rating debe estar entre 0 y 5, y en incrementos de 0,5.");
     };
 
+    // 6. Validate text length constraints for descriptions, developer, editor
     // 6. The name, descriptions, developer and editor sizes are adequate
     if (req.body.title) {
         if (req.body.title.length < 1 || req.body.title.length > 75) {
@@ -229,27 +252,24 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
         }
     };
 
-    // 7. Validate that the title is NOT repeated
+    // 7. Ensure title is unique
     const existing = await catalog.findGameByName(req.body.title.trim());
     if (existing) {
         errors.push("Ya existe un videojuego con ese nombre.");
     };
 
-    // 8.1. Validate at least one platform
+    // 8. Ensure at least one platform, mode and genre is selected
     if (!req.body.platform || req.body.platform.length === 0) {
         errors.push("Debes seleccionar al menos una plataforma de juego.");
     };
-    // 8.2. Validate at least one mode of gameplay
     if (!req.body.gamemod || req.body.gamemod.length === 0) {
         errors.push("Debes seleccionar al menos un modo de juego.");
     };
-    // 8.3. Validate at least one genre
     if (!req.body.genre || req.body.genre.length === 0) {
         errors.push("Debes seleccionar al menos un género.");
     };
 
-    // ---------------------------
-    // If there are errors: Show them and send back to form
+    // If validation failed, render Error template with the errors
     if (errors.length > 0) {
         return res.status(400).render("Error", {
             errors,
@@ -258,8 +278,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
     } else {
-        // ---------------------------
-        // If there are no errors: Create game
+        // Build game object for insertion
         let game_create = {
             title: req.body.title,
             description: req.body.description,
@@ -269,6 +288,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
             imageFilename: req.file?.filename,
             price: req.body.price,
             release_date: req.body.release_date,
+            // Ensure form fields that may be single values are converted to arrays
             platform: Array.isArray(req.body.platform) ? req.body.platform : [req.body.platform].filter(Boolean),
             gamemod: Array.isArray(req.body.gamemod) ? req.body.gamemod : [req.body.gamemod].filter(Boolean),
             age_classification: req.body.age_classification,
@@ -279,8 +299,9 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
         await catalog.addGame(game_create);
 
+        // After insertion, render success page. Note: catalog.addGame should set _id on game_create if needed.
         res.render('Success', {
-            _id: game_create._id.toString(),
+            _id: game_create._id?.toString(),
             new_game_added: true,
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
@@ -290,33 +311,36 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
 
 });
 
+// Route: Generic image download endpoint with a simple traversal check
 router.get('/image', (req, res) => {
     let filename = req.query.filename;
-    // If filename has \ or / then path traversal attack is detected
+    // Prevent path traversal by disallowing path separators
     if (/[\\/]/.test(filename)) {
         return res.status(400);
     }
     res.download('uploads/' + filename);
 });
 
+// Route: Show a specific game page with reviews and stars
 router.get('/game/:id', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
 
-    game.reviews = game.reviews.map(review => { // Map over each game to add stars property
+    // Add stars and game_id to each review for template rendering / linking
+    game.reviews = game.reviews.map(review => {
         return {
-            ...review, // Spread operator to copy existing properties
-            stars: calcRating(review.rating), // Add stars property with calculated stars
+            ...review,
+            stars: calcRating(review.rating),
             game_id: game_id
         };
     });
 
+    // Add stars for the game itself
     game.stars = calcRating(game.rating);
 
+    // Render 'game' template, spreading game properties and including sidebar data
     res.render('game', {
-        // Game properties
         ...game,
-        // Sidebar data
         sidebarData: {
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
@@ -324,18 +348,20 @@ router.get('/game/:id', async (req, res) => {
     });
 });
 
-
+// Route: Delete game via POST (also used to submit review deletions in some flows)
 router.post('/game/:id/delete', async (req, res) => {
     let game_id = req.params.id;
     let review_id = req.body.review_id;
 
     await catalog.deleteGame(game_id);
 
+    // Attempt to fetch game after deletion (may be null)
     let game = await catalog.getGame(game_id);
 
     res.render('deleted', { game_deleted: true, game, _id: game_id });
 });
 
+// Route: Show edit form for a game
 router.get('/editgame/:id', async (req, res) => {
 
     let game_id = req.params.id;
@@ -349,12 +375,13 @@ router.get('/editgame/:id', async (req, res) => {
     });
 });
 
+// Route: Edit game (POST) with optional image upload
 router.post('/game/edit/:id', upload.single('imageFilename'), async (req, res) => {
 
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
 
-    // New object with updated data
+    // Build updated object using submitted fields or falling back to current values
     let game_update = {
         title: req.body.title || game.title,
         description: req.body.description || game.description,
@@ -381,6 +408,7 @@ router.post('/game/edit/:id', upload.single('imageFilename'), async (req, res) =
     });
 });
 
+// Route: Download image attached to a review
 router.get('/game/:id/review/:_id/image', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
@@ -392,6 +420,7 @@ router.get('/game/:id/review/:_id/image', async (req, res) => {
 
 });
 
+// Route: Create a review for a game (POST) with optional image upload
 router.post('/game/:id/review/create', upload.single('imageFilename'), async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
@@ -461,8 +490,16 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
 
     };
 
+    // Push the new review into the game's reviews array
+    await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
+    res.render('Success', {
+        new_game_added: false, game, _id: game_id,
+        genres: allGenres.map(g => ({ ...g, active: false })),
+        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+    });
 });
 
+// Route: Delete a specific review from a game
 router.post('/game/:id/review/delete', async (req, res) => {
 
     let game_id = req.params.id;
@@ -473,11 +510,13 @@ router.post('/game/:id/review/delete', async (req, res) => {
     let game = await catalog.getGame(game_id);
 
     res.render('deleted', {
-        game_deleted: false, game, _id: game_id, genres: allGenres.map(g => ({ ...g, active: false })),
+        game_deleted: false, game, _id: game_id,
+        genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
 
+// Route: Show review editor for a specific review
 router.get('/game/:id/review_editor/:_id', async (req, res) => {
 
     let game_id = req.params.id;
@@ -491,6 +530,7 @@ router.get('/game/:id/review_editor/:_id', async (req, res) => {
     });
 });
 
+// Route: Edit a review (POST) with optional new image
 router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'), async (req, res) => {
 
     let game_id = req.params.id;
@@ -499,6 +539,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
+    // Build the updated review object (replace the review in the array)
     let review_edit = {
         _id: new ObjectId(review_id),
         username: req.body ? req.body.user_name : review.username,
@@ -508,6 +549,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         imageFilename: req.file ? req.file.filename : review.imageFilename
     };
 
+    // Update the specific review using positional operator
     await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
     res.render('Success', {
@@ -517,6 +559,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
     });
 });
 
+// Route: Search endpoint with pagination
 router.get('/search', async (req, res) => {
     let query = req.query.q || "";
     let pageSize = 6;
@@ -531,6 +574,7 @@ router.get('/search', async (req, res) => {
         pages.push(i);
     }
 
+    // Add star info to games
     games = games.map(game => {
         return {
             ...game,
@@ -557,6 +601,7 @@ router.get('/search', async (req, res) => {
     });
 });
 
+// Route: Category filter combined with search and pagination
 router.get('/category', async (req, res) => {
     let query = req.query.q || "";
     let pageSize = 6;
@@ -573,6 +618,7 @@ router.get('/category', async (req, res) => {
         pages.push(i);
     }
 
+    // Add star info to games
     games = games.map(game => {
         return {
             ...game,
@@ -580,6 +626,7 @@ router.get('/category', async (req, res) => {
         };
     });
 
+    // Render index with active flags for selected genre/platform
     res.render('index', {
         games,
         pages,
