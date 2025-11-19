@@ -416,7 +416,8 @@ router.post('/game/:id/review/delete', async (req, res) => {
     let game = await catalog.getGame(game_id);
 
     res.render('deleted', {
-        game_deleted: false, game, _id: game_id, genres: allGenres.map(g => ({ ...g, active: false })),
+        game_deleted: false, game, _id: game_id,
+        genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
 });
