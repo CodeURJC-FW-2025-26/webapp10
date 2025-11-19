@@ -202,7 +202,7 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
         errors.push("El rating debe estar entre 0 y 5.");
     };
 
-    // 6. The descriptions size is adequate
+    // 6. The descriptions, developer and editor sizes are adequate
     if (req.body.description) {
         if (req.body.description.length < 250 || req.body.description.length > 1500) {
             errors.push("La descripción debe tener entre 250 y 1500 caracteres.");
@@ -213,11 +213,34 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
             errors.push("La descripción corta debe tener entre 100 y 500 caracteres.");
         }
     };
+    if (req.body.developer) {
+        if (req.body.developer.length < 1 || req.body.developer.length > 50) {
+            errors.push("El desarrollador debe tener entre 1 y 50 caracteres.");
+        }
+    };
+    if (req.body.editor) {
+        if (req.body.editor.length < 1 || req.body.editor.length > 50) {
+            errors.push("El editor debe tener entre 1 y 50 caracteres.");
+        }
+    };
 
     // 7. Validate that the title is NOT repeated
     const existing = await catalog.findGameByName(req.body.title.trim());
     if (existing) {
         errors.push("Ya existe un videojuego con ese nombre.");
+    };
+
+    // 8.1. Validate at least one platform
+    if (!req.body.platform || req.body.platform.length === 0) {
+        errors.push("Debes seleccionar al menos una plataforma de juego.");
+    };
+    // 8.2. Validate at least one mode of gameplay
+    if (!req.body.gamemod || req.body.gamemod.length === 0) {
+        errors.push("Debes seleccionar al menos un modo de juego.");
+    };
+    // 8.3. Validate at least one genre
+    if (!req.body.genre || req.body.genre.length === 0) {
+        errors.push("Debes seleccionar al menos un género.");
     };
 
     // ---------------------------
@@ -325,18 +348,18 @@ router.post('/game/edit/:id', upload.single('imageFilename'), async (req, res) =
 
     // New object with updated data
     let game_update = {
-        title: req.body ? req.body.title : game.title,
-        description: req.body ? req.body.description : game.description,
-        short_description: req.body ? req.body.short_description : game.short_description,
-        developer: req.body ? req.body.developer : game.developer,
-        editor: req.body ? req.body.editor : game.editor,
+        title: req.body.title || game.title,
+        description: req.body.description || game.description,
+        short_description: req.body.short_description || game.short_description,
+        developer: req.body.developer || game.developer,
+        editor: req.body.editor || game.editor,
         imageFilename: req.file ? req.file.filename : game.imageFilename,
-        price: req.body ? req.body.price : game.price,
-        release_date: req.body ? req.body.release_date : game.release_date,
+        price: req.body.price || game.price,
+        release_date: req.body.release_date || game.release_date,
         platform: Array.isArray(req.body.platform)? req.body.platform: [req.body.platform].filter(Boolean),
         gamemod: Array.isArray(req.body.gamemod)? req.body.gamemod: [req.body.gamemod].filter(Boolean),
-        age_classification: req.body.age_classification,
-        rating: req.body ? req.body.rating : game.rating,
+        age_classification: req.body.age_classification || game.age_classification,
+        rating: req.body.rating || game.rating,
         genre: Array.isArray(req.body.genre)? req.body.genre: [req.body.genre].filter(Boolean),
     };
 
