@@ -374,6 +374,7 @@
                             </a>
 
                             <!-- "Button" to complete the form and submit the data -->
+                            <!-- role to make it work like a button. tabindex for keyboard navigation. aria-label for accessibility. onclick to submit the form and onkeydown to do the same but with keyboard tiles "Enter" and "Space". -->
                             <div class="btn col-sm-3" role="button" tabindex="0" aria-label="Completar edición del Videojuego"
                                 onclick="(function(f){ if(f.requestSubmit) f.requestSubmit(); else f.submit(); })(this.closest('form')); return false;"
                                 onkeydown="if(event.key==='Enter'||event.key===' '){ event.preventDefault(); (function(f){ if(f.requestSubmit) f.requestSubmit(); else f.submit(); })(this.closest('form')); }">
