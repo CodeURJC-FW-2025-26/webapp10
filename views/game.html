@@ -161,14 +161,14 @@
                             <h2>Añadir Reseña</h2>
                             <br>
 
-                                    <form onsubmit="createreview(event)" action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
-                                        <!-- Row for the user name -->
-                                        <div class="row mb-4">
-                                            <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="user_name" class="form-control" maxlength="50" placeholder="Nombre" required>
-                                            </div>
-                                        </div>
+                            <form onsubmit="createreview(event)" action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
+                                <!-- Row for the user name -->
+                                <div class="row mb-4">
+                                    <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="user_name" class="form-control" maxlength="50" placeholder="Nombre" required>
+                                    </div>
+                                </div>
 
                                 <!-- Row for the comment -->
                                 <div class="row mb-4">
