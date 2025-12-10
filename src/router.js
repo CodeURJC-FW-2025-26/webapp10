@@ -30,8 +30,8 @@ const allGenres = [
 
 const allPlatforms = [
     { value: 'PC', icon: 'bi-windows', color: 'text-primary', display: 'PCs', useClass: true },
-    { value: 'Play Station', icon: 'bi-playstation', color: 'text-info', display: 'PlayStation', useClass: true },
-    { value: 'XBox', icon: 'bi-xbox', color: 'text-success', display: 'Xbox', useClass: true },
+    { value: 'PlayStation', icon: 'bi-playstation', color: 'text-info', display: 'PlayStation', useClass: true },
+    { value: 'XBox', icon: 'bi-xbox', color: 'text-success', display: 'XBox', useClass: true },
     { value: 'Nintendo', icon: 'bi-nintendo-switch', color: 'text-danger', display: 'Nintendo', useClass: true },
     { value: 'Móvil', icon: 'bi-phone', color: 'text-warning', display: 'Móviles', useClass: true },
     { value: 'Realidad Virtual', icon: 'bi-vr', color: 'purple', display: 'Realidad Virtual', useClass: false },
@@ -109,6 +109,7 @@ router.get('/', async (req, res) => {
 router.get('/creategame', async (req, res) => {
 
     res.render('CreateGame', {
+        new_game_from_scratch: true,
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
@@ -171,8 +172,20 @@ router.get('/game/:id/image', async (req, res) => {
 
 });
 
-// Route: Create a new game (POST) with file upload
-router.post('/game/create', upload.single('imageFilename'), async (req, res) => {
+router.post('/game/create', upload.single('imageFilename'), handler);
+router.post('/game/create/:id', upload.single('imageFilename'), handler);
+
+async function handler(req, res) {
+
+    let new_game_from_scratch = !req.query.id;
+    let game_id = req.query.id;
+    let existing_game = game_id ? await catalog.getGame(game_id) : null;
+
+    if (req.params.id) {
+        game_id = req.params.id;
+        existing_game = await catalog.getGame(game_id);
+        new_game_from_scratch = false;
+    }
 
     const errors = [];
 
@@ -274,42 +287,47 @@ router.post('/game/create', upload.single('imageFilename'), async (req, res) => 
         return res.status(400).render("Error", {
             errors,
             having_errors: true,
+            new_game_from_scratch,
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
     } else {
         // Build game object for insertion
         let game_create = {
-            title: req.body.title,
-            description: req.body.description,
-            short_description: req.body.short_description,
-            developer: req.body.developer,
-            editor: req.body.editor,
-            imageFilename: req.file?.filename,
-            price: req.body.price,
-            release_date: req.body.release_date,
-            // Ensure form fields that may be single values are converted to arrays
+            title: req.body.title || existing_game.title,
+            description: req.body.description || existing_game.description,
+            short_description: req.body.short_description || existing_game.short_description,
+            developer: req.body.developer || existing_game.developer,
+            editor: req.body.editor || existing_game.editor,
+            imageFilename: req.file ? req.file.filename : existing_game.imageFilename,
+            price: req.body.price || existing_game.price,
+            release_date: req.body.release_date || existing_game.release_date,
             platform: Array.isArray(req.body.platform) ? req.body.platform : [req.body.platform].filter(Boolean),
             gamemod: Array.isArray(req.body.gamemod) ? req.body.gamemod : [req.body.gamemod].filter(Boolean),
-            age_classification: req.body.age_classification,
-            rating: req.body.rating,
-            genre: Array.isArray(req.body.genre) ? req.body.genre : [req.body.genre].filter(Boolean),
-            reviews: []
+            age_classification: req.body.age_classification || existing_game.age_classification,
+            rating: req.body.rating || existing_game.rating,
+            genre: Array.isArray(req.body.genre) ? req.body.genre : [req.body.genre].filter(Boolean)
         };
 
-        await catalog.addGame(game_create);
+        if (new_game_from_scratch == true) {
+            game_create.reviews = [];
+            await catalog.addGame(game_create);
+        } else {
+            await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_create });
+        }
 
         // After insertion, render success page. Note: catalog.addGame should set _id on game_create if needed.
         res.render('Success', {
-            _id: game_create._id?.toString(),
+            _id: game_id || game_create._id?.toString(),
             new_game_added: true,
+            new_game_from_scratch,
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
 
     };
 
-});
+};
 
 // Route: Generic image download endpoint with a simple traversal check
 router.get('/image', (req, res) => {
@@ -367,42 +385,10 @@ router.get('/editgame/:id', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
 
-    res.render('CreateGame_editor', {
+    res.render('CreateGame', {
         game,
         game_id,
-        genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
-});
-
-// Route: Edit game (POST) with optional image upload
-router.post('/game/edit/:id', upload.single('imageFilename'), async (req, res) => {
-
-    let game_id = req.params.id;
-    let game = await catalog.getGame(game_id);
-
-    // Build updated object using submitted fields or falling back to current values
-    let game_update = {
-        title: req.body.title || game.title,
-        description: req.body.description || game.description,
-        short_description: req.body.short_description || game.short_description,
-        developer: req.body.developer || game.developer,
-        editor: req.body.editor || game.editor,
-        imageFilename: req.file ? req.file.filename : game.imageFilename,
-        price: req.body.price || game.price,
-        release_date: req.body.release_date || game.release_date,
-        platform: Array.isArray(req.body.platform) ? req.body.platform : [req.body.platform].filter(Boolean),
-        gamemod: Array.isArray(req.body.gamemod) ? req.body.gamemod : [req.body.gamemod].filter(Boolean),
-        age_classification: req.body.age_classification || game.age_classification,
-        rating: req.body.rating || game.rating,
-        genre: Array.isArray(req.body.genre) ? req.body.genre : [req.body.genre].filter(Boolean),
-    };
-
-    await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_update });
-
-    res.render('Success', {
-        new_game_added: true,
-        _id: game_id,
+        new_game_from_scratch: false,
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false }))
     });
