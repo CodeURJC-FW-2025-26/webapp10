@@ -59,7 +59,9 @@
                             </div>
                         </div>
                         <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
-                                <a href="/game/{{_id}}/delete" class="btn btn-primary">Borrar juego</a>
+                                <form onsubmit="securemessage(event)" action="/game/{{_id}}/delete"> 
+                                    <input type="submit" class="btn btn-primary" value="Borrar juego"></form>
+                                    
                                 <a href="/editgame/{{_id}}" class="btn btn-primary">Editar juego</a>
                                 <a href="/creategame" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
                                     Crear tu propio juego</a>
@@ -188,7 +190,7 @@
                                     <h2>Añadir Reseña</h2>
                                     <br>
 
-                                    <form action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
+                                    <form onsubmit="" action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
                                         <!-- Row for the user name -->
                                         <div class="row mb-4">
                                             <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
@@ -243,6 +245,8 @@
         </div>
     </div>
 
+
+    <script src="/app.js"></script>
 </body>
 
 </html>
