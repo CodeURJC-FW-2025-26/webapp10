@@ -105,6 +105,35 @@ router.get('/', async (req, res) => {
     });
 });
 
+// Route: Load more games for infinite scroll / "Load More" button
+router.get('/games/load', async (req, res) => {
+    let pageSize = 6;
+    let numPage = parseInt(req.query.page) || 1;
+    let query = req.query.q || "";
+    let genre = req.query.genre || "";
+    let platform = req.query.platform || "";
+    
+    let games = await catalog.searchGames(query, genre, platform, pageSize, numPage);
+    let total = await catalog.countSearchResults(query, genre, platform);
+    let hasMore = (numPage * pageSize) < total;
+    
+    games = games.map(game => ({
+        ...game,
+        stars: calcRating(game.rating)
+    }));
+    
+    res.json({
+        games,
+        numPage,
+        hasMore,
+        total,
+        query,
+        genre,
+        platform
+    });
+});
+
+
 // Route: Show create game form
 router.get('/creategame', async (req, res) => {
 

@@ -87,7 +87,7 @@
 
     {   
         "title": "Fortnite",
-        "price": "GRATIS",
+        "price": "0.00",
         "rating": "4.5",
         "imageFilename": "Fortnite-poster.jpg",
         "developer": "Epic Games",
@@ -167,6 +167,159 @@
         "platform": ["Play Station", "XBox", "PC"],
         "short_description": "\"EA Sports FC 25\" es el simulador de fútbol de EA Sports lanzado en 2024, sucesor de la saga \"FIFA\". El juego se centra en el realismo gracias a la tecnología HyperMotion avanzada y los \"Estilos de Juego+\" (PlayStyles+), que dan habilidades únicas a los futbolistas estrella. Su modo principal es Ultimate Team, que combina jugadores y jugadoras. También incluye los modos Carrera, Clubs y VOLTA, y mantiene las licencias clave como la Champions League y las grandes ligas europeas.",
         "description": "\"EA Sports FC 25\" es la segunda entrega de la renombrada franquicia de simulación de fútbol de Electronic Arts tras su cambio de marca. Este título consolida la nueva identidad de la saga, profundizando en el realismo y la autenticidad en el campo de juego virtual. El pilar tecnológico sigue siendo el motor Frostbite junto con una versión evolucionada de la tecnología HyperMotion, que utiliza datos volumétricos capturados de cientos de partidos reales para generar animaciones ultrarrealistas y movimientos fluidos y específicos para cada jugador. Una de las características más destacadas es la expansión del sistema PlayStyles+ (Estilos de Juego+), que otorga habilidades distintivas a los jugadores de élite, haciendo que sus contrapartes virtuales se comporten de manera idéntica a como lo hacen en la vida real. En cuanto a los modos de juego, Ultimate Team sigue siendo el modo estrella, continuando con la integración total de futbolistas masculinas y femeninas en el mismo ecosistema y expandiendo el sistema de \"Evoluciones\" para mejorar las cartas de los jugadores. El Modo Carrera (tanto de Mánager como de Jugador) recibe actualizaciones en la gestión táctica y el desarrollo de jóvenes promesas. Los modos sociales como Clubs (anteriormente Pro Clubs) y VOLTA Football también regresan, manteniendo el cross-play entre plataformas de la misma generación.",
+        "reviews": []
+    },
+
+    {
+        "title": "Baldur's Gate 3",
+        "price": "59.99",
+        "rating": "4.9",
+        "imageFilename": "baldur-portada.jpg",
+        "developer": "Larian Studios",
+        "editor": "Larian Studios",
+        "release_date": "2023-08-03",
+        "gamemod": ["Un jugador", "Multijugador", "Cooperativo", "Historia"],
+        "age_classification": "18",
+        "genre": ["RPG", "Estrategia", "Aventura"],
+        "platform": ["PC", "Play Station", "XBox"],
+        "short_description": "RPG de fantasía basado en D&D 5ª edición. Con decisiones que importan, combate por turnos y un sistema de relaciones complejo. Ganador de múltiples premios GOTY 2023.",
+        "description": "Un RPG monumental que redefine el género con su atención al detalle y libertad absoluta. Basado en las reglas de Dungeons & Dragons 5ª edición, ofrece más de 174 horas de cinemáticas, 17.000 finales posibles y un sistema de combate táctico por turnos. Los jugadores pueden elegir entre 12 clases y 46 subclases, cada una con habilidades únicas. La historia sigue a personajes infectados por un parásito ilítido, con decisiones que alteran permanentemente el mundo. El modo cooperativo para hasta 4 jugadores permite estrategias combinadas únicas.",
+        "reviews": []
+    },
+
+    {
+        "title": "Call of Duty: Modern Warfare III",
+        "price": "69.99",
+        "rating": "3.5",
+        "imageFilename": "cod-poster.jpg",
+        "developer": "Sledgehammer Games",
+        "editor": "Activision",
+        "release_date": "2023-11-10",
+        "gamemod": ["Un jugador", "Multijugador", "Competitivo", "Cooperativo"],
+        "age_classification": "18",
+        "genre": ["Shooters", "Acción", "Battle Royale"],
+        "platform": ["PC", "Play Station", "XBox"],
+        "short_description": "Continuación directa de MWII con Makarov como villano principal. Incluye modo campaña, multijugador con todos los mapas de MW2 (2009) y Zombies en mundo abierto.",
+        "description": "La tercera entrega del reboot de Modern Warfare continúa la historia donde MWII la dejó, con Task Force 141 persiguiendo a Vladimir Makarov. La campaña ofrece misiones de 'Operaciones de combate' con múltiples enfoques. El multijugador reintroduce todos los 16 mapas clásicos de Modern Warfare 2 (2009), remasterizados. El modo Zombies se traslada a un mapa de mundo abierto tipo DMZ con misiones por contrato. Incluye soporte completo para controladores en PC y cross-play entre plataformas.",
+        "reviews": []
+    },
+
+    {
+        "title": "Cyberpunk 2077: Phantom Liberty",
+        "price": "29.99",
+        "rating": "4.6",
+        "imageFilename": "cyberpunk-poster.jpg",
+        "developer": "CD Projekt Red",
+        "editor": "CD Projekt",
+        "release_date": "2023-09-26",
+        "gamemod": ["Un jugador", "RPG", "Historia"],
+        "age_classification": "18",
+        "genre": ["RPG", "Mundo Abierto", "Acción", "Cyberpunk"],
+        "platform": ["PC", "Play Station", "XBox"],
+        "short_description": "Expansión independiente con Idris Elba. Nueva zona de Dogtown, sistema de habilidades revampado y final secreto para la campaña base.",
+        "description": "Expansión de espionaje que traslada a V al distrito amurallado de Dogtown, un estado fallido dentro de Night City. Con la participación de Idris Elba como Solomon Reed, agente de la FIA. Introduce el sistema de habilidades revampado 2.0 con árboles de habilidades redesarrollados y el nuevo árbol de Relic. Añade más de 30 nuevas armas, 100+ piezas de ropa y vehículos. La historia ofrece múltiples finales y desbloquea un nuevo final para la campaña principal. Incluye mejoras técnicas como Ray Tracing: Overdrive mode.",
+        "reviews": []
+    },
+
+    {
+        "title": "Elden Ring",
+        "price": "59.99",
+        "rating": "4.8",
+        "imageFilename": "eldenring-poster.jpg",
+        "developer": "FromSoftware",
+        "editor": "Bandai Namco",
+        "release_date": "2022-02-25",
+        "gamemod": ["Un jugador", "Multijugador", "Cooperativo", "Competitivo"],
+        "age_classification": "16",
+        "genre": ["RPG", "Acción", "Mundo Abierto", "Souls-like"],
+        "platform": ["PC", "Play Station", "XBox"],
+        "short_description": "RPG de mundo abierto de FromSoftware y George R.R. Martin. Explora las Tierras Intermedias, derrota a señores semidioses y conviértete en el Lord del Círculo.",
+        "description": "Colaboración entre Hidetaka Miyazaki y George R.R. Martin. Un mundo abierto masivo de 79km² sin marcadores de misión, que incentiva la exploración orgánica. Con 10 jefes principales, 83 jefes opcionales y 6 finales. El sistema de combate hereda la dificultad característica de Souls pero añade montura, salto y espíritus invocables. Las 31 armas únicas ofrecen movimientos especiales (Ash of War) intercambiables. La narrativa ambiental cuenta la historia de la fragmentación del Círculo de Elden.",
+        "reviews": []
+    },
+
+    {
+        "title": "Among Us",
+        "price": "4.99",
+        "rating": "4.0",
+        "imageFilename": "amongus-poster.jpg",
+        "developer": "InnerSloth",
+        "editor": "InnerSloth",
+        "release_date": "2018-06-15",
+        "gamemod": ["Multijugador", "Cooperativo", "Competitivo", "Social"],
+        "age_classification": "10",
+        "genre": ["Social", "Puzles", "Estrategia", "Party"],
+        "platform": ["PC", "Play Station", "XBox", "Nintendo Switch", "Móvil"],
+        "short_description": "Juego social de deducción para 4-15 jugadores. Tripulantes completan tareas, impostores los sabotean. ¡Encuentra al impostor antes de que sea tarde!",
+        "description": "Fenómeno viral de 2020 que popularizó los juegos de deducción social. En cada partida, 1-3 impostores deben eliminar a los tripulantes sin ser descubiertos, mientras los tripulantes completan minijuegos tipo tarea. El juego destaca por sus reuniones de emergencia donde los jugadores debaten y votan sospechosos. Con 4 mapas (The Skeld, Mira HQ, Polus, The Airship), más de 30 tareas diferentes y personalización completa de colores y sombreros. El cross-play permite que móviles, consolas y PC jueguen juntos.",
+        "reviews": []
+    },
+
+    {
+        "title": "Rocket League",
+        "price": "0.00",
+        "rating": "4.4",
+        "imageFilename": "rocketLeague-poster.jpg",
+        "developer": "Psyonix",
+        "editor": "Psyonix",
+        "release_date": "2015-07-07",
+        "gamemod": ["Multijugador", "Competitivo", "Cooperativo", "Deportes"],
+        "age_classification": "3",
+        "genre": ["Deportes", "Carreras", "Arcade", "Competitivo"],
+        "platform": ["PC", "Play Station", "XBox", "Nintendo Switch"],
+        "short_description": "Fútbol con coches voladores. Golpea la pelota gigante con tu coche personalizable. Modos competitivos, casuales y torneos.",
+        "description": "La combinación perfecta de fútbol y conducción arcade. Los coches pueden saltar, impulsarse en el aire y realizar acrobacias aéreas. El juego es gratuito desde 2020 con cross-play completo entre plataformas. El sistema de rangos competitivos va desde Bronce hasta Supersonic Legend. Los coches son completamente personalizables con decenas de cuerpos, miles de combinaciones de pintura y efectos especiales. Colaboraciones con Fast & Furious, Batman, Back to the Future y más. El modo extras incluye Hockey, Baloncesto y modo Rumble con power-ups.",
+        "reviews": []
+    },
+
+    {
+        "title": "Overwatch 2",
+        "price": "0.00",
+        "rating": "3.8",
+        "imageFilename": "overwatch-poster.jpg",
+        "developer": "Blizzard Entertainment",
+        "editor": "Blizzard Entertainment",
+        "release_date": "2022-10-04",
+        "gamemod": ["Multijugador", "Competitivo", "Cooperativo"],
+        "age_classification": "12",
+        "genre": ["Shooters", "Hero Shooter", "Estrategia"],
+        "platform": ["PC", "Play Station", "XBox", "Nintendo Switch"],
+        "short_description": "Shooter por equipos gratuito con héroes únicos. Cambia de 6v6 a 5v5 con un tanque por equipo. Nuevos modos Push y Flashpoint.",
+        "description": "Secuela gratuita que reemplaza al Overwatch original. Reducción de 6v6 a 5v5 (1 tanque, 2 daño, 2 soporte) para partidas más rápidas. Sistema de batalla por pases reemplaza las loot boxes, con héroes nuevos desbloqueables gratis o mediante pase premium. Modos Push y Flashpoint ofrecen objetivos dinámicos. Los héroes tienen kits reequilibrados y nueva apariencia. Las temporadas traen nuevos mapas, eventos y colaboraciones (One-Punch Man, LE SSERAFIM). El modo PvE se vende por separado como misiones heroicas.",
+        "reviews": []
+    },
+
+    {
+        "title": "Resident Evil 4 Remake",
+        "price": "59.99",
+        "rating": "4.7",
+        "imageFilename": "residentEvil-poster.webp",
+        "developer": "Capcom",
+        "editor": "Capcom",
+        "release_date": "2023-03-24",
+        "gamemod": ["Un jugador", "Acción", "Survival Horror"],
+        "age_classification": "18",
+        "genre": ["Terror", "Survival Horror", "Acción", "Shooters"],
+        "platform": ["PC", "Play Station", "XBox"],
+        "short_description": "Remake completo del clásico de 2005. Leon S. Kennedy rescata a la hija del presidente de una secta en España. Gráficos RE Engine y jugabilidad modernizada.",
+        "description": "Reimaginación que mantiene la esencia pero moderniza cada aspecto. Gráficos fotorealistas con el motor RE Engine, iluminación dinámica y efectos de niebla atmosféricos. Jugabilidad más táctica con posibilidad de moverse mientras apuntas, cuchillo degradable y menú de crafting en tiempo real. La historia expande personajes como Luis Sera y Ada Wong. Mercader ahora permite mejorar armas en cualquier lugar. Incluye los modos Mercenarios y Separate Ways DLC. Técnicamente soporta ray tracing, 4K y hasta 120fps en consolas de nueva generación.",
+        "reviews": []
+    },
+
+    {
+        "title": "Stardew Valley",
+        "price": "14.99",
+        "rating": "4.9",
+        "imageFilename": "stardewValley-poster.jpg",
+        "developer": "ConcernedApe",
+        "editor": "ConcernedApe",
+        "release_date": "2016-02-26",
+        "gamemod": ["Un jugador", "Multijugador", "Cooperativo", "Simulación"],
+        "age_classification": "10",
+        "genre": ["Simulación", "RPG", "Indie", "Agricultura"],
+        "platform": ["PC", "Play Station", "XBox", "Nintendo Switch", "Móvil"],
+        "short_description": "Simulador de granja indie creado por una sola persona. Hereda una granja abandonada, cultiva, cría animales, pesca y haz amigos en Pueblo Pelícano.",
+        "description": "Obra maestra indie desarrollada completamente por Eric Barone durante 4 años. Combina gestión de granja (28 tipos de cultivos, 12 animales), exploración de minas (120 pisos), pesca (55 tipos de peces) y relaciones sociales (28 personajes con historias complejas). Actualizaciones gratuitas añaden la isla Ginger, modos de dificultad, granjas especializadas y cooperativo para 4 jugadores. Los eventos estacionales y festivales anuales mantienen el ciclo de juego. Modding activo con miles de mods en Nexus. Cross-save entre PC y móvil.",
         "reviews": []
     }
 ]
