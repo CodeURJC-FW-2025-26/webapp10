@@ -3,15 +3,12 @@ async function securemessage(event) {
     
     const confirmed = window.confirm("¿Está seguro de que desea borrar el juego? Esta acción no se puede deshacer.");
     if (confirmed) {
-        // Mostrar el spinner de carga
         showLoadingSpinner();
-        // Enviar el formulario manualmente
         event.target.submit();
     }
 }
 
 function showLoadingSpinner() {
-    // Crear contenedor del spinner si no existe
     let spinner = document.getElementById('loading-spinner');
     if (!spinner) {
         spinner = document.createElement('div');
