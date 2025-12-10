@@ -144,16 +144,37 @@ router.get('/success', async (req, res) => {
     });
 });
 
-// Route: Delete a game (GET) - deletes and renders deleted confirmation
-router.get('/game/:id/delete', async (req, res) => {
+// Route: Delete a game (POST) - deletes and returns JSON response
+router.post('/game/:id/delete', async (req, res) => {
+    try {
+        let game = await catalog.deleteGame(req.params.id);
 
-    let game = await catalog.deleteGame(req.params.id);
+        // Remove uploaded image file if present
+        if (game && game.imageFilename) {
+            try {
+                await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+            } catch (err) {
+                console.error('Error al eliminar archivo de imagen:', err);
+            }
+        }
 
-    // Remove uploaded image file if present
-    if (game && game.imageFilename) {
-        await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+        res.json({
+            success: true,
+            message: 'Juego borrado exitosamente',
+            gameId: req.params.id
+        });
+
+    } catch (error) {
+        console.error('Error al borrar el juego:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Ocurrió un error al borrar el juego. Por favor, intenta nuevamente.'
+        });
     }
+});
 
+// Route: View deleted game confirmation page
+router.get('/game/:id/deleted', async (req, res) => {
     res.render('deleted', {
         genres: allGenres.map(g => ({ ...g, active: false })),
         platforms: allPlatforms.map(p => ({ ...p, active: false })),
