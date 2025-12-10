@@ -121,3 +121,4 @@ export async function countSearchResults(query, genre, platform) {
     
     return games.countDocuments(filter);
 }
+
