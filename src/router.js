@@ -516,8 +516,9 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
     // ---------------------------
     // If there are errors: Show them and send back to form
     if (errors.length > 0) {
-        return res.status(400).render("Error", {
-            errors
+        return res.status(400).json({
+            success: false,
+            errors 
         });
     } else {
         // ---------------------------
@@ -537,8 +538,9 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
-
+        
     };
+
 
 });
 
