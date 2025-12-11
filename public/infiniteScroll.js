@@ -48,6 +48,7 @@ async function loadMore() {
                 });
             }
         }
+    
     } catch (error) {
         console.error('Error cargando más juegos:', error);
         currentPage--;
@@ -94,8 +95,9 @@ function renderStars(stars) {
     return html;
 }
 
+// Escape HTML to prevent XSS (no lo hemos visto como tal, pero es buena práctica)
 function escapeHTML(text) {
-    const div = document.createElement('div');
+    const div = document.createElement('div'); 
     div.textContent = text;
     return div.innerHTML;
 }
