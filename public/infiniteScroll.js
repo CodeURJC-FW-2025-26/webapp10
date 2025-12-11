@@ -7,12 +7,11 @@ async function loadMore() {
     if (isLoading || !hasMore) return;
     
     isLoading = true;
-    
-    // show loading indicator
-    const btn = document.getElementById('loadMore');
-    if (btn) {
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Cargando...';
-        btn.disabled = true;
+
+    // Show loading indicator (spinner existente)
+    const spinnerContainer = document.querySelector('.spinner-container');
+    if (spinnerContainer) {
+        spinnerContainer.style.display = 'flex';
     }
     
     try {
@@ -48,30 +47,17 @@ async function loadMore() {
                     container.insertAdjacentHTML('beforeend', gameHTML);
                 });
             }
-            
-            // Hide traditional pagination
-            const pagination = document.querySelector('.pagination');
-            if (pagination) pagination.style.display = 'none';
-            
-            // If no more games, hide button
-            if (!hasMore && btn) {
-                btn.style.display = 'none';
-            }
         }
     } catch (error) {
         console.error('Error cargando más juegos:', error);
-        currentPage--; // Revert if error
-        
-        if (btn) {
-            btn.innerHTML = 'Error - Intenta de nuevo';
-            btn.disabled = false;
-        }
+        currentPage--;
     } finally {
         isLoading = false;
         
-        if (btn && hasMore) {
-            btn.innerHTML = 'Cargar más';
-            btn.disabled = false;
+        // Hide spinner
+        const spinnerContainer = document.querySelector('.spinner-container');
+        if (spinnerContainer) {
+            spinnerContainer.style.display = 'none';
         }
     }
 }
