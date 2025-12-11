@@ -222,6 +222,24 @@ router.get('/game/:id/image', async (req, res) => {
 
 });
 
+// Route: Check if a game title already exists (AJAX endpoint)
+router.post('/check-title', async (req, res) => {
+    try {
+        const { title } = req.body;
+
+        if (!title || title.trim() === '') {
+            return res.json({ exists: false });
+        }
+
+        const existing = await findGameByName(title.trim());
+
+        res.json({ exists: !!existing });
+    } catch (error) {
+        console.error('Error checking title:', error);
+        res.status(500).json({ exists: false });
+    }
+});
+
 router.post('/game/create', upload.single('imageFilename'), handler);
 router.post('/game/create/:id', upload.single('imageFilename'), handler);
 
@@ -287,7 +305,6 @@ async function handler(req, res) {
         errors.push("El rating debe estar entre 0 y 5, y en incrementos de 0,5.");
     };
 
-    // 6. Validate text length constraints for descriptions, developer, editor
     // 6. The name, descriptions, developer and editor sizes are adequate
     if (req.body.title) {
         if (req.body.title.length < 1 || req.body.title.length > 75) {
@@ -371,6 +388,7 @@ async function handler(req, res) {
             _id: game_id || game_create._id?.toString(),
             new_game_added: true,
             new_game_from_scratch,
+            
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
@@ -526,7 +544,6 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         });
         
     };
-
 
 });
 

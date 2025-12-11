@@ -12,11 +12,11 @@
             <br>
 
             {{#new_game_from_scratch}}
-                <form method="post" action="/game/create" enctype="multipart/form-data" class="d-grid">
+                <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data" class="d-grid">
             {{/new_game_from_scratch}}
 
             {{^new_game_from_scratch}}
-                <form method="post" action="/game/create/{{game_id}}" enctype="multipart/form-data" class="d-grid">
+                <form method="post" id="createGameForm" action="/game/create/{{game_id}}" novalidate enctype="multipart/form-data" class="d-grid">
             {{/new_game_from_scratch}}
 
                 <!-- Row for the videogame name -->
@@ -71,7 +71,7 @@
                 <!-- Row for the videogame cost -->
                 <div class="row mb-4">
                     <label for="price" class="col-sm-3 col-form-label">Coste del videojuego:</label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <input type="number" id="price" name="price" min="0" max="1000" step="0.01" class="form-control" placeholder="Coste en €" value="{{game.price}}" required>
                     </div>
                     <label for="price" class="col-sm-1 col-form-label">€</label>
@@ -217,7 +217,7 @@
                 <!-- Row for the videogame rating -->
                 <div class="row mb-4">
                     <label for="rating" class="col-sm-3 col-form-label">Calificación del videojuego:</label>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <input type="number" id="rating" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5" value="{{game.rating}}" required>
                     </div>
                 </div>
