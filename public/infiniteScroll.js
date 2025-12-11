@@ -116,16 +116,24 @@ function escapeHTML(text) {
 
 // Infinite scroll
 function initInfiniteScroll() {
-    window.addEventListener("scroll", () => {
-        const documentHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const windowHeight = window.innerHeight;
+    const contentContainer = document.querySelector('.content'); 
+    
+    if (!contentContainer) {
+        console.error('Contenedor de juegos no encontrado');
+        return;
+    }
+    
+    contentContainer.addEventListener("scroll", () => {
+        const containerHeight = contentContainer.clientHeight;
+        const scrollTop = contentContainer.scrollTop;
+        const scrollHeight = contentContainer.scrollHeight;
         
-        if ((scrollTop + windowHeight >= documentHeight - 100)) {
+        if ((scrollTop + containerHeight >= scrollHeight - 100)) {
             loadMore();
         }
     });
 }
+
 
 // Initialize
 document.addEventListener("DOMContentLoaded", function() {
