@@ -68,6 +68,11 @@ function calcRating(rating) {
     return { starFull, starHalf, starEmpty };
 }
 
+// Helper function to convert a value to an array
+function toArr(v) {
+    return Array.isArray(v) ? v : (v ? [v] : []);
+    }
+
 // Route: Home page - list games with pagination
 router.get('/', async (req, res) => {
 
@@ -231,7 +236,7 @@ router.post('/check-title', async (req, res) => {
             return res.json({ exists: false });
         }
 
-        const existing = await findGameByName(title.trim());
+        const existing = await catalog.findGameByName(title.trim());
 
         res.json({ exists: !!existing });
     } catch (error) {
@@ -245,7 +250,7 @@ router.post('/game/create/:id', upload.single('imageFilename'), handler);
 
 async function handler(req, res) {
 
-    let new_game_from_scratch = !req.query.id;
+    let new_game_from_scratch = !req.query.id; 
     let game_id = req.query.id;
     let existing_game = game_id ? await catalog.getGame(game_id) : null;
 
@@ -278,7 +283,7 @@ async function handler(req, res) {
     };
 
     // Image is required
-    if (!req.file) {
+    if (new_game_from_scratch && !req.file) {
         errors.push("La imagen es obligatoria.");
     };
 
@@ -359,14 +364,23 @@ async function handler(req, res) {
     }
     // Case 2: existing is null -> The name is unique and validation passes.
 
+    const platformArr = toArr(req.body.platform);
+    const gamemodArr = toArr(req.body.gamemod);
+    const genreArr = toArr(req.body.genre);
+
+    // In edition, if no platforms/modes/genres are sent, keep existing ones
+    const platformsToValidate = platformArr.length > 0 ? platformArr : (existing_game?.platform || []);
+    const modesToValidate = gamemodArr.length > 0 ? gamemodArr : (existing_game?.gamemod || []);
+    const genresToValidate = genreArr.length > 0 ? genreArr : (existing_game?.genre || []);
+
     // 8. Ensure at least one platform, mode and genre is selected
-    if (!req.body.platform || req.body.platform.length === 0) {
+    if (!platformsToValidate || platformsToValidate.length === 0) {
         errors.push("Debes seleccionar al menos una plataforma de juego.");
     };
-    if (!req.body.gamemod || req.body.gamemod.length === 0) {
+    if (!modesToValidate || modesToValidate.length === 0) {
         errors.push("Debes seleccionar al menos un modo de juego.");
     };
-    if (!req.body.genre || req.body.genre.length === 0) {
+    if (!genresToValidate || genresToValidate.length === 0) {
         errors.push("Debes seleccionar al menos un género.");
     };
 
@@ -390,14 +404,14 @@ async function handler(req, res) {
             imageFilename: req.file ? req.file.filename : existing_game.imageFilename,
             price: req.body.price || existing_game.price,
             release_date: req.body.release_date || existing_game.release_date,
-            platform: Array.isArray(req.body.platform) ? req.body.platform : [req.body.platform].filter(Boolean),
-            gamemod: Array.isArray(req.body.gamemod) ? req.body.gamemod : [req.body.gamemod].filter(Boolean),
+            platform: platformArr.length > 0 ? platformArr : existing_game.platform,
+            gamemod: gamemodArr.length > 0 ? gamemodArr : existing_game.gamemod,
             age_classification: req.body.age_classification || existing_game.age_classification,
             rating: req.body.rating || existing_game.rating,
-            genre: Array.isArray(req.body.genre) ? req.body.genre : [req.body.genre].filter(Boolean)
+            genre: genreArr.length > 0 ? genreArr : existing_game.genre
         };
 
-        if (new_game_from_scratch == true) {
+        if (new_game_from_scratch) {
             game_create.reviews = [];
             await catalog.addGame(game_create);
         } else {
@@ -409,7 +423,6 @@ async function handler(req, res) {
             _id: game_id || game_create._id?.toString(),
             new_game_added: true,
             new_game_from_scratch,
-            
             genres: allGenres.map(g => ({ ...g, active: false })),
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         });
@@ -474,12 +487,33 @@ router.get('/editgame/:id', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
 
+    //Convert to Sets for easier checking
+    const platformSet = new Set(toArr(game.platform));
+    const genreSet = new Set(toArr(game.genre));
+    const gamemodSet = new Set(toArr(game.gamemod));
+
     res.render('CreateGame', {
         game,
         game_id,
         new_game_from_scratch: false,
-        genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        genres: allGenres.map(g => ({ 
+            ...g, 
+            active: false,
+            checked: genreSet.has(g.value)
+        })),
+        platforms: allPlatforms.map(p => ({ 
+            ...p, 
+            active: false,
+            checked: platformSet.has(p.value)
+        })),
+        gamemods: [
+            { value: 'Un jugador', display: 'Un jugador', checked: gamemodSet.has('Un jugador') },
+            { value: 'Multijugador', display: 'Multijugador', checked: gamemodSet.has('Multijugador') },
+            { value: 'Cooperativo', display: 'Cooperativo', checked: gamemodSet.has('Cooperativo') },
+            { value: 'Competitivo', display: 'Competitivo', checked: gamemodSet.has('Competitivo') },
+            { value: 'Práctica/Entrenamiento', display: 'Práctica/Entrenamiento', checked: gamemodSet.has('Práctica/Entrenamiento') },
+            { value: 'Historia', display: 'Historia', checked: gamemodSet.has('Historia') }
+        ]
     });
 });
 

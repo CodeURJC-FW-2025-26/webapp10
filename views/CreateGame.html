@@ -86,120 +86,30 @@
                 </div>
 
                 <!-- Row for the videogame platforms -->
-                <div class="row mb-4">
-                    <label for="platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
-                    <div id="platforms" class="col-sm-9">
-                        <!-- Checkbox for PlayStation platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_PlayStation" name="platform[]" value="PlayStation">
-                            <label class="form-check-label" for="platform_PlayStation">
-                                PlayStation
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Xbox platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_XBox" name="platform[]" value="XBox">
-                            <label class="form-check-label" for="platform_XBox">
-                                XBox
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Nintendo platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_Nintendo" name="platform[]" value="Nintendo">
-                            <label class="form-check-label" for="platform_Nintendo">
-                                Nintendo
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for PCs platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_PCs" name="platform[]" value="PC">
-                            <label class="form-check-label" for="platform_PCs">
-                                PCs
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Mobile platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_Mobiles" name="platform[]" value="Móvil">
-                            <label class="form-check-label" for="platform_Mobiles">
-                                Móviles (Smartphones y Tablets)
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for VR platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_VR" name="platform[]" value="Realidad Virtual">
-                            <label class="form-check-label" for="platform_VR">
-                                Realidad Virtual (VR)
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Arcade platform -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="platform_Arcade" name="platform[]" value="Arcade">
-                            <label class="form-check-label" for="platform_Arcade">
-                                Máquinas Arcade
-                            </label>
-                        </div>
-                    </div>
-                </div>
+               <div class="row mb-4">
+    <label for="platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
+    <div id="platforms" class="col-sm-9">
+        {{#platforms}}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="platform_{{value}}" name="platform[]" value="{{value}}" {{#checked}}checked{{/checked}}>
+            <label class="form-check-label" for="platform_{{value}}">{{display}}</label>
+        </div>
+        {{/platforms}}
+    </div>
+</div>
 
                 <!-- Row for the videogame modes -->
                 <div class="row mb-4">
-                    <label for="modes" class="col-sm-3 col-form-label">Modos de juego disponibles:</label>
-                    <div id="modes" class="col-sm-9">
-                        <!-- Checkbox for Single Player mode -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mode_SinglePlayer" name="gamemod[]" value="Un jugador">
-                            <label class="form-check-label" for="mode_SinglePlayer">
-                                Un jugador
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Multiplayer mode -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mode_Multiplayer" name="gamemod[]" value="Multijugador">
-                            <label class="form-check-label" for="mode_Multiplayer">
-                                Multijugador
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Cooperative mode -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mode_Cooperative" name="gamemod[]" value="Cooperativo">
-                            <label class="form-check-label" for="mode_Cooperative">
-                                Cooperativo
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Competitive mode -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mode_Competitive" name="gamemod[]" value="Competitivo">
-                            <label class="form-check-label" for="mode_Competitive">
-                                Competitivo
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Practice/Training mode -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mode_Practice" name="gamemod[]" value="Práctica/Entrenamiento">
-                            <label class="form-check-label" for="mode_Practice">
-                                Práctica/Entrenamiento
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Story/Campaign mode -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mode_Story" name="gamemod[]" value="Historia">
-                            <label class="form-check-label" for="mode_Story">
-                                Historia/Campaña
-                            </label>
-                        </div>
-                    </div>
-                </div>
+    <label for="platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
+    <div id="platforms" class="col-sm-9">
+        {{#platforms}}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="platform_{{value}}" name="platform[]" value="{{value}}" {{#checked}}checked{{/checked}}>
+            <label class="form-check-label" for="platform_{{value}}">{{display}}</label>
+        </div>
+        {{/platforms}}
+    </div>
+</div>
 
                 <!-- Row for the age classification -->
                 <div class="row mb-4">
@@ -224,121 +134,16 @@
 
                 <!-- Row for the videogame genres -->
                 <div class="row mb-4">
-                    <label for="genres" class="col-sm-3 col-form-label">Género/s principal/es del videojuego:</label>
-                    <div id="genres" class="col-sm-9">
-                        <!-- Checkbox for Survival genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Survival" name="genre[]" value="Supervivencia">
-                            <label class="form-check-label" for="genre_Survival">
-                                Supervivencia
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Action-Adventure genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_ActionAdventure" name="genre[]" value="Aventura">
-                            <label class="form-check-label" for="genre_ActionAdventure">
-                                Acción-Aventura
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Strategy genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Strategy" name="genre[]" value="Estrategia">
-                            <label class="form-check-label" for="genre_Strategy">
-                                Estrategia
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Sandbox genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Sandbox" name="genre[]" value="Sandbox">
-                            <label class="form-check-label" for="genre_Sandbox">
-                                Sandbox
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Sports genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Sports" name="genre[]" value="Deportes">
-                            <label class="form-check-label" for="genre_Sports">
-                                Deportes
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Simulation genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Simulation" name="genre[]" value="Simulación">
-                            <label class="form-check-label" for="genre_Simulation">
-                                Simulación
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Puzzle genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Puzzle" name="genre[]" value="Puzles">
-                            <label class="form-check-label" for="genre_Puzzle">
-                                Puzles
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for RPG genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_RPG" name="genre[]" value="RPG">
-                            <label class="form-check-label" for="genre_RPG">
-                                Rol (RPG)
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Horror genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Horror" name="genre[]" value="Terror">
-                            <label class="form-check-label" for="genre_Horror">
-                                Terror
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Battle Royale genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_BattleRoyale" name="genre[]" value="Battle Royale">
-                            <label class="form-check-label" for="genre_BattleRoyale">
-                                Battle Royale
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Racing genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Racing" name="genre[]" value="Carreras">
-                            <label class="form-check-label" for="genre_Racing">
-                                Carreras
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Indie genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Indie" name="genre[]" value="Indie">
-                            <label class="form-check-label" for="genre_Indie">
-                                Indie
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Shooters genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_Shooters" name="genre[]" value="Shooters">
-                            <label class="form-check-label" for="genre_Shooters">
-                                Shooters
-                            </label>
-                        </div>
-
-                        <!-- Checkbox for Open World genre -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="genre_OpenWorld" name="genre[]" value="Mundo Abierto">
-                            <label class="form-check-label" for="genre_OpenWorld">
-                                Mundo Abierto
-                            </label>
-                        </div>
-                    </div>
-                </div>
+    <label for="genres" class="col-sm-3 col-form-label">Género/s principal/es del videojuego:</label>
+    <div id="genres" class="col-sm-9">
+        {{#genres}}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="genre_{{value}}" name="genre[]" value="{{value}}" {{#checked}}checked{{/checked}}>
+            <label class="form-check-label" for="genre_{{value}}">{{display}}</label>
+        </div>
+        {{/genres}}
+    </div>
+</div>
 
                 <!-- Row for the "buttons" -->
                 <div class="row mb-4" id="form_buttons">
