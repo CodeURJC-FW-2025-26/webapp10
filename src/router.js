@@ -145,7 +145,15 @@ router.get('/creategame', async (req, res) => {
     res.render('CreateGame', {
         new_game_from_scratch: true,
         genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        platforms: allPlatforms.map(p => ({ ...p, active: false })),
+        gamemods: [
+            { value: 'Un jugador', display: 'Un jugador', checked: false },
+            { value: 'Multijugador', display: 'Multijugador', checked: false },
+            { value: 'Cooperativo', display: 'Cooperativo', checked: false },
+            { value: 'Competitivo', display: 'Competitivo', checked: false },
+            { value: 'Práctica/Entrenamiento', display: 'Práctica/Entrenamiento', checked: false },
+            { value: 'Historia', display: 'Historia', checked: false }
+        ]
     });
 });
 
