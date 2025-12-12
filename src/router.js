@@ -558,10 +558,10 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         };
 
         await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
-        res.render('Success', {
-            new_game_added: false, game, _id: game_id,
-            genres: allGenres.map(g => ({ ...g, active: false })),
-            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        res.json({
+            success: true,
+            message: 'Reseña creada exitosamente',
+            review: review_create
         });
         
     };
@@ -722,3 +722,4 @@ router.get('/category', async (req, res) => {
         activePlatform: platform
     });
 });
+
