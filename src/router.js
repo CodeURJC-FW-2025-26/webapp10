@@ -332,11 +332,32 @@ async function handler(req, res) {
         }
     };
 
-    // 7. Ensure title is unique
-    const existing = await catalog.findGameByName(req.body.title.trim());
+    // 7. Ensure title is unique ONLY if creating a new game or changing the title
+    const newTitle = req.body.title.trim();
+    const existing = await catalog.findGameByName(newTitle); // Returns the found game object or null
+
     if (existing) {
-        errors.push("Ya existe un videojuego con ese nombre.");
-    };
+        // Case 1: A game with the same title was found -> Potential error.
+
+        if (new_game_from_scratch) {
+            // Option A: It's a creation, and the title already exists -> ERROR.
+            errors.push("Ya existe un videojuego con ese nombre.");
+
+        } else {
+            // Option B: It's an edit. We must check if the found game is the same as the one we are editing.
+
+            // Compare the ID of the found game with the ID of the game we are editing.
+            // .toString() is used to strictly compare MongoDB ObjectIDs.
+            const isSameGame = existing._id.toString() === existing_game._id.toString();
+
+            if (!isSameGame) {
+                // The found game is NOT the game we are editing -> ERROR, the title belongs to ANOTHER.
+                errors.push("Ya existe un videojuego con ese nombre.");
+            }
+            // If isSameGame is true, validation passes without error (the title is valid for this game).
+        }
+    }
+    // Case 2: existing is null -> The name is unique and validation passes.
 
     // 8. Ensure at least one platform, mode and genre is selected
     if (!req.body.platform || req.body.platform.length === 0) {
