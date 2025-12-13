@@ -235,21 +235,45 @@ router.get('/game/:id/image', async (req, res) => {
 
 });
 
-// Route: Check if a game title already exists (AJAX endpoint)
-router.post('/check-title', async (req, res) => {
-    try {
-        const { title } = req.body;
+// New endpoint to verify the uniqueness of the title
+router.get('/check-title-unique', async (req, res) => {
+    // 1. Obtain the title from the query parameter
+    const title = req.query.title ? req.query.title.trim() : '';
+    
+    // ID of the game being edited
+    const existingGameId = req.query.game_id;
 
-        if (!title || title.trim() === '') {
-            return res.json({ exists: false });
+    if (!title) {
+        return res.status(400).json({ isUnique: false, message: 'El título es requerido.' });
+    }
+
+    try {
+        // 2. Search in MongoDB for a game with the same title
+        const existingGame = await catalog.findGameByName(title); 
+
+        // 3. Respond to the client based on the search result
+        if (existingGame) {
+            // A game with that title was found
+            
+            if (existingGameId && existingGame._id.toString() === existingGameId) {
+                // Edition case, where the found title belongs to the same game we are editing.
+                return res.json({ isUnique: true });
+            } else {
+                // Creation or Edition case, where the title belongs to ANOTHER game.
+                return res.json({ 
+                    isUnique: false, 
+                    message: 'Ya existe un videojuego con ese nombre en el catálogo.' 
+                });
+            }
+            
+        } else {
+            // The game doesn't exist -> It is unique
+            return res.json({ isUnique: true });
         }
 
-        const existing = await catalog.findGameByName(title.trim());
-
-        res.json({ exists: !!existing });
     } catch (error) {
-        console.error('Error checking title:', error);
-        res.status(500).json({ exists: false });
+        console.error('Error al verificar título:', error);
+        res.status(500).json({ isUnique: false, message: 'Error interno del servidor.' });
     }
 });
 
