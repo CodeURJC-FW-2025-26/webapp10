@@ -12,23 +12,27 @@
             <br>
 
             {{#new_game_from_scratch}}
-                <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data" class="d-grid">
-            {{/new_game_from_scratch}}
+            <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data"
+                class="d-grid">
+                {{/new_game_from_scratch}}
 
-            {{^new_game_from_scratch}}
-                <form method="post" id="createGameForm" action="/game/create/{{game_id}}" novalidate enctype="multipart/form-data" class="d-grid">
-            {{/new_game_from_scratch}}
+                {{^new_game_from_scratch}}
+                <form method="post" id="createGameForm" action="/game/create/{{game_id}}" novalidate
+                    enctype="multipart/form-data" class="d-grid">
+                    {{/new_game_from_scratch}}
 
                     <!-- Hidden field to store the game ID when editing -->
                     {{^new_game_from_scratch}}
-                        <input type="hidden" id="game_id" name="game_id" value="{{game_id}}">
+                    <input type="hidden" id="game_id" name="game_id" value="{{game_id}}">
                     {{/new_game_from_scratch}}
 
                     <!-- Row for the videogame name -->
                     <div class="row mb-4">
                         <label for="title" class="col-sm-3 col-form-label">Nombre del videojuego:</label>
                         <div class="col-sm-9">
-                            <input type="text" id="title" name="title" class="form-control" placeholder="Debe comenzar con mayúscula" maxlength="75" value="{{game.title}}" required>
+                            <input type="text" id="title" name="title" class="form-control"
+                                placeholder="Debe comenzar con mayúscula" maxlength="75" value="{{game.title}}"
+                                required>
                         </div>
                     </div>
 
@@ -36,7 +40,9 @@
                     <div class="row mb-4">
                         <label for="description" class="col-sm-3 col-form-label">Descripción del videojuego:</label>
                         <div class="col-sm-9">
-                            <textarea id="description" name="description" class="form-control" rows="4" placeholder="Mínimo de caracteres: 250. Máximo de caracteres: 1500." minlength="250" maxlength="1500" required>{{game.description}}</textarea>
+                            <textarea id="description" name="description" class="form-control" rows="4"
+                                placeholder="Mínimo de caracteres: 250. Máximo de caracteres: 1500." minlength="250"
+                                maxlength="1500" required>{{game.description}}</textarea>
                         </div>
                     </div>
 
@@ -45,7 +51,9 @@
                         <label for="short_description" class="col-sm-3 col-form-label">Descripción corta del
                             videojuego:</label>
                         <div class="col-sm-9">
-                            <textarea id="short_description" name="short_description" class="form-control" rows="3" placeholder="Mínimo de caracteres: 100. Máximo de caracteres: 500." minlength="100" maxlength="500" required>{{game.short_description}}</textarea>
+                            <textarea id="short_description" name="short_description" class="form-control" rows="3"
+                                placeholder="Mínimo de caracteres: 100. Máximo de caracteres: 500." minlength="100"
+                                maxlength="500" required>{{game.short_description}}</textarea>
                         </div>
                     </div>
 
@@ -53,7 +61,8 @@
                     <div class="row mb-4">
                         <label for="developer" class="col-sm-3 col-form-label">Desarrollador del videojuego:</label>
                         <div class="col-sm-9">
-                            <input type="text" id="developer" name="developer" class="form-control" placeholder="Desarrollador" value="{{game.developer}}" maxlength="50" required>
+                            <input type="text" id="developer" name="developer" class="form-control"
+                                placeholder="Desarrollador" value="{{game.developer}}" maxlength="50" required>
                         </div>
                     </div>
 
@@ -61,7 +70,8 @@
                     <div class="row mb-4">
                         <label for="editor" class="col-sm-3 col-form-label">Editor del videojuego:</label>
                         <div class="col-sm-9">
-                            <input type="text" id="editor" name="editor" class="form-control" placeholder="Editor" value="{{game.editor}}" maxlength="50" required>
+                            <input type="text" id="editor" name="editor" class="form-control" placeholder="Editor"
+                                value="{{game.editor}}" maxlength="50" required>
                         </div>
                     </div>
 
@@ -69,8 +79,20 @@
                     <div class="row mb-4">
                         <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                         <div class="col-sm-9">
-                            <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp">
-                            <span>Archivo actual: <img src="/game/{{game._id}}/image" width="300" height="300"> </span>
+                            <input type="file" id="imageFilename" name="imageFilename" class="form-control"
+                                accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp">
+                            {{^new_game_from_scratch}}
+                            <div class="mt-2">
+                                <span>Archivo actual:</span><br>
+                                <img src="/game/{{game._id}}/image" width="300" height="300" alt="Imagen actual">
+                            </div>
+                            {{/new_game_from_scratch}}
+
+                            <!-- Preview of the new selected image -->
+                            <div id="imagePreview" class="mt-2" style="display: none;">
+                                <span>Vista previa:</span><br>
+                                <img id="previewImg" width="300" height="300" alt="Vista previa">
+                            </div>
                         </div>
                     </div>
 
@@ -78,28 +100,33 @@
                     <div class="row mb-4">
                         <label for="price" class="col-sm-3 col-form-label">Coste del videojuego:</label>
                         <div class="col-sm-3">
-                            <input type="number" id="price" name="price" min="0" max="1000" step="0.01" class="form-control" placeholder="Coste en €" value="{{game.price}}" required>
+                            <input type="number" id="price" name="price" min="0" max="1000" step="0.01"
+                                class="form-control" placeholder="Coste en €" value="{{game.price}}" required>
                         </div>
                         <label for="price" class="col-sm-1 col-form-label">€</label>
                     </div>
 
                     <!-- Row for the videogame release date -->
                     <div class="row mb-4">
-                        <label for="release_date" class="col-sm-3 col-form-label">Fecha de lanzamiento del videojuego:</label>
+                        <label for="release_date" class="col-sm-3 col-form-label">Fecha de lanzamiento del
+                            videojuego:</label>
                         <div class="col-sm-3">
-                            <input type="date" id="release_date" name="release_date" class="form-control" value="{{game.release_date}}" required>
+                            <input type="date" id="release_date" name="release_date" class="form-control"
+                                value="{{game.release_date}}" required>
                         </div>
                     </div>
 
                     <!-- Row for the videogame platforms -->
                     <div class="row mb-4">
-                        <label for="platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra disponible el videojuego:</label>
+                        <label for="platforms" class="col-sm-3 col-form-label">Plataformas en las que se encuentra
+                            disponible el videojuego:</label>
                         <div id="platforms" class="col-sm-9">
                             {{#platforms}}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="platform_{{value}}" name="platform[]" value="{{value}}" {{#checked}}checked{{/checked}}>
-                                    <label class="form-check-label" for="platform_{{value}}">{{display}}</label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="platform_{{value}}"
+                                    name="platform[]" value="{{value}}" {{#checked}}checked{{/checked}}>
+                                <label class="form-check-label" for="platform_{{value}}">{{display}}</label>
+                            </div>
                             {{/platforms}}
                         </div>
                     </div>
@@ -109,17 +136,19 @@
                         <label for="modes" class="col-sm-3 col-form-label">Modos de juego disponibles:</label>
                         <div id="modes" class="col-sm-9">
                             {{#gamemods}}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gamemod_{{value}}" name="gamemod[]" value="{{value}}" {{#checked}}checked{{/checked}}>
-                                    <label class="form-check-label" for="gamemod_{{value}}">{{display}}</label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gamemod_{{value}}" name="gamemod[]"
+                                    value="{{value}}" {{#checked}}checked{{/checked}}>
+                                <label class="form-check-label" for="gamemod_{{value}}">{{display}}</label>
+                            </div>
                             {{/gamemods}}
                         </div>
                     </div>
 
                     <!-- Row for the age classification -->
                     <div class="row mb-4">
-                        <label for="age_classification" class="col-sm-3 col-form-label">Clasificación PEGI por edades:</label>
+                        <label for="age_classification" class="col-sm-3 col-form-label">Clasificación PEGI por
+                            edades:</label>
                         <select id="age_classification" name="age_classification" class="form-select col-sm-9" required>
                             <option value="{{game.age_classification}}" selected>{{game.age_classification}}</option>
                             <option value="3">3</option>
@@ -134,19 +163,22 @@
                     <div class="row mb-4">
                         <label for="rating" class="col-sm-3 col-form-label">Calificación del videojuego:</label>
                         <div class="col-sm-4">
-                            <input type="number" id="rating" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5" value="{{game.rating}}" required>
+                            <input type="number" id="rating" name="rating" class="form-control" min="0" max="5"
+                                step="0.5" placeholder="Calificación de 0 a 5" value="{{game.rating}}" required>
                         </div>
                     </div>
 
                     <!-- Row for the videogame genres -->
                     <div class="row mb-4">
-                        <label for="genres" class="col-sm-3 col-form-label">Género/s principal/es del videojuego:</label>
+                        <label for="genres" class="col-sm-3 col-form-label">Género/s principal/es del
+                            videojuego:</label>
                         <div id="genres" class="col-sm-9">
                             {{#genres}}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="genre_{{value}}" name="genre[]" value="{{value}}" {{#checked}}checked{{/checked}}>
-                                    <label class="form-check-label" for="genre_{{value}}">{{display}}</label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="genre_{{value}}" name="genre[]"
+                                    value="{{value}}" {{#checked}}checked{{/checked}}>
+                                <label class="form-check-label" for="genre_{{value}}">{{display}}</label>
+                            </div>
                             {{/genres}}
                         </div>
                     </div>
@@ -156,23 +188,24 @@
 
                         <!-- "Button" to cancel the form and return to the main page IF they are creating a new one -->
                         {{#new_game_from_scratch}}
-                            <a href="/" class="btn col-sm-3">
-                                <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
-                                Cancelar
-                            </a>
+                        <a href="/" class="btn col-sm-3">
+                            <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
+                            Cancelar
+                        </a>
                         {{/new_game_from_scratch}}
 
                         <!-- "Button" to cancel the form and return to the videogame page IF they are editing an existing one -->
                         {{^new_game_from_scratch}}
-                            <a href="/game/{{game_id}}" class="btn col-sm-3">
-                                <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
-                                Cancelar
-                            </a>
+                        <a href="/game/{{game_id}}" class="btn col-sm-3">
+                            <h1><i class="bi bi-house-fill"></i> </h1> <!-- House icon -->
+                            Cancelar
+                        </a>
                         {{/new_game_from_scratch}}
 
                         <!-- "Button" to complete the form and submit the data -->
                         <!-- role to make it work like a button. tabindex for keyboard navigation. aria-label for accessibility. onclick to submit the form and onkeydown to do the same but with keyboard tiles "Enter" and "Space". -->
-                        <div class="btn col-sm-3" role="button" tabindex="0" aria-label="Completar formulario del Videojuego"
+                        <div class="btn col-sm-3" role="button" tabindex="0"
+                            aria-label="Completar formulario del Videojuego"
                             onclick="(function(f){ if(f.requestSubmit) f.requestSubmit(); else f.submit(); })(this.closest('form')); return false;"
                             onkeydown="if(event.key==='Enter'||event.key===' '){ event.preventDefault(); (function(f){ if(f.requestSubmit) f.requestSubmit(); else f.submit(); })(this.closest('form')); }">
                             <h1><i class="bi bi-file-plus"></i></h1>
