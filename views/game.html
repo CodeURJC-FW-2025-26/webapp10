@@ -121,9 +121,14 @@
                             <!-- Individual user review with rating and /images -->
 
                             {{#reviews}}
-                            <div class="game-title">
-                                <h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i>
-                            </div>
+                                <div class="review" data-review-id="{{_id}}">
+                                    <div class="game-title"><h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
+                                
+                                <div class="rating-stars">
+                                    <!-- Full stars -->
+                                    {{#stars.starFull}}
+                                    <i class="bi bi-star-fill text-danger"></i>
+                                    {{/stars.starFull}}
 
                             <div class="rating-stars">
                                 <!-- Full stars -->
@@ -157,6 +162,27 @@
 
                             </div>
 
+                                    <!-- Empty stars -->
+                                    {{#stars.starEmpty}}
+                                    <i class="bi bi-star text-danger"></i>
+                                    {{/stars.starEmpty}}
+                                </div></h4>
+                                <p>{{comment}} </p>
+                                <!-- Review image -->
+                                <div>
+                                    <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
+                                </div>
+                                <!-- Edit and delete buttons for the review -->
+                                <div class="m-3 justify-content-start d-flex">
+                                    <form  action="/game/{{game_id}}/review/delete" method="POST" >
+                                        <input type="hidden" name="review_id" value="{{_id}}">
+                                        <input type="submit" class="btn btn-primary" value="Borrar">
+                                        <a href="/game/{{game_id}}/review_editor/{{_id}}" class="btn" >Editar</a>
+                                    </form>
+                                    
+                                </div>
+                                
+                                </div>
                             {{/reviews}}
 
                         </div>

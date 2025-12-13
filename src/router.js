@@ -674,6 +674,63 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
+    // Server-side validation (same rules as creation, but image optional)
+    // We collect field-specific errors (errorsObj) and an array of messages (errorsArr)
+    const errorsObj = {};
+    const errorsArr = [];
+
+    // Required fields
+    const required = [ 'user_name', 'comment_description', 'rating' ];
+    for (const f of required) {
+        if (!req.body[f] || req.body[f].trim() === '') {
+            const msg = `El campo "${f}" es obligatorio.`;
+            errorsObj[f] = msg;
+            errorsArr.push(msg);
+        }
+    }
+
+    // Rating validation
+    const ratingVal = Number(req.body.rating);
+    if (isNaN(ratingVal) || ratingVal < 0 || ratingVal > 5 || ratingVal % 0.5 !== 0) {
+        const msg = 'El rating debe estar entre 0 y 5, y en incrementos de 0,5.';
+        errorsObj.rating = msg;
+        errorsArr.push(msg);
+    }
+
+    // Name/comment sizes
+    if (req.body.user_name && (req.body.user_name.length < 1 || req.body.user_name.length > 50)) {
+        const msg = 'El nombre de usuario debe tener entre 1 y 50 caracteres.';
+        errorsObj.user_name = msg;
+        errorsArr.push(msg);
+    }
+    if (req.body.comment_description && (req.body.comment_description.length < 25 || req.body.comment_description.length > 200)) {
+        const msg = 'La descripción debe tener entre 25 y 200 caracteres.';
+        errorsObj.comment_description = msg;
+        errorsArr.push(msg);
+    }
+
+    // If a file was uploaded, ensure it's an image
+    if (req.file && req.file.mimetype && !req.file.mimetype.startsWith('image/')) {
+        const msg = 'El archivo debe ser una imagen.';
+        errorsObj.imageFilename = msg;
+        errorsArr.push(msg);
+    }
+
+    if (errorsArr.length > 0) {
+        // If request expects JSON (AJAX), return JSON errors so client can show them in a dialog and map them to fields
+        const acceptsJson = req.xhr || (req.headers.accept && req.headers.accept.indexOf('application/json') !== -1);
+        if (acceptsJson) {
+            return res.status(400).json({ success: false, errors: errorsObj, messages: errorsArr });
+        } else {
+            // For non-AJAX, render the editor page with errors array
+            return res.render('review_editor', {
+                game, review, game_id, _id: review_id, errors: errorsArr,
+                genres: allGenres.map(g => ({ ...g, active: false })),
+                platforms: allPlatforms.map(p => ({ ...p, active: false }))
+            });
+        }
+    }
+
     // Build the updated review object (replace the review in the array)
     let review_edit = {
         _id: new ObjectId(review_id),
@@ -684,14 +741,27 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         imageFilename: req.file ? req.file.filename : review.imageFilename
     };
 
-    // Update the specific review using positional operator
-    await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
+    try {
+        // Update the specific review using positional operator
+        await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
-    res.render('Success', {
-        new_game_added: false, game_id, review_id, _id: game_id,
-        genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
+        // If this is an XHR / AJAX request, respond with JSON so the client can update in-place
+        if (req.xhr || (req.headers.accept && req.headers.accept.indexOf('application/json') !== -1)) {
+            return res.json({ success: true, review: review_edit });
+        }
+
+        res.render('Success', {
+            new_game_added: false, game_id, review_id, _id: game_id,
+            genres: allGenres.map(g => ({ ...g, active: false })),
+            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        });
+    } catch (err) {
+        console.error('Error editing review:', err);
+        if (req.xhr || (req.headers.accept && req.headers.accept.indexOf('application/json') !== -1)) {
+            return res.status(500).json({ success: false, message: 'Error editing review' });
+        }
+        res.status(500).render('Error', { message: 'Error editing review' });
+    }
 });
 
 // Route: Search endpoint with pagination
