@@ -282,19 +282,34 @@ function addReviewToPage(review, gameId) {
 }
 
 //Esto lo agregué yo para previsualizar la imagen seleccionada al crear un juego nuevo ns si va en este archivo o en otro
-document.getElementById('imageFilename').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    const preview = document.getElementById('imagePreview');
-    const previewImg = document.getElementById('previewImg');
+// Reusable function to set up image preview
+function setupImagePreview(inputId, previewContainerId, previewImgId) {
+    const input = document.getElementById(inputId);
+    if (!input) return; // if input not found, exit
     
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            previewImg.src = e.target.result;
-            preview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    } else {
-        preview.style.display = 'none';
-    }
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById(previewContainerId);
+        const previewImg = document.getElementById(previewImgId);
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+}
+
+// Initialize previews when the DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Preview for creating/editing game
+    setupImagePreview('imageFilename', 'imagePreview', 'previewImg');
+    
+    // Preview for reviews (if present on the page)
+    setupImagePreview('imageFilename', 'reviewImagePreview', 'reviewPreviewImg');
 });

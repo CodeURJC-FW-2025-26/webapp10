@@ -7,7 +7,7 @@
     <!-- Content -->
     <div class="col-12 col-lg-10 md-10">
         <main class="game-p-content">
-            
+
             <!-- Game title and action buttons -->
             <div class="row d-flex flex-column flex-md-row">
 
@@ -30,13 +30,14 @@
                     </div>
                 </div>
                 <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
-                        <form onsubmit="securemessage(event)" action="/game/{{_id}}/delete"> 
-                            <input type="submit" class="btn btn-primary" value="Borrar juego"></form>
-                            
-                        <a href="/editgame/{{_id}}" class="btn btn-primary">Editar juego</a>
-                        <a href="/creategame" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
-                            Crear tu propio juego</a>
-                        <a href="/" class="btn btn-primary">Volver a página principal</a>
+                    <form onsubmit="securemessage(event)" action="/game/{{_id}}/delete">
+                        <input type="submit" class="btn btn-primary" value="Borrar juego">
+                    </form>
+
+                    <a href="/editgame/{{_id}}" class="btn btn-primary">Editar juego</a>
+                    <a href="/creategame" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
+                        Crear tu propio juego</a>
+                    <a href="/" class="btn btn-primary">Volver a página principal</a>
                 </div>
             </div>
 
@@ -55,10 +56,10 @@
 
                 <div class="row">
 
-                    <div class="information col-12">    
+                    <div class="information col-12">
                         <!-- Game price -->
                         <div id="price" class="description"> Precio: {{price}} €
-                        
+
                         </div>
                         <!-- Detailed game description -->
                         <div id="description" class="description">
@@ -86,7 +87,7 @@
                                     <th>Plataformas disponibles</th>
                                     <td>
                                         {{#platform}}
-                                            <span>{{.}}</span>
+                                        <span>{{.}}</span>
                                         {{/platform}}
                                     </td>
                                 </tr>
@@ -94,7 +95,7 @@
                                     <th>Modos de juego</th>
                                     <td>
                                         {{#gamemod}}
-                                            <span>{{.}}</span>
+                                        <span>{{.}}</span>
                                         {{/gamemod}}
                                     </td>
                                 </tr>
@@ -102,12 +103,12 @@
                                     <th>Clasificación por edades</th>
                                     <td>PEGI {{age_classification}}</td>
                                 </tr>
-                                
+
                                 <tr>
                                     <th>Género/s</th>
                                     <td>
                                         {{#genre}}
-                                            <span>{{.}}</span>
+                                        <span>{{.}}</span>
                                         {{/genre}}
                                     </td>
                                 </tr>
@@ -115,44 +116,47 @@
                         </div>
                         <!-- User reviews section -->
                         <div id="reseñas" class="description overflow-x-auto">
-                                
+
                             <h2>Reseñas de usuarios</h2>
                             <!-- Individual user review with rating and /images -->
-                            
+
                             {{#reviews}}
-                                <div class="game-title"><h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i></div>
-                                
-                                <div class="rating-stars">
-                                    <!-- Full stars -->
-                                    {{#stars.starFull}}
-                                    <i class="bi bi-star-fill text-danger"></i>
-                                    {{/stars.starFull}}
+                            <div class="game-title">
+                                <h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i>
+                            </div>
 
-                                    <!-- Half stars -->
-                                    {{#stars.starHalf}}
-                                    <i class="bi bi-star-half text-danger"></i>
-                                    {{/stars.starHalf}}
+                            <div class="rating-stars">
+                                <!-- Full stars -->
+                                {{#stars.starFull}}
+                                <i class="bi bi-star-fill text-danger"></i>
+                                {{/stars.starFull}}
 
-                                    <!-- Empty stars -->
-                                    {{#stars.starEmpty}}
-                                    <i class="bi bi-star text-danger"></i>
-                                    {{/stars.starEmpty}}
-                                </div></h4>
-                                <p>{{comment}} </p>
-                                <!-- Review image -->
-                                <div>
-                                    <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
-                                </div>
-                                <!-- Edit and delete buttons for the review -->
-                                <div class="m-3 justify-content-start d-flex">
-                                    <form  action="/game/{{game_id}}/review/delete" method="POST" >
-                                        <input type="hidden" name="review_id" value="{{_id}}">
-                                        <input type="submit" class="btn btn-primary" value="Borrar">
-                                        <a href="/game/{{game_id}}/review_editor/{{_id}}" class="btn" >Editar</a>
-                                    </form>
-                                    
-                                </div>
-                                
+                                <!-- Half stars -->
+                                {{#stars.starHalf}}
+                                <i class="bi bi-star-half text-danger"></i>
+                                {{/stars.starHalf}}
+
+                                <!-- Empty stars -->
+                                {{#stars.starEmpty}}
+                                <i class="bi bi-star text-danger"></i>
+                                {{/stars.starEmpty}}
+                            </div>
+                            </h4>
+                            <p>{{comment}} </p>
+                            <!-- Review image -->
+                            <div>
+                                <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
+                            </div>
+                            <!-- Edit and delete buttons for the review -->
+                            <div class="m-3 justify-content-start d-flex">
+                                <form action="/game/{{game_id}}/review/delete" method="POST">
+                                    <input type="hidden" name="review_id" value="{{_id}}">
+                                    <input type="submit" class="btn btn-primary" value="Borrar">
+                                    <a href="/game/{{game_id}}/review_editor/{{_id}}" class="btn">Editar</a>
+                                </form>
+
+                            </div>
+
                             {{/reviews}}
 
                         </div>
@@ -161,21 +165,26 @@
                             <h2>Añadir Reseña</h2>
                             <br>
 
-                            <form onsubmit="createreview(event)" action="/game/{{_id}}/review/create" method="POST" enctype="multipart/form-data" class="d-grid ">
+                            <form onsubmit="createreview(event)" action="/game/{{_id}}/review/create" method="POST"
+                                enctype="multipart/form-data" class="d-grid ">
                                 <!-- Row for the user name -->
                                 <div class="row mb-4">
                                     <label for="user_name" class="col-sm-3 col-form-label">Nombre de usuario:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="user_name" class="form-control" maxlength="50" placeholder="Nombre" required>
+                                        <input type="text" name="user_name" class="form-control" maxlength="50"
+                                            placeholder="Nombre" required>
                                         <div class="invalid-feedback" id="user_name_error"></div>
                                     </div>
                                 </div>
 
                                 <!-- Row for the comment -->
                                 <div class="row mb-4">
-                                    <label for="comment_description" class="col-sm-3 col-form-label">Introduzca aquí su comentario:</label>
+                                    <label for="comment_description" class="col-sm-3 col-form-label">Introduzca aquí su
+                                        comentario:</label>
                                     <div class="col-sm-9">
-                                        <textarea name="comment_description" class="form-control" rows="4" placeholder="Descripción" minlength="25" maxlength="200" required></textarea>
+                                        <textarea name="comment_description" class="form-control" rows="4"
+                                            placeholder="Descripción" minlength="25" maxlength="200"
+                                            required></textarea>
                                         <div class="invalid-feedback" id="comment_description_error"></div>
                                     </div>
                                 </div>
@@ -184,21 +193,30 @@
                                 <div class="row mb-4">
                                     <label for="rating" class="col-sm-3 col-form-label">Calificación:</label>
                                     <div class="col-sm-5">
-                                        <input type="number" name="rating" class="form-control" min="0" max="5" step="0.5" placeholder="Calificación de 0 a 5" required>
+                                        <input type="number" name="rating" class="form-control" min="0" max="5"
+                                            step="0.5" placeholder="Calificación de 0 a 5" required>
                                         <div class="invalid-feedback" id="rating_error"></div>
-                                    </div>
-                                </div> 
-                                
-                                <!-- Row for the videogame photos -->
-                                <div class="row mb-4">
-                                    <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
-                                    <div class="col-sm-9">
-                                        <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept="image/*" required>
-                                        <div class="invalid-feedback" id="imageFilename_error"></div>
                                     </div>
                                 </div>
 
-                                <div class="row mb-4 " >
+                                <!-- Row for the videogame photos -->
+                                <div class="row mb-4">
+                                    <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del
+                                        videojuego:</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" id="imageFilename" name="imageFilename" class="form-control"
+                                            accept="image/*" required>
+                                        <div class="invalid-feedback" id="imageFilename_error"></div>
+                                    </div>
+
+                                    <!-- Preview of the selected image -->
+                                    <div id="reviewImagePreview" class="mt-2" style="display: none;">
+                                        <span>Vista previa:</span><br>
+                                        <img id="reviewPreviewImg" width="300" height="200" alt="Vista previa">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4 ">
                                     <!-- "Button" to finish the comment and submit the data -->
                                     <input type="submit" value="Subir reseña" class="btn btn-primary">
                                 </div>
