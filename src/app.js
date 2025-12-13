@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import router from './router.js';
 import './load_data.js';
 
-//import { UPLOADS_FOLDER } from './catalog.js';
+import { UPLOADS_FOLDER } from './catalog.js';
 
 const app = express();
 
@@ -21,4 +21,4 @@ app.use('/', router);
 
 app.listen(3000, () => console.log('Web ready in http://localhost:3000/'));
 
-//app.use("/uploads", express.static("UPLOADS_FOLDER"));
+app.use("/uploads", express.static(UPLOADS_FOLDER));
