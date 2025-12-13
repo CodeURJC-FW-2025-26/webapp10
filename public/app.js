@@ -97,7 +97,7 @@ async function createreview(event) {
 
 
     // Validate form
-    if (!validateForm(form)) {
+    if (!validateForm(form, false)) {
         return;
     }
 
@@ -159,13 +159,13 @@ function clearFormErrors(form) {
     inputs.forEach(input => input.classList.remove('is-invalid'));
 }
 
-function validateForm(form) {
+function validateForm(form, isEdit = false) {
     let isValid = true;
 
     // Validate user_name
     const userName = form.querySelector('[name="user_name"]');
-    if (!userName.value.trim()) {
-        showFieldError(userName, 'El nombre de usuario es obligatorio.');
+    if (!userName || !userName.value.trim()) {
+        if (userName) showFieldError(userName, 'El nombre de usuario es obligatorio.');
         isValid = false;
     } else if (userName.value.length > 50) {
         showFieldError(userName, 'El nombre de usuario no puede exceder 50 caracteres.');
@@ -174,8 +174,8 @@ function validateForm(form) {
 
     // Validate comment_description
     const comment = form.querySelector('[name="comment_description"]');
-    if (!comment.value.trim()) {
-        showFieldError(comment, 'El comentario es obligatorio.');
+    if (!comment || !comment.value.trim()) {
+        if (comment) showFieldError(comment, 'El comentario es obligatorio.');
         isValid = false;
     } else if (comment.value.length < 25) {
         showFieldError(comment, 'El comentario debe tener al menos 25 caracteres.');
@@ -187,22 +187,33 @@ function validateForm(form) {
 
     // Validate rating
     const rating = form.querySelector('[name="rating"]');
-    const ratingValue = parseFloat(rating.value);
-    if (isNaN(ratingValue) || ratingValue < 0 || ratingValue > 5) {
-        showFieldError(rating, 'La calificación debe estar entre 0 y 5.');
+    const ratingValue = rating ? parseFloat(rating.value) : NaN;
+    if (!rating || isNaN(ratingValue) || ratingValue < 0 || ratingValue > 5) {
+        if (rating) showFieldError(rating, 'La calificación debe estar entre 0 y 5.');
         isValid = false;
     }
 
-    // Validate imageFilename
+    // Validate imageFilename (required when creating, optional when editing)
     const image = form.querySelector('[name="imageFilename"]');
-    if (!image.files || image.files.length === 0) {
-        showFieldError(image, 'Debe seleccionar una imagen.');
-        isValid = false;
-    } else {
-        const file = image.files[0];
-        if (!file.type.startsWith('image/')) {
-            showFieldError(image, 'El archivo debe ser una imagen.');
+    if (!isEdit) {
+        if (!image || !image.files || image.files.length === 0) {
+            if (image) showFieldError(image, 'Debe seleccionar una imagen.');
             isValid = false;
+        } else {
+            const file = image.files[0];
+            if (!file.type.startsWith('image/')) {
+                showFieldError(image, 'El archivo debe ser una imagen.');
+                isValid = false;
+            }
+        }
+    } else {
+        // editing: image optional, but if provided must be an image
+        if (image && image.files && image.files.length > 0) {
+            const file = image.files[0];
+            if (!file.type.startsWith('image/')) {
+                showFieldError(image, 'El archivo debe ser una imagen.');
+                isValid = false;
+            }
         }
     }
 
@@ -257,8 +268,9 @@ function addReviewToPage(review, gameId) {
 
     const stars = calcRating(review.rating);
 
-    const reviewHtml = `
-        <div class="game-title"><h4>${review.date}-${review.username}:<i class="bi bi-person-check-fill text-info"></i></div>
+        const reviewHtml = `
+            <div class="review" data-review-id="${review._id}">
+                <div class="game-title"><h4>${review.date}-${review.username}:<i class="bi bi-person-check-fill text-info"></i></div>
         
         <div class="rating-stars">
             ${stars.starFull.map(() => '<i class="bi bi-star-fill text-danger"></i>').join('')}
@@ -276,7 +288,211 @@ function addReviewToPage(review, gameId) {
                 <a href="/game/${gameId}/review_editor/${review._id}" class="btn" >Editar</a>
             </form>
         </div>
+            </div>
     `;
 
     reviewsContainer.insertAdjacentHTML('beforeend', reviewHtml);
 }
+
+// Helper: build the stars HTML for a given numeric rating
+function buildStarsHtml(rating) {
+    const stars = calcRating(parseFloat(rating) || 0);
+    return `${stars.starFull.map(() => '<i class="bi bi-star-fill text-danger"></i>').join('')}
+            ${stars.starHalf.map(() => '<i class="bi bi-star-half text-danger"></i>').join('')}
+            ${stars.starEmpty.map(() => '<i class="bi bi-star text-danger"></i>').join('')}`;
+}
+
+// Helper: extract rating number from the rating-stars element inside a review
+function extractRatingFromNode(ratingNode) {
+    if (!ratingNode) return 0;
+    const full = ratingNode.querySelectorAll('.bi-star-fill').length;
+    const half = ratingNode.querySelectorAll('.bi-star-half').length;
+    return full + (half > 0 ? 0.5 : 0);
+}
+
+// Event delegation for clicking on 'Editar' links inside reviews
+document.addEventListener('click', function(event) {
+    const target = event.target.closest('a');
+    if (!target) return;
+    const href = target.getAttribute('href');
+    if (!href) return;
+
+    const match = href.match(/\/game\/(.*?)\/review_editor\/(.*)/);
+    if (!match) return; // not a review editor link
+
+    event.preventDefault();
+    const gameId = match[1];
+    const reviewId = match[2];
+
+    // Prevent multiple edits simultaneously
+    if (document.querySelector('.review-edit-form')) return;
+
+    // Work inside the review container (server-rendered or dynamically created)
+    const reviewContainer = target.closest('.review');
+    if (!reviewContainer) return;
+
+    const wrapper = reviewContainer; // use existing container as wrapper
+
+    // Build inline edit form pre-filled with current values
+    const titleNode = wrapper.querySelector('.game-title');
+    const ratingNode = wrapper.querySelector('.rating-stars');
+    const commentNode = wrapper.querySelector('p');
+    const imgNode = wrapper.querySelector('img');
+
+    // Extract current values
+    let username = '';
+    const titleText = titleNode ? titleNode.textContent.trim() : '';
+    if (titleText) {
+        const colonIndex = titleText.indexOf(':');
+        if (colonIndex !== -1) {
+            // If the title begins with a date (YYYY-MM-DD-username:), strip the date prefix
+            if (titleText.length > 10 && titleText[10] === '-') {
+                username = titleText.substring(11, colonIndex).trim();
+            } else {
+                // Fallback: capture text after the last dash up to ':'
+                const m = titleText.match(/-([^:]+):/);
+                username = m ? m[1].trim() : titleText.substring(0, colonIndex).trim();
+            }
+        }
+    }
+    const currentComment = commentNode ? commentNode.textContent.trim() : '';
+    const currentRating = extractRatingFromNode(ratingNode);
+
+    const existingImgSrc = imgNode ? imgNode.src : '';
+    const formHtml = `
+        <form class="review-edit-form d-grid p-3 border rounded bg-light" enctype="multipart/form-data">
+            <div class="row mb-2">
+                <label class="col-sm-3 col-form-label">Nombre:</label>
+                <div class="col-sm-9"><input type="text" name="user_name" class="form-control" maxlength="50" value="${username}" required>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label class="col-sm-3 col-form-label">Comentario:</label>
+                <div class="col-sm-9"><textarea name="comment_description" class="form-control" rows="3" minlength="25" maxlength="200" required>${currentComment}</textarea>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label class="col-sm-3 col-form-label">Calificación:</label>
+                <div class="col-sm-5"><input type="number" name="rating" class="form-control" min="0" max="5" step="0.5" value="${currentRating}" required>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label class="col-sm-3 col-form-label">Imagen actual / Cambiar:</label>
+                <div class="col-sm-9 d-flex flex-column">
+                    <img src="${existingImgSrc}" class="edit-image-preview mb-2" width="300" height="200">
+                    <input type="file" name="imageFilename" class="form-control" accept="image/*">
+                    <input type="hidden" name="existing_image" value="${existingImgSrc}">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-2">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary btn-cancel-edit">Cancelar</button>
+            </div>
+        </form>`;
+
+    // Create form container and insert
+    const formContainer = document.createElement('div');
+    formContainer.innerHTML = formHtml;
+    wrapper.appendChild(formContainer);
+
+    // Hide the original parts (we kept them inside wrapper, so hide them)
+    const originalNodes = wrapper.querySelectorAll('.game-title, .rating-stars, p, img, .m-3');
+    originalNodes.forEach(n => { if (!n.classList.contains('review-edit-form') && !n.closest('.review-edit-form')) n.style.display = 'none'; });
+
+    // Add event handlers for the form buttons
+    const editForm = wrapper.querySelector('.review-edit-form');
+    const cancelBtn = wrapper.querySelector('.btn-cancel-edit');
+    cancelBtn.addEventListener('click', (e) => {
+        // Remove form and show original content
+        editForm.remove();
+        originalNodes.forEach(n => n.style.display = '');
+    });
+
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        clearFormErrors(form);
+        
+        // Inline validation for edit: image optional
+        const userName = form.querySelector('[name="user_name"]');
+        const comment = form.querySelector('[name="comment_description"]');
+        const rating = form.querySelector('[name="rating"]');
+        let skipSubmit = false;
+        if (!userName.value.trim()) { showFieldError(userName, 'El nombre de usuario es obligatorio.'); skipSubmit = true; }
+        else if (userName.value.length > 50) { showFieldError(userName, 'El nombre de usuario no puede exceder 50 caracteres.'); skipSubmit = true; }
+        if (!comment.value.trim()) { showFieldError(comment, 'El comentario es obligatorio.'); skipSubmit = true; }
+        else if (comment.value.length < 25) { showFieldError(comment, 'El comentario debe tener al menos 25 caracteres.'); skipSubmit = true; }
+        else if (comment.value.length > 200) { showFieldError(comment, 'El comentario no puede exceder 200 caracteres.'); skipSubmit = true; }
+        const ratingVal = parseFloat(rating.value);
+        if (isNaN(ratingVal) || ratingVal < 0 || ratingVal > 5) { showFieldError(rating, 'La calificación debe estar entre 0 y 5.'); skipSubmit = true; }
+        if (skipSubmit) return;
+
+        showLoadingSpinner();
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(`/game/${gameId}/review_editor/${reviewId}/edit`, {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) {
+                // Try to parse JSON error response (sent by server on validation errors)
+                const contentType = response.headers.get('content-type') || '';
+                hideLoadingSpinner();
+                if (contentType.indexOf('application/json') !== -1) {
+                    const data = await response.json();
+                    const message = data.errors ? data.errors.join('. ') : (data.message || 'No se pudo editar la reseña.');
+                    showErrorModal(message);
+                } else {
+                    const text = await response.text();
+                    showErrorModal('No se pudo editar la reseña. ' + text);
+                }
+                return;
+            }
+
+            // Success: update UI locally
+            const newDate = new Date().toISOString().split('T')[0];
+            titleNode.querySelector('h4').innerHTML = `${newDate}-${userName.value}:<i class="bi bi-person-check-fill text-info"></i>`;
+            commentNode.textContent = comment.value;
+            ratingNode.innerHTML = buildStarsHtml(ratingVal);
+            if (imgNode) {
+                // Force reload of image from server (cache bust)
+                imgNode.src = `/game/${gameId}/review/${reviewId}/image?cache=${Date.now()}`;
+            }
+
+            hideLoadingSpinner();
+            showBootstrapAlert('✅ Reseña editada con éxito.', 'success');
+
+            // Remove inline form and show original content
+            editForm.remove();
+            originalNodes.forEach(n => n.style.display = '');
+
+        } catch (err) {
+            hideLoadingSpinner();
+            showErrorModal('Error al editar la reseña: ' + err.message);
+        }
+    });
+
+    // File input preview handling: when user chooses a new file, show it; otherwise keep existing preview
+    const fileInput = wrapper.querySelector('input[type="file"][name="imageFilename"]');
+    const previewImg = wrapper.querySelector('.edit-image-preview');
+    const originalImg = existingImgSrc;
+    if (fileInput && previewImg) {
+        fileInput.addEventListener('change', (ev) => {
+            const f = fileInput.files && fileInput.files[0];
+            if (f) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                };
+                reader.readAsDataURL(f);
+            } else {
+                // no file selected -> show the old image
+                previewImg.src = originalImg;
+            }
+        });
+    }
+});
