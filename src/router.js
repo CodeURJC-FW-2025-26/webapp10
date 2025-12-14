@@ -640,15 +640,33 @@ router.post('/game/:id/review/delete', async (req, res) => {
     let game_id = req.params.id;
     let review_id = req.body.review_id;
 
-    await catalog.deletereview({ _id: new ObjectId(game_id) }, { $pull: { reviews: { _id: new ObjectId(review_id) } } });
+    console.log('Deleting review:', review_id, 'from game:', game_id);
 
-    let game = await catalog.getGame(game_id);
+    try {
+        let review = await catalog.deletereview({ _id: new ObjectId(game_id) }, { $pull: { reviews: { _id: new ObjectId(review_id) } } });
+        console.log('Review deleted:', review);
+        // Remove uploaded image file if present
+        if (review && review.imageFilename) {
+            try {
+                await fs.rm(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
+            } catch (err) {
+                console.error('Error al eliminar archivo de imagen:', err);
+            }
+        }
 
-    res.render('deleted', {
-        game_deleted: false, game, _id: game_id,
-        genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
+        res.json({
+            success: true,
+            message: 'Juego borrado exitosamente',
+            gameId: req.params.id
+        });
+
+    } catch (error) {
+        console.error('Error al borrar el juego:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Ocurrió un error al borrar el juego. Por favor, intenta nuevamente.'
+        });
+    }
 });
 
 // Route: Show review editor for a specific review

@@ -4,10 +4,8 @@ async function securemessage(event) {
     const confirmed = window.confirm("¿Está seguro de que desea borrar el juego? Esta acción no se puede deshacer.");
     if (confirmed) {
         showLoadingSpinner();
-        console.log('Iniciando proceso de borrado del juego...');
-        console.log('Evento recibido:', event.target.action);
+       
         const gameId = event.target.action.split('/')[4];
-        console.log('Borrando juego con ID:', gameId);
 
         try {
             const response = await fetch(`/game/${gameId}/delete`, {
@@ -28,7 +26,6 @@ async function securemessage(event) {
         } catch (error) {
             hideLoadingSpinner();
             showBootstrapAlert('❌ Error: No se ha podido realizar el borrado del juego. Intenta nuevamente.', 'danger');
-            console.error('Error al borrar juego:', error);
         }
     }
 }
@@ -103,32 +100,23 @@ async function createreview(event) {
 
     showLoadingSpinner();
     
-    console.log('Creando reseña para juego con ID:', gameId);
 
     const formData = new FormData(form);
     
-    console.log('Datos del formulario preparados para envío.');
-    console.log('Contenido del FormData:');
-    for (let pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-    }
+
 
     try {
         const response = await fetch(`/game/${gameId}/review/create`, {
             method: "POST",
             body: formData,
         });
-        console.log('Respuesta recibida del servidor para la creación de reseña.');
-        console.log('Status:', response.status, 'OK:', response.ok);
-
+       
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Error response:', errorText);
             throw new Error(`Error del servidor: ${response.status} - ${errorText}`);
         }
 
         const data = await response.json();
-        console.log('Datos JSON:', data);
 
         if (data.success) {
             // Clear form fields
@@ -147,7 +135,6 @@ async function createreview(event) {
         }
     } catch (error) {
         hideLoadingSpinner();
-        console.error('Error completo:', error);
         showErrorModal('No se ha podido crear la reseña. Intenta nuevamente. Detalles: ' + error.message);
     }
 }
@@ -157,6 +144,107 @@ function clearFormErrors(form) {
     errorElements.forEach(el => el.textContent = '');
     const inputs = form.querySelectorAll('.form-control');
     inputs.forEach(input => input.classList.remove('is-invalid'));
+    // Reset touched state used by realtime validation
+    inputs.forEach(input => input.removeAttribute('data-touched'));
+}
+
+// Validate a single input element and show/hide its error message
+function validateField(input, isEdit = false) {
+    if (!input) return true;
+
+    const name = input.name;
+    const value = input.value;
+    const touched = input.getAttribute('data-touched') === 'true';
+
+    // Helper to clear error
+    function clear() {
+        input.classList.remove('is-invalid');
+        const err = input.parentNode && input.parentNode.querySelector('.invalid-feedback');
+        if (err) err.textContent = '';
+    }
+
+    // Helper to set error
+    function setError(msg) {
+        input.classList.add('is-invalid');
+        const err = input.parentNode && input.parentNode.querySelector('.invalid-feedback');
+        if (err) err.textContent = msg;
+    }
+
+    // Only show "required" errors if user has touched the control (blurred)
+    // But format/length errors are shown in real-time.
+    switch (name) {
+        case 'user_name':
+            if (!value.trim()) {
+                if (touched) { setError('El nombre de usuario es obligatorio.'); return false; }
+                clear(); return false;
+            }
+            if (value.length > 50) { setError('El nombre de usuario no puede exceder 50 caracteres.'); return false; }
+            clear(); return true;
+
+        case 'comment_description':
+            if (!value.trim()) {
+                if (touched) { setError('El comentario es obligatorio.'); return false; }
+                clear(); return false;
+            }
+            if (value.length < 25) { setError('El comentario debe tener al menos 25 caracteres.'); return false; }
+            if (value.length > 200) { setError('El comentario no puede exceder 200 caracteres.'); return false; }
+            clear(); return true;
+
+        case 'rating': {
+            const rv = parseFloat(value);
+            if (isNaN(rv) || rv < 0 || rv > 5) {
+                if (touched) { setError('La calificación debe estar entre 0 y 5.'); return false; }
+                clear(); return false;
+            }
+            clear(); return true;
+        }
+
+        case 'imageFilename': {
+            const files = input.files;
+            if (!isEdit) {
+                // create: required
+                if (!files || files.length === 0) {
+                    if (touched) { setError('Debe seleccionar una imagen.'); return false; }
+                    clear(); return false;
+                }
+            }
+            if (files && files.length > 0) {
+                const file = files[0];
+                if (!file.type.startsWith('image/')) { setError('El archivo debe ser una imagen.'); return false; }
+            }
+            clear(); return true;
+        }
+
+        default:
+            clear();
+            return true;
+    }
+}
+
+// Attach realtime validation to a form: 'input' and 'blur' handlers
+function attachRealTimeValidation(form, isEdit = false) {
+    if (!form) return;
+
+    const inputs = form.querySelectorAll('input[name="user_name"], textarea[name="comment_description"], input[name="rating"], input[name="imageFilename"]');
+
+    inputs.forEach(input => {
+        // On input -> validate format and lengths in real time
+        input.addEventListener('input', (e) => {
+            validateField(input, isEdit);
+        });
+
+        // On change (for file inputs) -> validate
+        input.addEventListener('change', (e) => {
+            input.setAttribute('data-touched', 'true');
+            validateField(input, isEdit);
+        });
+
+        // On blur -> mark touched and validate required constraints
+        input.addEventListener('blur', (e) => {
+            input.setAttribute('data-touched', 'true');
+            validateField(input, isEdit);
+        });
+    });
 }
 
 function validateForm(form, isEdit = false) {
@@ -406,6 +494,9 @@ document.addEventListener('click', function(event) {
     // Add event handlers for the form buttons
     const editForm = wrapper.querySelector('.review-edit-form');
     const cancelBtn = wrapper.querySelector('.btn-cancel-edit');
+
+    // Attach realtime validation to the inline edit form (image optional)
+    attachRealTimeValidation(editForm, true);
     cancelBtn.addEventListener('click', (e) => {
         // Remove form and show original content
         editForm.remove();
@@ -497,34 +588,79 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Reusable function to set up image preview
-function setupImagePreview(inputId, previewContainerId, previewImgId) {
-    const input = document.getElementById(inputId);
-    if (!input) return; // if input not found, exit
-    
-    input.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        const preview = document.getElementById(previewContainerId);
-        const previewImg = document.getElementById(previewImgId);
-        
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImg.src = e.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        } else {
-            preview.style.display = 'none';
-        }
-    });
-}
+// On page load, attach realtime validation to create-review forms already present
+document.addEventListener('DOMContentLoaded', () => {
+    const createForms = document.querySelectorAll('form[action*="/review/create"]');
+    createForms.forEach(f => attachRealTimeValidation(f, false));
+});
 
-// Initialize previews when the DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Preview for creating/editing game
-    setupImagePreview('imageFilename', 'imagePreview', 'previewImg');
+// Delegated handler: intercept review delete forms and perform AJAX delete
+document.addEventListener('submit', async (e) => {
+    const form = e.target;
+    const gameId = e.target.action.split('/')[4];
+    if (!form || !form.action || form.action.indexOf('/review/delete') === -1) return;
+
+    e.preventDefault();
+
+    // Prevent double-submission
+    if (form.getAttribute('data-deleting') === 'true') return;
+    form.setAttribute('data-deleting', 'true');
+
+    // Find the delete button to disable/reenable it
+    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
     
-    // Preview for reviews (if present on the page)
-    setupImagePreview('imageFilename', 'reviewImagePreview', 'reviewPreviewImg');
+    showLoadingSpinner();
+
+    try {
+        const formData = new FormData(form);
+        
+        console.log('Enviando solicitud de eliminación de reseña al servidor para el juego ID:', gameId);
+        console.log('Datos del formulario:', Array.from(formData.entries()));
+        
+        const response = await fetch(`/game/${gameId}/review/delete`, {
+            method: 'POST',
+            body: new URLSearchParams(formData),
+        });
+        console.log('Respuesta recibida del servidor para la eliminación de la reseña.');
+        // Try parse JSON response when possible
+        let data = null;
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.indexOf('application/json') !== -1) {
+            data = await response.json();
+        } else {
+            const text = await response.text();
+            // If server returned non-JSON but with 200 OK, treat as success
+            if (!response.ok) {
+                throw new Error(text || 'Error al eliminar la reseña');
+            }
+        }
+
+        if (!response.ok || (data && data.success === false)) {
+            const msg = data && (data.message || (data.errors && data.errors.join('. '))) ? (data.message || data.errors.join('. ')) : ('Error al eliminar la reseña.');
+            hideLoadingSpinner();
+            showErrorModal(msg);
+            return;
+        }
+
+        // Success: remove review element from DOM
+        const reviewId = form.querySelector('[name="review_id"]') ? form.querySelector('[name="review_id"]').value : (data && data.review_id ? data.review_id : null);
+        let reviewEl = null;
+        if (reviewId) reviewEl = document.querySelector(`.review[data-review-id="${reviewId}"]`);
+        if (!reviewEl) reviewEl = form.closest('.review');
+        if (reviewEl) {
+            // remove smoothly
+            reviewEl.remove();
+        }
+
+        hideLoadingSpinner();
+        showBootstrapAlert('✅ Reseña eliminada con éxito.', 'success');
+
+    } catch (err) {
+        hideLoadingSpinner();
+        showErrorModal('No se ha podido eliminar la reseña. Detalles: ' + (err.message || err));
+    } finally {
+        form.removeAttribute('data-deleting');
+        if (submitBtn) submitBtn.disabled = false;
+    }
 });
