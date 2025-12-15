@@ -360,7 +360,7 @@ document.addEventListener('click', function(event) {
 
     const existingImgSrc = imgNode ? imgNode.src : '';
     const formHtml = `
-        <form class="review-edit-form d-grid p-3 border rounded bg-light" enctype="multipart/form-data">
+        <form class="review-edit-form d-grid p-3" enctype="multipart/form-data">
             <div class="row mb-2">
                 <label class="col-sm-3 col-form-label">Nombre:</label>
                 <div class="col-sm-9"><input type="text" name="user_name" class="form-control" maxlength="50" value="${username}" required>
@@ -497,7 +497,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Reusable function to set up image preview
+// Function to set up image preview
 function setupImagePreview(inputId, previewContainerId, previewImgId) {
     const input = document.getElementById(inputId);
     if (!input) return; // if input not found, exit
@@ -527,4 +527,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Preview for reviews (if present on the page)
     setupImagePreview('imageFilename', 'reviewImagePreview', 'reviewPreviewImg');
+});
+
+// Function to clear image in the review
+document.addEventListener('DOMContentLoaded', function() {
+    const clearBtn = document.getElementById('clearReviewImage');
+    const input = document.getElementById('imageFilename');
+    const preview = document.getElementById('reviewImagePreview');
+    const previewImg = document.getElementById('reviewPreviewImg');
+
+    if (clearBtn && input) {
+        // Deshabilitar si no hay archivo seleccionado
+        clearBtn.disabled = !(input.files && input.files.length > 0);
+
+        // Al cambiar el input, habilitar/deshabilitar el botón según haya archivo
+        input.addEventListener('change', () => {
+            clearBtn.disabled = !(input.files && input.files.length > 0);
+        });
+
+        // Al pulsar, limpiar selección y ocultar la preview
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            if (preview) preview.style.display = 'none';
+            if (previewImg) previewImg.src = '';
+            clearBtn.disabled = true;
+        });
+    }
 });
