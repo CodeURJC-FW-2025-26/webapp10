@@ -231,7 +231,12 @@ router.get('/game/:id/image', async (req, res) => {
 
     let game = await catalog.getGame(req.params.id);
 
-    res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+    // If it's the default image, serve from public/images, otherwise from uploads
+    if (game.imageFilename === 'default_img.jpg') {
+        res.download('./public/images/' + game.imageFilename);
+    } else {
+        res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+    }
 
 });
 
@@ -328,9 +333,11 @@ async function handler(req, res) {
     };
 
     // 1.2 Image is required
+    /*
     if (new_game_from_scratch && !req.file) {
         errors.push("El campo \"Imagen\" es obligatorio.");
     };
+    */
 
     // 2. Title must start with uppercase (locale insensitive regex includes accented uppercase)
     if (req.body.title && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.title.trim())) {
@@ -451,7 +458,6 @@ async function handler(req, res) {
             short_description: req.body.short_description || existing_game.short_description,
             developer: req.body.developer || existing_game.developer,
             editor: req.body.editor || existing_game.editor,
-            imageFilename: req.file ? req.file.filename : existing_game.imageFilename,
             price: req.body.price || existing_game.price,
             release_date: req.body.release_date || existing_game.release_date,
             platform: platformArr.length > 0 ? platformArr : existing_game.platform,
@@ -461,11 +467,12 @@ async function handler(req, res) {
             genre: genreArr.length > 0 ? genreArr : existing_game.genre
         };
 
-        if (new_game_from_scratch) {
-            game_create.reviews = [];
-            await catalog.addGame(game_create);
+        if (req.file) {
+            game_create.imageFilename = req.file.filename;
+        } else if (existing_game && existing_game.imageFilename) {
+            game_create.imageFilename = existing_game.imageFilename;
         } else {
-            await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_create });
+            game_create.imageFilename = 'default_img.jpg';
         }
 
         // Create or modify the game in the database
@@ -525,6 +532,20 @@ router.get('/game/:id', async (req, res) => {
             platforms: allPlatforms.map(p => ({ ...p, active: false }))
         }
     });
+});
+
+router.post('/game/:id/delete-image', async (req, res) => {
+    let game_id = req.params.id;
+    let game = await catalog.getGame(game_id);
+    if (game && game.imageFilename && game.imageFilename !== 'default_img.jpg') {
+        try {
+            await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
+        } catch (err) {
+            console.error('Error al eliminar archivo de imagen:', err);
+        }
+        await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: { imageFilename: 'default_img.jpg' } });
+    }
+    res.json({ success: true });
 });
 
 // Route: Delete game via POST (also used to submit review deletions in some flows)

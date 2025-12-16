@@ -87,8 +87,6 @@
                     <div class="row mb-4">
                         <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                         <div class="col-sm-9">
-                            <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp">
-                            
                             <!-- Drag-and-drop area -->
                             <div id="dropArea" class="file-upload-container">
                                 <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
@@ -97,26 +95,30 @@
                                 </label>
                             </div>
 
-                            <!-- Button for clearing image -->
-                            <div class="mt-2">
-                                <button type="button" id="clearImage"
-                                    class="btn btn-outline-secondary mt-2">
-                                    Quitar imagen
-                                </button>
-                            </div>
-
                             <!-- Display current image when editing an existing videogame -->
                             {{^new_game_from_scratch}}
                                 <div class="mt-2">
-                                    <span>Archivo actual:</span><br>
+                                    <button type="button" id="clearCurrentImage"
+                                        class="btn btn-outline-secondary mt-2">
+                                        Eliminar la imagen actual:
+                                    </button>
+
                                     <img src="/game/{{game._id}}/image" width="300" height="300" alt="Imagen actual">
                                 </div>
                             {{/new_game_from_scratch}}
 
+                            <!-- Button for clearing image -->
+                            <div class="mt-2">
+                                <button type="button" id="clearImage"
+                                    class="btn btn-outline-secondary mt-2">
+                                    Eliminar la imagen añadida
+                                </button>
+                            </div>
+
                             <!-- Preview of the new selected image -->
                             <div id="imagePreview" class="mt-2" style="display: none;">
-                                <span>Vista previa:</span><br>
-                                <img id="previewImg" width="300" height="300" alt="Vista previa">
+                                <span>Vista previa de la imagen añadida:</span><br>
+                                <img id="previewImg" width="300" height="300" alt="Vista previa de la imagen añadida">
                             </div>
                         </div>
                     </div>

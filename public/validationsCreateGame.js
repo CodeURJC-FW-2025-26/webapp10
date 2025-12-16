@@ -99,61 +99,63 @@ function showArrayErrorModal(errorsArray) {
     });
 
     function preventDefaults (e) {
-    e.preventDefault();
-    e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
     }
 
-    // 2. Resaltar la zona al arrastrar
+    // 2. Highlight the zone when dragging
     ['dragenter', 'dragover'].forEach(eventName => {
-    dropArea.addEventListener(eventName, highlight, false);
+        dropArea.addEventListener(eventName, highlight, false);
     });
 
     ['dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, unhighlight, false);
+        dropArea.addEventListener(eventName, unhighlight, false);
     });
 
     function highlight(e) {
-    dropArea.classList.add('highlight');
+        dropArea.classList.add('highlight');
     }
 
     function unhighlight(e) {
-    dropArea.classList.remove('highlight');
+        dropArea.classList.remove('highlight');
     }
 
-    // 3. Manejar el archivo soltado
+    // 3. Handle the dropped file
     dropArea.addEventListener('drop', handleDrop, false);
 
     function handleDrop(e) {
-    let dt = e.dataTransfer;
-    let files = dt.files; // files es un objeto FileList con los archivos
+        let dt = e.dataTransfer;
+        let files = dt.files; // "files" is a FileList object with the files
 
-    handleFiles(files); // Llama a una función para procesar los archivos
+        handleFiles(files); // Calls a function to process the files
     }
 
     function handleFiles(files) {
-    files = [...files]; // Convierte FileList a un array
+        files = [...files]; // Converts FileList to an array
 
-    files.forEach(file => {
-        // Aquí puedes hacer validaciones (como verificar que sea una imagen)
-        if (file.type.startsWith('image/')) {
-            // Por ejemplo, para mostrar una vista previa:
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                // Aquí añades img a tu galería o zona de vista previa
-            };
-            reader.readAsDataURL(file);
-            
-            // Aquí es donde enviarías el archivo al servidor (fetch o XMLHttpRequest)
-            // uploadFile(file); 
-        }
-    });
+        files.forEach(file => {
+            // Here you can do validations (like checking if it's an image)
+            if (file.type.startsWith('image/')) {
+
+                // For example, to show a preview:
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    // Here you add img to your gallery or preview area
+                };
+
+                reader.readAsDataURL(file);
+                
+                // Here is where you would send the file to the server (fetch or XMLHttpRequest)
+                // uploadFile(file); 
+            }
+        });
     }
 // ^-----------------------------------------------------------------------------------^
 
 
-// Function to clear image in the review
+// Function to clear the added image in the game creation/edit form
 document.addEventListener("DOMContentLoaded", function () {
     const clearBtn = document.getElementById("clearImage");
     const input = document.getElementById("imageFilename");
@@ -176,8 +178,46 @@ document.addEventListener("DOMContentLoaded", function () {
         if (preview) preview.style.display = "none";
         if (previewImg) previewImg.src = "";
         clearBtn.disabled = true;
-        showError(input, 'Debe subir una imagen para el videojuego');
     });
+});
+
+// Function to clear the current image in the game edit form
+document.addEventListener("DOMContentLoaded", function () {
+    const clearBtn = document.getElementById("clearCurrentImage");
+    const input = document.getElementById("imageFilename");
+
+    // Enable -> disable the button when clicked
+    clearBtn.addEventListener("click", async () => {
+
+        showLoadingSpinner();
+        
+        // Delete the image from the database
+        try {
+            const response = await fetch(`/game/${currentEditingGame_id}/delete-image`, {
+                method: 'POST'
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+                hideLoadingSpinner();
+                showBootstrapAlert(
+                "❌ Error: " +
+                    (data.message || "No se ha podido realizar el borrado de la imagen"),
+                "danger"
+                );
+            } else {
+                hideLoadingSpinner();
+            }
+
+        } catch (error) {
+            console.error('Error al eliminar la imagen actual:', error);
+        }
+
+        // Disable the button
+        clearBtn.disabled = true;
+    });
+
 });
 
 
@@ -403,10 +443,11 @@ imageInput.addEventListener('change', () => {
     }
 
     // When creating (no game id), image is required
-    if (!currentEditingGame_id && imageInput.files.length === 0) {
+    /*if (!currentEditingGame_id && imageInput.files.length === 0) {
         showError(imageInput, 'Debe subir una imagen para el videojuego');
         return;
     }
+    
 
     // If a file is present (either creating or editing), validate type
     const file = imageInput.files[0];
@@ -419,11 +460,12 @@ imageInput.addEventListener('change', () => {
         }
         return;
     }
+    */
 
     const fileType = file.type;
     if (!fileType || !fileType.startsWith('image/')) {
         // The uploaded file is not an image
-        showError(imageInput, 'El archivo subido no es una imagen válida');
+        showError(imageInput, 'El archivo subido no es una imagen');
     } else if (!allowedTypes.includes(fileType)) {
         // The uploaded file is not one of the allowed types
         showError(imageInput, 'Solo se permiten PNG, JPG/JPEG, SVG y WebP.');
