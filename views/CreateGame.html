@@ -8,18 +8,26 @@
     <div class="col-12 col-lg-10 md-10">
         <main class="content">
 
-            <h1>Editar el videojuego del catálogo</h1>
+            <!-- Title of the page -->
+            {{#new_game_from_scratch}}
+                <h1>Crear un nuevo videojuego para el catálogo</h1>
+            {{/new_game_from_scratch}}
+
+            {{^new_game_from_scratch}}
+                <h1>Editar el videojuego del catálogo</h1>
+            {{/new_game_from_scratch}}
+
             <br>
 
             {{#new_game_from_scratch}}
-            <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data"
+                <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data"
                 class="d-grid">
-                {{/new_game_from_scratch}}
+            {{/new_game_from_scratch}}
 
-                {{^new_game_from_scratch}}
+            {{^new_game_from_scratch}}
                 <form method="post" id="createGameForm" action="/game/create/{{game_id}}" novalidate
                     enctype="multipart/form-data" class="d-grid">
-                    {{/new_game_from_scratch}}
+            {{/new_game_from_scratch}}
 
                     <!-- Hidden field to store the game ID when editing -->
                     {{^new_game_from_scratch}}

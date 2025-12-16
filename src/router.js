@@ -239,7 +239,7 @@ router.get('/game/:id/image', async (req, res) => {
 router.get('/check-title-unique', async (req, res) => {
     // 1. Obtain the title from the query parameter
     const title = req.query.title ? req.query.title.trim() : '';
-    
+
     // ID of the game being edited
     const existingGameId = req.query.game_id;
 
@@ -307,21 +307,34 @@ async function handler(req, res) {
         "rating"
     ];
 
-    // Validate required fields
+    // Diccionario para traducir los nombres de los campos
+    const fieldTranslations = {
+        "title": "Título",
+        "description": "Descripción",
+        "short_description": "Descripción Corta",
+        "developer": "Desarrollador",
+        "editor": "Editor",
+        "price": "Precio",
+        "release_date": "Fecha de Lanzamiento",
+        "age_classification": "Clasificación por Edad",
+        "rating": "Puntuación"
+    };
+
+    // 1.1 Validate required fields
     for (const field of requiredFields) {
         if (!req.body[field] || req.body[field].trim() === "") {
-            errors.push(`El campo "${field}" es obligatorio.`);
+            errors.push(`El campo "${fieldTranslations[field]}" es obligatorio.`);
         }
     };
 
-    // Image is required
+    // 1.2 Image is required
     if (new_game_from_scratch && !req.file) {
-        errors.push("La imagen es obligatoria.");
+        errors.push("El campo \"Imagen\" es obligatorio.");
     };
 
     // 2. Title must start with uppercase (locale insensitive regex includes accented uppercase)
     if (req.body.title && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.title.trim())) {
-        errors.push("El nombre del videojuego debe comenzar con mayúscula.");
+        errors.push("El título del videojuego debe comenzar con mayúscula.");
     };
 
     // 3. Validate release_date is a valid date
@@ -416,14 +429,19 @@ async function handler(req, res) {
         errors.push("Debes seleccionar al menos un género.");
     };
 
-    // If validation failed, render Error template with the errors
+    // 9. Check that the uploaded file is a valid image type (if a file was uploaded)
+    if (req.file) {
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'];
+        if (!allowedTypes.includes(req.file.mimetype)) {
+            errors.push("Tipo de imagen no válida. Solo se permiten PNG, JPG/JPEG, SVG y WebP.");
+        }
+    };
+
+    // If validation failed, send a 400 Bad Request response with the error messages
     if (errors.length > 0) {
-        return res.status(400).render("Error", {
-            errors,
-            having_errors: true,
-            new_game_from_scratch,
-            genres: allGenres.map(g => ({ ...g, active: false })),
-            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        return res.status(400).json({
+            success: false,
+            errors: errors // Sends the list of error messages to the client
         });
     } else {
         // Build game object for insertion
@@ -450,13 +468,22 @@ async function handler(req, res) {
             await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_create });
         }
 
-        // After insertion, render success page. Note: catalog.addGame should set _id on game_create if needed.
-        res.render('Success', {
-            _id: game_id || game_create._id?.toString(),
-            new_game_added: true,
-            new_game_from_scratch,
-            genres: allGenres.map(g => ({ ...g, active: false })),
-            platforms: allPlatforms.map(p => ({ ...p, active: false }))
+        // Create or modify the game in the database
+        let finalGameId;
+
+        if (new_game_from_scratch) {
+            game_create.reviews = [];
+            await catalog.addGame(game_create);
+            finalGameId = game_create._id?.toString();
+        } else {
+            await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: game_create });
+            finalGameId = game_id;
+        }
+        
+        // After insertion, send a success JSON response to the client
+            return res.status(new_game_from_scratch ? 201 : 200).json({
+            success: true,
+            gameId: finalGameId // Use gameId so the client can redirect properly
         });
 
     };
