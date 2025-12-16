@@ -98,7 +98,13 @@ async function createreview(event) {
   event.preventDefault();
 
   const form = event.target;
-  const gameId = event.target.action.split("/")[4];
+  const match = form.action.match(/\/game\/([^\/]+)\/review\/create/);
+  const gameId = match ? match[1] : null;
+
+  if (!gameId) {
+    showBootstrapAlert("Error: No se pudo identificar el juego.", "danger");
+    return;
+  }
 
   // Clear previous errors
   clearFormErrors(form);
@@ -412,23 +418,35 @@ function addReviewToPage(review, gameId) {
   const reviewHtml = `
     <div class="review" data-review-id="${review._id}">
         <div class="game-title">
-            <h4>${review.date} - ${review.username} <i class="bi bi-person-check-fill text-info"></i></h4>
+            <h4>${review.date} - ${
+    review.username
+  } <i class="bi bi-person-check-fill text-info"></i></h4>
         </div>
         <div class="rating-stars">
-            ${stars.starFull.map(() => '<i class="bi bi-star-fill text-danger"></i>').join('')}
-            ${stars.starHalf.map(() => '<i class="bi bi-star-half text-danger"></i>').join('')}
-            ${stars.starEmpty.map(() => '<i class="bi bi-star text-danger"></i>').join('')}
+            ${stars.starFull
+              .map(() => '<i class="bi bi-star-fill text-danger"></i>')
+              .join("")}
+            ${stars.starHalf
+              .map(() => '<i class="bi bi-star-half text-danger"></i>')
+              .join("")}
+            ${stars.starEmpty
+              .map(() => '<i class="bi bi-star text-danger"></i>')
+              .join("")}
         </div>
         <p>${review.comment}</p>
         <div>
-            <img src="/game/${gameId}/review/${review._id}/image" width="300" height="200" alt="Imagen de reseña">
+            <img src="/game/${gameId}/review/${
+    review._id
+  }/image" width="300" height="200" alt="Imagen de reseña">
         </div>
         <div class="m-3 justify-content-start d-flex gap-2">
             <form action="/game/${gameId}/review/delete" method="POST" style="display: inline;">
                 <input type="hidden" name="review_id" value="${review._id}">
                 <input type="submit" class="btn btn-primary" value="Borrar">
             </form>
-            <a href="/game/${gameId}/review_editor/${review._id}" class="btn btn-primary">Editar</a>
+            <a href="/game/${gameId}/review_editor/${
+    review._id
+  }" class="btn btn-primary">Editar</a>
         </div>
     </div>
 `;
@@ -744,9 +762,13 @@ document.addEventListener("DOMContentLoaded", function () {
 // Delegated handler: intercept review delete forms and perform AJAX delete
 document.addEventListener("submit", async (e) => {
   const form = e.target;
-  const gameId = e.target.action.split("/")[4];
+  
   if (!form || !form.action || form.action.indexOf("/review/delete") === -1)
     return;
+
+  const match = form.action.match(/\/game\/([^\/]+)\/review\/delete/);
+  const gameId = match ? match[1] : null;
+  if (!gameId) return;
 
   e.preventDefault();
 
