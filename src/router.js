@@ -769,8 +769,8 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         errorsObj.user_name = msg;
         errorsArr.push(msg);
     }
-    if (req.body.comment_description && (req.body.comment_description.length < 25 || req.body.comment_description.length > 200)) {
-        const msg = 'La descripción debe tener entre 25 y 200 caracteres.';
+    if (req.body.comment_description && (req.body.comment_description.length < 25 || req.body.comment_description.length > 500)) {
+        const msg = 'La descripción debe tener entre 25 y 500 caracteres.';
         errorsObj.comment_description = msg;
         errorsArr.push(msg);
     }

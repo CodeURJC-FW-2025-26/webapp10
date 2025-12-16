@@ -412,11 +412,12 @@ function addReviewToPage(review, gameId) {
   const stars = calcRating(review.rating);
 
   const reviewHtml = `
-            <div class="review" data-review-id="${review._id}">
-                <div class="game-title"><h4>${review.date}-${
+    <div class="review" data-review-id="${review._id}">
+        <div class="game-title">
+            <h4>${review.date} - ${
     review.username
-  }:<i class="bi bi-person-check-fill text-info"></i></div>
-        
+  } <i class="bi bi-person-check-fill text-info"></i></h4>
+        </div>
         <div class="rating-stars">
             ${stars.starFull
               .map(() => '<i class="bi bi-star-fill text-danger"></i>')
@@ -427,24 +428,24 @@ function addReviewToPage(review, gameId) {
             ${stars.starEmpty
               .map(() => '<i class="bi bi-star text-danger"></i>')
               .join("")}
-        </div></h4>
-        <p>${review.comment} </p>
+        </div>
+        <p>${review.comment}</p>
         <div>
             <img src="/game/${gameId}/review/${
     review._id
-  }/image" width="300" height="200">
+  }/image" width="300" height="200" alt="Imagen de reseña">
         </div>
-        <div class="m-3 justify-content-start d-flex">
-            <form action="/game/${gameId}/review/delete" method="POST" >
+        <div class="m-3 justify-content-start d-flex gap-2">
+            <form action="/game/${gameId}/review/delete" method="POST" style="display: inline;">
                 <input type="hidden" name="review_id" value="${review._id}">
                 <input type="submit" class="btn btn-primary" value="Borrar">
-                <a href="/game/${gameId}/review_editor/${
-    review._id
-  }" class="btn" >Editar</a>
             </form>
+            <a href="/game/${gameId}/review_editor/${
+    review._id
+  }" class="btn btn-primary">Editar</a>
         </div>
-            </div>
-    `;
+    </div>
+`;
 
   reviewsContainer.insertAdjacentHTML("beforeend", reviewHtml);
 }
@@ -499,7 +500,7 @@ document.addEventListener("click", function (event) {
   const ratingNode = wrapper.querySelector(".rating-stars");
   const commentNode = wrapper.querySelector("p");
   const imgNode = wrapper.querySelector("img");
-
+  const buttons = wrapper.querySelector(".buttons");
   // Extract current values
   let username = "";
   const titleText = titleNode ? titleNode.textContent.trim() : "";
@@ -562,7 +563,7 @@ document.addEventListener("click", function (event) {
 
   // Hide the original parts (we kept them inside wrapper, so hide them)
   const originalNodes = wrapper.querySelectorAll(
-    ".game-title, .rating-stars, p, img, .m-3"
+    ".game-title, .rating-stars, p, img, .buttons"
   );
   originalNodes.forEach((n) => {
     if (
@@ -721,135 +722,120 @@ function setupImagePreview(inputId, previewContainerId, previewImgId) {
   });
 }
 
-// Initialize previews when the DOM is ready
+// Function to clear image in the review
 document.addEventListener("DOMContentLoaded", function () {
   // Preview for creating/editing game
   setupImagePreview("imageFilename", "imagePreview", "previewImg");
 
   // Preview for reviews (if present on the page)
   setupImagePreview("imageFilename", "reviewImagePreview", "reviewPreviewImg");
-});
 
-// Function to clear image in the review
-document.addEventListener("DOMContentLoaded", function () {
   const clearBtn = document.getElementById("clearReviewImage");
   const input = document.getElementById("imageFilename");
   const preview = document.getElementById("reviewImagePreview");
   const previewImg = document.getElementById("reviewPreviewImg");
 
   if (clearBtn && input) {
-    // Deshabilitar si no hay archivo seleccionado
+    // Disabled if no file selected
     clearBtn.disabled = !(input.files && input.files.length > 0);
 
-    // Al cambiar el input, habilitar/deshabilitar el botón según haya archivo
+    // On input change, enable/disable the button based on file presence
     input.addEventListener("change", () => {
       clearBtn.disabled = !(input.files && input.files.length > 0);
     });
 
-    // Al pulsar, limpiar selección y ocultar la preview
+    // On click, clear selection and hide preview
     clearBtn.addEventListener("click", () => {
       input.value = "";
       if (preview) preview.style.display = "none";
       if (previewImg) previewImg.src = "";
       clearBtn.disabled = true;
     });
-    // On page load, attach realtime validation to create-review forms already present
-    document.addEventListener("DOMContentLoaded", () => {
-      const createForms = document.querySelectorAll(
-        'form[action*="/review/create"]'
-      );
-      createForms.forEach((f) => attachRealTimeValidation(f, false));
+  }
+});
+
+// Delegated handler: intercept review delete forms and perform AJAX delete
+document.addEventListener("submit", async (e) => {
+  const form = e.target;
+  
+  if (!form || !form.action || form.action.indexOf("/review/delete") === -1)
+    return;
+
+  const match = form.action.match(/\/game\/([^\/]+)\/review\/delete/);
+  const gameId = match ? match[1] : null;
+  if (!gameId) return;
+
+  e.preventDefault();
+
+  // Prevent double-submission
+  if (form.getAttribute("data-deleting") === "true") return;
+  form.setAttribute("data-deleting", "true");
+
+  // Find the delete button to disable/reenable it
+  const submitBtn = form.querySelector(
+    'input[type="submit"], button[type="submit"]'
+  );
+  if (submitBtn) submitBtn.disabled = true;
+
+  showLoadingSpinner();
+
+  try {
+    const formData = new FormData(form);
+
+    const response = await fetch(`/game/${gameId}/review/delete`, {
+      method: "POST",
+      body: new URLSearchParams(formData),
     });
 
-    // Delegated handler: intercept review delete forms and perform AJAX delete
-    document.addEventListener("submit", async (e) => {
-      const form = e.target;
-      const gameId = e.target.action.split("/")[4];
-      if (!form || !form.action || form.action.indexOf("/review/delete") === -1)
-        return;
-
-      e.preventDefault();
-
-      // Prevent double-submission
-      if (form.getAttribute("data-deleting") === "true") return;
-      form.setAttribute("data-deleting", "true");
-
-      // Find the delete button to disable/reenable it
-      const submitBtn = form.querySelector(
-        'input[type="submit"], button[type="submit"]'
-      );
-      if (submitBtn) submitBtn.disabled = true;
-
-      showLoadingSpinner();
-
-      try {
-        const formData = new FormData(form);
-
-        console.log(
-          "Enviando solicitud de eliminación de reseña al servidor para el juego ID:",
-          gameId
-        );
-        console.log("Datos del formulario:", Array.from(formData.entries()));
-
-        const response = await fetch(`/game/${gameId}/review/delete`, {
-          method: "POST",
-          body: new URLSearchParams(formData),
-        });
-        console.log(
-          "Respuesta recibida del servidor para la eliminación de la reseña."
-        );
-        // Try parse JSON response when possible
-        let data = null;
-        const contentType = response.headers.get("content-type") || "";
-        if (contentType.indexOf("application/json") !== -1) {
-          data = await response.json();
-        } else {
-          const text = await response.text();
-          // If server returned non-JSON but with 200 OK, treat as success
-          if (!response.ok) {
-            throw new Error(text || "Error al eliminar la reseña");
-          }
-        }
-
-        if (!response.ok || (data && data.success === false)) {
-          const msg =
-            data && (data.message || (data.errors && data.errors.join(". ")))
-              ? data.message || data.errors.join(". ")
-              : "Error al eliminar la reseña.";
-          hideLoadingSpinner();
-          showErrorModal(msg);
-          return;
-        }
-
-        // Success: remove review element from DOM
-        const reviewId = form.querySelector('[name="review_id"]')
-          ? form.querySelector('[name="review_id"]').value
-          : data && data.review_id
-          ? data.review_id
-          : null;
-        let reviewEl = null;
-        if (reviewId)
-          reviewEl = document.querySelector(
-            `.review[data-review-id="${reviewId}"]`
-          );
-        if (!reviewEl) reviewEl = form.closest(".review");
-        if (reviewEl) {
-          // remove smoothly
-          reviewEl.remove();
-        }
-
-        hideLoadingSpinner();
-        showBootstrapAlert("✅ Reseña eliminada con éxito.", "success");
-      } catch (err) {
-        hideLoadingSpinner();
-        showErrorModal(
-          "No se ha podido eliminar la reseña. Detalles: " +
-            (err.message || err)
-        );
-      } finally {
-        form.removeAttribute("data-deleting");
-        if (submitBtn) submitBtn.disabled = false;
+    // Try parse JSON response when possible
+    let data = null;
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.indexOf("application/json") !== -1) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      // If server returned non-JSON but with 200 OK, treat as success
+      if (!response.ok) {
+        throw new Error(text || "Error al eliminar la reseña");
       }
-    });
+    }
+
+    if (!response.ok || (data && data.success === false)) {
+      const msg =
+        data && (data.message || (data.errors && data.errors.join(". ")))
+          ? data.message || data.errors.join(". ")
+          : "Error al eliminar la reseña.";
+      hideLoadingSpinner();
+      showErrorModal(msg);
+      return;
+    }
+
+    // Success: remove review element from DOM
+    const reviewId = form.querySelector('[name="review_id"]')
+      ? form.querySelector('[name="review_id"]').value
+      : data && data.review_id
+      ? data.review_id
+      : null;
+    let reviewEl = null;
+    if (reviewId)
+      reviewEl = document.querySelector(
+        `.review[data-review-id="${reviewId}"]`
+      );
+    if (!reviewEl) reviewEl = form.closest(".review");
+    if (reviewEl) {
+
+      reviewEl.remove();
+    }
+
+    hideLoadingSpinner();
+    showBootstrapAlert("✅ Reseña eliminada con éxito.", "success");
+  } catch (err) {
+    hideLoadingSpinner();
+    showErrorModal(
+      "No se ha podido eliminar la reseña. Detalles: " + (err.message || err)
+    );
+  } finally {
+    form.removeAttribute("data-deleting");
+    if (submitBtn) submitBtn.disabled = false;
   }
 });

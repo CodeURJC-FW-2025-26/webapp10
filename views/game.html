@@ -5,7 +5,7 @@
     {{>sidebar}}
 
     <!-- Content -->
-    <div class="col-12 col-lg-10 col-md-10">
+    <div class="col-12 col-lg-10 md-10">
         <main class="game-p-content">
 
             <!-- Game title and action buttons -->
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
-                    <form onsubmit="securemessage(event)" method="POST" action="/game/{{_id}}/delete">
+                    <form onsubmit="securemessage(event)" action="/game/{{_id}}/delete">
                         <input type="submit" class="btn btn-primary" value="Borrar juego">
                     </form>
 
@@ -49,7 +49,7 @@
                     </div>
                     <!-- Game /images -->
                     <div class="image-side col-12 col-md-3">
-                        <img src="/game/{{_id}}/image" width="300" height="300" alt="Portada de {{title}}">
+                        <img src="/image?filename={{imageFilename}}" alt="Portada de {{title}}">
                     </div>
 
                 </div>
@@ -123,7 +123,7 @@
                             {{#reviews}}
                             <div class="review" data-review-id="{{_id}}">
                                 <div class="game-title">
-                                    <h4>{{date}} - {{username}} <i class="bi bi-person-check-fill text-info"></i></h4>
+                                    <h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i>
                                 </div>
 
                                 <div class="rating-stars">
@@ -142,30 +142,28 @@
                                     <i class="bi bi-star text-danger"></i>
                                     {{/stars.starEmpty}}
                                 </div>
-
-                                <p>{{comment}}</p>
-
+                                </h4>
+                                <p>{{comment}} </p>
                                 <!-- Review image -->
                                 <div>
-                                    <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200"
-                                        alt="Imagen de reseña">
+                                    <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
                                 </div>
-
                                 <!-- Edit and delete buttons for the review -->
-                                <div class="m-3 justify-content-start d-flex gap-2">
-                                    <form action="/game/{{game_id}}/review/delete" method="POST"
-                                        style="display: inline;">
+                                <div class="buttons m-3 justify-content-start d-flex">
+                                    <form action="/game/{{game_id}}/review/delete" method="POST">
                                         <input type="hidden" name="review_id" value="{{_id}}">
                                         <input type="submit" class="btn btn-primary" value="Borrar">
+                                        <a href="/game/{{game_id}}/review_editor/{{_id}}" class="btn">Editar</a>
                                     </form>
-                                    <a href="/game/{{game_id}}/review_editor/{{_id}}" class="btn btn-primary">Editar</a>
+
                                 </div>
+
                             </div>
                             {{/reviews}}
 
                         </div>
                         <!-- Add new review form -->
-                        <div id="add_reseñas" class="description col-12 col-lg-12 col-md-12">
+                        <div id="add_reseñas" class="description col-12 col-lg-12 md-12">
                             <h2>Añadir Reseña</h2>
                             <br>
 
@@ -211,13 +209,14 @@
                                         <input type="file" id="imageFilename" name="imageFilename" class="form-control"
                                             accept="image/*" required>
                                         <div class="invalid-feedback" id="imageFilename_error"></div>
-                                        <!-- Preview of the selected image -->
+
+                                        <!-- Preview -->
                                         <div id="reviewImagePreview" class="mt-2" style="display: none;">
                                             <span>Vista previa:</span><br>
                                             <img id="reviewPreviewImg" width="300" height="200" alt="Vista previa">
                                         </div>
 
-                                        <!-- Button for deselecting image -->
+                                        <!-- Botón quitar -->
                                         <button type="button" id="clearReviewImage"
                                             class="btn btn-outline-secondary mt-2">
                                             Quitar imagen
