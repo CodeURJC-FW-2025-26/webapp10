@@ -300,13 +300,13 @@ npm run watch
 It is the static database that is loaded when the web page starts
 
 #### infiniteScroll.js
-
+It stores all the functions related to the infinite scrolling of the main page.
 
 #### reviews.js
-
+It is the document responsible for all functions related to the editing, creation, and deletion of reviews
 
 #### validationsCreateGame.js
-
+File responsible for the validations of creating and editing a game
 
 #### app.js
 It is the central hub that brings together the Express framework, necessary external modules, and custom routing logic before finally launching the web server.
@@ -348,6 +348,7 @@ Page indicating that the review or game has been successfully saved
 #### Paula De La Fuente
 
  * Description of my tasks during the practice:
+In this final section, I've focused on everything related to reviews: using AJAX to create, edit, and delete reviews; transforming the review editing page to be integrated into the game's page; and enabling the use of a predefined image if the review doesn't contain one or if it's deleted. I also created the selector and implemented the AJAX function to delete a game.
 
 * 5 best commits:
   1. [delete created](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/0b15d60b356e4591faf9293e2d69a619e77c542b)
