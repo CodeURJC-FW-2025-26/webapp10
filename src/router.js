@@ -630,10 +630,6 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         }
     };
 
-    if (!req.file) {
-        errors.push("La imagen es obligatoria.");
-    };
-
     // 2. Validate rating (0 to 5)
     const rating = Number(req.body.rating);
     if (isNaN(rating) || rating < 0 || rating > 5 || rating % 0.5 !== 0) {
@@ -717,20 +713,6 @@ router.post('/game/:id/review/delete', async (req, res) => {
     }
 });
 
-// Route: Show review editor for a specific review
-router.get('/game/:id/review_editor/:_id', async (req, res) => {
-
-    let game_id = req.params.id;
-    let review_id = req.params._id;
-    let game = await catalog.getGame(game_id);
-    let review = game.reviews.find(r => r._id.toString() === review_id);
-
-    res.render('review_editor', {
-        game, review, game_id, _id: review_id, genres: allGenres.map(g => ({ ...g, active: false })),
-        platforms: allPlatforms.map(p => ({ ...p, active: false }))
-    });
-});
-
 // Route: Edit a review (POST) with optional new image
 router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'), async (req, res) => {
 
@@ -740,7 +722,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
     let game = await catalog.getGame(game_id);
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
-    // Server-side validation (same rules as creation, but image optional)
+    // Server-side validation (same rules as creation)
     // We collect field-specific errors (errorsObj) and an array of messages (errorsArr)
     const errorsObj = {};
     const errorsArr = [];
@@ -804,7 +786,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         comment: req.body ? req.body.comment_description : review.comment,
         rating: req.body ? req.body.rating : review.rating,
         date: new Date().toISOString().split('T')[0],
-        imageFilename: req.file ? req.file.filename : review.imageFilename
+        imageFilename: req.file ? req.file.filename : null
     };
 
     try {

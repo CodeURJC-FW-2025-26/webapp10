@@ -123,7 +123,7 @@
                             {{#reviews}}
                             <div class="review" data-review-id="{{_id}}">
                                 <div class="game-title">
-                                    <h4>{{date}}-{{username}}:<i class="bi bi-person-check-fill text-info"></i>
+                                    <h4>{{date}}:{{username}} |<i class="bi bi-person-check-fill text-info"></i>
                                 </div>
 
                                 <div class="rating-stars">
@@ -207,7 +207,7 @@
                                         videojuego:</label>
                                     <div class="col-sm-9">
                                         <input type="file" id="imageFilename" name="imageFilename" class="form-control"
-                                            accept="image/*" required>
+                                            accept="image/*">
                                         <div class="invalid-feedback" id="imageFilename_error"></div>
 
                                         <!-- Preview -->

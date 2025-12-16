@@ -338,19 +338,7 @@ function validateForm(form, isEdit = false) {
 
   // Validate imageFilename (required when creating, optional when editing)
   const image = form.querySelector('[name="imageFilename"]');
-  if (!isEdit) {
-    if (!image || !image.files || image.files.length === 0) {
-      if (image) showFieldError(image, "Debe seleccionar una imagen.");
-      isValid = false;
-    } else {
-      const file = image.files[0];
-      if (!file.type.startsWith("image/")) {
-        showFieldError(image, "El archivo debe ser una imagen.");
-        isValid = false;
-      }
-    }
-  } else {
-    // editing: image optional, but if provided must be an image
+    // image optional, but if provided must be an image
     if (image && image.files && image.files.length > 0) {
       const file = image.files[0];
       if (!file.type.startsWith("image/")) {
@@ -358,7 +346,6 @@ function validateForm(form, isEdit = false) {
         isValid = false;
       }
     }
-  }
 
   return isValid;
 }
@@ -414,9 +401,7 @@ function addReviewToPage(review, gameId) {
   const reviewHtml = `
     <div class="review" data-review-id="${review._id}">
         <div class="game-title">
-            <h4>${review.date} - ${
-    review.username
-  } <i class="bi bi-person-check-fill text-info"></i></h4>
+            <h4>${review.date}:${review.username} | <i class="bi bi-person-check-fill text-info"></i></h4>
         </div>
         <div class="rating-stars">
             ${stars.starFull
@@ -431,18 +416,15 @@ function addReviewToPage(review, gameId) {
         </div>
         <p>${review.comment}</p>
         <div>
-            <img src="/game/${gameId}/review/${
-    review._id
-  }/image" width="300" height="200" alt="Imagen de reseña">
+            <img src="/game/${gameId}/review/${review._id}/image" width="300" height="200" alt="Imagen de reseña">
         </div>
-        <div class="m-3 justify-content-start d-flex gap-2">
-            <form action="/game/${gameId}/review/delete" method="POST" style="display: inline;">
-                <input type="hidden" name="review_id" value="${review._id}">
-                <input type="submit" class="btn btn-primary" value="Borrar">
-            </form>
-            <a href="/game/${gameId}/review_editor/${
-    review._id
-  }" class="btn btn-primary">Editar</a>
+        <div class="buttons m-3 justify-content-start d-flex">
+          <form action="/game/${gameId}/review/delete" method="POST">
+            <input type="hidden" name="review_id" value="${review._id}">
+            <input type="submit" class="btn btn-primary" value="Borrar">
+              <a href="/game/${gameId}/review_editor/${review._id}" class="btn">Editar</a>
+          </form>
+
         </div>
     </div>
 `;
@@ -505,16 +487,11 @@ document.addEventListener("click", function (event) {
   let username = "";
   const titleText = titleNode ? titleNode.textContent.trim() : "";
   if (titleText) {
-    const colonIndex = titleText.indexOf(":");
+    const colonIndex = titleText.indexOf("|");
     if (colonIndex !== -1) {
-      // If the title begins with a date (YYYY-MM-DD-username:), strip the date prefix
-      if (titleText.length > 10 && titleText[10] === "-") {
+      // If the title begins with a date (YY-MM-DD:username:), strip the date prefix
+        console.log(colonIndex);
         username = titleText.substring(11, colonIndex).trim();
-      } else {
-        // Fallback: capture text after the last dash up to ':'
-        const m = titleText.match(/-([^:]+):/);
-        username = m ? m[1].trim() : titleText.substring(0, colonIndex).trim();
-      }
     }
   }
   const currentComment = commentNode ? commentNode.textContent.trim() : "";
@@ -548,6 +525,9 @@ document.addEventListener("click", function (event) {
                     <input type="file" name="imageFilename" class="form-control" accept="image/*">
                     <input type="hidden" name="existing_image" value="${existingImgSrc}">
                     <div class="invalid-feedback"></div>
+                    <button type="button" id="clearReviewImage" class="btn btn-outline-secondary mt-2">
+                      Quitar imagen
+                    </button>
                 </div>
             </div>
             <div class="d-flex gap-2 mt-2">
@@ -590,7 +570,7 @@ document.addEventListener("click", function (event) {
     const form = e.target;
     clearFormErrors(form);
 
-    // Inline validation for edit: image optional
+    // Inline validation for edit
     const userName = form.querySelector('[name="user_name"]');
     const comment = form.querySelector('[name="comment_description"]');
     const rating = form.querySelector('[name="rating"]');
