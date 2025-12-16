@@ -426,7 +426,7 @@ document.addEventListener('click', function(event) {
     const ratingNode = wrapper.querySelector('.rating-stars');
     const commentNode = wrapper.querySelector('p');
     const imgNode = wrapper.querySelector('img');
-
+    const buttons= wrapper.querySelector('.buttons');
     // Extract current values
     let username = '';
     const titleText = titleNode ? titleNode.textContent.trim() : '';
@@ -448,6 +448,7 @@ document.addEventListener('click', function(event) {
 
     const existingImgSrc = imgNode ? imgNode.src : '';
     const formHtml = `
+    
         <form class="review-edit-form d-grid p-3 border rounded bg-light" enctype="multipart/form-data">
             <div class="row mb-2">
                 <label class="col-sm-3 col-form-label">Nombre:</label>
@@ -488,8 +489,8 @@ document.addEventListener('click', function(event) {
     wrapper.appendChild(formContainer);
 
     // Hide the original parts (we kept them inside wrapper, so hide them)
-    const originalNodes = wrapper.querySelectorAll('.game-title, .rating-stars, p, img, .m-3');
-    originalNodes.forEach(n => { if (!n.classList.contains('review-edit-form') && !n.closest('.review-edit-form')) n.style.display = 'none'; });
+    const originalNodes = wrapper.querySelectorAll('.game-title, .rating-stars, p, img, .buttons');
+    originalNodes.forEach(n => { if (!n.classList.contains('review-edit-form') && !n.closest('.review-edit-form')) n.style.display = 'none';});
 
     // Add event handlers for the form buttons
     const editForm = wrapper.querySelector('.review-edit-form');
@@ -501,6 +502,7 @@ document.addEventListener('click', function(event) {
         // Remove form and show original content
         editForm.remove();
         originalNodes.forEach(n => n.style.display = '');
+       
     });
 
     editForm.addEventListener('submit', async (e) => {
@@ -615,14 +617,11 @@ document.addEventListener('submit', async (e) => {
     try {
         const formData = new FormData(form);
         
-        console.log('Enviando solicitud de eliminación de reseña al servidor para el juego ID:', gameId);
-        console.log('Datos del formulario:', Array.from(formData.entries()));
-        
         const response = await fetch(`/game/${gameId}/review/delete`, {
             method: 'POST',
             body: new URLSearchParams(formData),
         });
-        console.log('Respuesta recibida del servidor para la eliminación de la reseña.');
+
         // Try parse JSON response when possible
         let data = null;
         const contentType = response.headers.get('content-type') || '';
