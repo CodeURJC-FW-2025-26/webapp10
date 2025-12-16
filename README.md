@@ -350,15 +350,15 @@ Page indicating that the review or game has been successfully saved
  * Description of my tasks during the practice:
 
 * 5 best commits:
-  1. [static review editor added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/ab5d4dfe12ed8849c8e70068ca35552599da145d)
-  2. [reviews db](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/88edd850d3bc50f6f1dbbf4fc69b2a8f404723e8)
-  3. [minecraft review stars](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/fc927e6bb05945631fd04785e6bccc33a305c4dc)
-  4. [trying review](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/28f4b37594883489e2de1f3fa7acdec756203182)
-  5. [id_bd](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/c4b72ad1788167a0b3f81bdefdfffb1457a790d5)
+  1. [delete created](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/0b15d60b356e4591faf9293e2d69a619e77c542b)
+  2. [CreateReview](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/fa58913450becf9998b7173511d7b8eb0f50831c)
+  3. [form in game.html](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/47377b4c1245fda8e7ccac80020fca766f3434fa)
+  4. [Deletereview with AJAX](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/45301c5f983adc4cd5c84d93c60b8e9b1f15ef71)
+  5. [editreview with AJAX](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/a2ae1c1ef9e395189d7f3fa28b10eeaa823ecd8e)
  
 * 5 files most participated:
-  1. [game.html](./views/game.html)
-  2. [review_editor.html](./views/review_editor.js)
+  1. [reviews.js](./public/reviews.js)
+  2. [game.html](./views/game.html)
   3. [router.js](./src/router.js)
   4. [Readme.md](#moreforplaying)
   5. [data.json](./data/data.json)
