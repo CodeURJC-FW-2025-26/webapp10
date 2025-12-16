@@ -299,7 +299,7 @@ async function handler(req, res) {
 
     const errors = [];
 
-    // 1. Required fields list
+    // 1.1. Required fields list
     const requiredFields = [
         "title",
         "description",
@@ -312,7 +312,7 @@ async function handler(req, res) {
         "rating"
     ];
 
-    // Diccionario para traducir los nombres de los campos
+    // 1.2. Dictionary to translate field names
     const fieldTranslations = {
         "title": "Título",
         "description": "Descripción",
@@ -325,19 +325,12 @@ async function handler(req, res) {
         "rating": "Puntuación"
     };
 
-    // 1.1 Validate required fields
+    // 1.3. Validate required fields
     for (const field of requiredFields) {
         if (!req.body[field] || req.body[field].trim() === "") {
             errors.push(`El campo "${fieldTranslations[field]}" es obligatorio.`);
         }
     };
-
-    // 1.2 Image is required
-    /*
-    if (new_game_from_scratch && !req.file) {
-        errors.push("El campo \"Imagen\" es obligatorio.");
-    };
-    */
 
     // 2. Title must start with uppercase (locale insensitive regex includes accented uppercase)
     if (req.body.title && !/^[A-ZÁÉÍÓÚÑ]/.test(req.body.title.trim())) {

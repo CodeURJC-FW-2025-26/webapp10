@@ -131,26 +131,13 @@ function showArrayErrorModal(errorsArray) {
     }
 
     function handleFiles(files) {
-        files = [...files]; // Converts FileList to an array
-
-        files.forEach(file => {
-            // Here you can do validations (like checking if it's an image)
-            if (file.type.startsWith('image/')) {
-
-                // For example, to show a preview:
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    // Here you add img to your gallery or preview area
-                };
-
-                reader.readAsDataURL(file);
-                
-                // Here is where you would send the file to the server (fetch or XMLHttpRequest)
-                // uploadFile(file); 
-            }
-        });
+        // Assign the files to the input element
+        const imageInput = document.getElementById('imageFilename');
+        imageInput.files = files; // This assigns the dropped files to the input
+        
+        // Trigger change event to update the form validation and preview
+        const event = new Event('change', { bubbles: true });
+        imageInput.dispatchEvent(event);
     }
 // ^-----------------------------------------------------------------------------------^
 
@@ -442,26 +429,6 @@ imageInput.addEventListener('change', () => {
         return;
     }
 
-    // When creating (no game id), image is required
-    /*if (!currentEditingGame_id && imageInput.files.length === 0) {
-        showError(imageInput, 'Debe subir una imagen para el videojuego');
-        return;
-    }
-    
-
-    // If a file is present (either creating or editing), validate type
-    const file = imageInput.files[0];
-    if (!file) {
-        // Safety: treat as valid when editing, error when creating
-        if (currentEditingGame_id) {
-            showValid(imageInput);
-        } else {
-            showError(imageInput, 'Debe subir una imagen para el videojuego');
-        }
-        return;
-    }
-    */
-
     const fileType = file.type;
     if (!fileType || !fileType.startsWith('image/')) {
         // The uploaded file is not an image
@@ -539,15 +506,6 @@ gameForm.addEventListener('submit', async (event) => {
 
     // 1. Prevent default submission to validate first
     event.preventDefault();
-
-    // 00. If something is not valid, don't submit the form
-    /*if (!checkAllClientValidations()) {
-
-        // Show a general alert and don't submit the form
-        alert('Por favor, corrija los errores en el formulario antes de enviarlo.');
-        return;
-
-    }*/
 
     // 2. AJAX submission v----------------------------------------------v
         // Show the loading spinner
