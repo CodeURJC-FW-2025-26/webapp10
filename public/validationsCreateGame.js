@@ -1,3 +1,6 @@
+// If we are editing, assume a hidden field with the game ID
+const currentEditingGame_id = document.getElementById('game_id')?.value;
+
 function showError(input, message) {
     // Mark the input as invalid
     input.classList.add('is-invalid');
@@ -66,6 +69,119 @@ function showGroupValid(container) {
     }
 }
 
+// Function to show error modal with an array of errors
+function showArrayErrorModal(errorsArray) {
+    const modalBody = document.getElementById("errorModalBody");
+    
+    // 1. Transform the array of errors into an HTML list (<ul><li>...</li></ul>)
+    const errorListHTML = errorsArray.map(err => `<li>${err}</li>`).join('');
+    
+    // 2. Use .innerHTML to inject the HTML list into the modal body
+    modalBody.innerHTML = `<ul>${errorListHTML}</ul>`;
+    
+    // 3. Show the Bootstrap modal
+    const modalElement = document.getElementById("errorModal");
+    const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+    modal.show();
+}
+
+
+
+
+
+// Drag-and-Drop functionality for image upload area v---------------------------------v
+    const dropArea = document.getElementById('dropArea');
+
+    // 1. Prevent default behaviour
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false); // Also at the body level to prevent navigation
+    });
+
+    function preventDefaults (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    }
+
+    // 2. Resaltar la zona al arrastrar
+    ['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+    dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+    dropArea.classList.remove('highlight');
+    }
+
+    // 3. Manejar el archivo soltado
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+    let dt = e.dataTransfer;
+    let files = dt.files; // files es un objeto FileList con los archivos
+
+    handleFiles(files); // Llama a una función para procesar los archivos
+    }
+
+    function handleFiles(files) {
+    files = [...files]; // Convierte FileList a un array
+
+    files.forEach(file => {
+        // Aquí puedes hacer validaciones (como verificar que sea una imagen)
+        if (file.type.startsWith('image/')) {
+            // Por ejemplo, para mostrar una vista previa:
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                // Aquí añades img a tu galería o zona de vista previa
+            };
+            reader.readAsDataURL(file);
+            
+            // Aquí es donde enviarías el archivo al servidor (fetch o XMLHttpRequest)
+            // uploadFile(file); 
+        }
+    });
+    }
+// ^-----------------------------------------------------------------------------------^
+
+
+// Function to clear image in the review
+document.addEventListener("DOMContentLoaded", function () {
+    const clearBtn = document.getElementById("clearImage");
+    const input = document.getElementById("imageFilename");
+    const preview = document.getElementById("imagePreview");
+    const previewImg = document.getElementById("previewImg");
+
+    // Dishable if no file is selected
+    if (clearBtn && input) {
+        clearBtn.disabled = !(input.files && input.files.length > 0);
+    }
+
+    // Changing the input, enable/disable the button, depending on whether there is a file
+    input.addEventListener("change", () => {
+        clearBtn.disabled = !(input.files && input.files.length > 0);
+    });
+
+    // On click, clear selection and hide the preview
+    clearBtn.addEventListener("click", () => {
+        input.value = "";
+        if (preview) preview.style.display = "none";
+        if (previewImg) previewImg.src = "";
+        clearBtn.disabled = true;
+        showError(input, 'Debe subir una imagen para el videojuego');
+    });
+});
+
+
+
 
 
 // Debounce implementation
@@ -101,9 +217,6 @@ function validateTitleClient(titleInput) {
     showValid(titleInput);
     return true;
 }
-
-// If we are editing, assume a hidden field with the game ID
-const currentEditingGame_id = document.getElementById('game_id')?.value;
 
 // Asynchronous validation function (AJAX/Fetch) for Uniqueness
 async function validateTitleUniqueness(event) {
@@ -277,25 +390,43 @@ ratingInput.addEventListener('input', () => {
 
 });
 
-// Validate required image upload
+// Validate image upload (required only when creating)
 imageInput.addEventListener('change', () => {
 
     // Array of allowed image types
     const allowedTypes = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'];
-    const fileType = imageInput.files[0].type;
 
-    // Check if a file is uploaded. If not, show error and stop execution
-    if (imageInput.files.length === 0) {
+    // If editing and no new file selected, keep current image -> valid
+    if (currentEditingGame_id && imageInput.files.length === 0) {
+        showValid(imageInput);
+        return;
+    }
+
+    // When creating (no game id), image is required
+    if (!currentEditingGame_id && imageInput.files.length === 0) {
         showError(imageInput, 'Debe subir una imagen para el videojuego');
         return;
     }
-    
-    if (!imageInput.files[0].type.startsWith('image/')) {
+
+    // If a file is present (either creating or editing), validate type
+    const file = imageInput.files[0];
+    if (!file) {
+        // Safety: treat as valid when editing, error when creating
+        if (currentEditingGame_id) {
+            showValid(imageInput);
+        } else {
+            showError(imageInput, 'Debe subir una imagen para el videojuego');
+        }
+        return;
+    }
+
+    const fileType = file.type;
+    if (!fileType || !fileType.startsWith('image/')) {
         // The uploaded file is not an image
         showError(imageInput, 'El archivo subido no es una imagen válida');
     } else if (!allowedTypes.includes(fileType)) {
         // The uploaded file is not one of the allowed types
-        showError(imageInput, "Tipo de imagen no válida. Solo se permiten PNG, JPG/JPEG, SVG y WebP.");
+        showError(imageInput, 'Solo se permiten PNG, JPG/JPEG, SVG y WebP.');
     } else {
         showValid(imageInput);
     }
@@ -341,37 +472,106 @@ genreContainer.addEventListener('change', () => {
 
 });
 
+// List of inputs that need the class 'is-valid'
+const requiredValidInputs = [
+    titleInput, descriptionInput, short_descriptionInput, developerInput, editorInput,
+    priceInput, release_dateInput, age_classificationInput, ratingInput
+].concat(currentEditingGame_id ? [] : [imageInput]);
+
+// List of containers that need the class 'border-success'
+const requiredValidContainers = [
+    platformContainer, gamemodContainer, genreContainer
+];
+
+// Function to check if all fields have the success class
+function checkAllClientValidations() {
+    let allInputsValid = requiredValidInputs.every(input => input.classList.contains('is-valid'));
+    let allContainersValid = requiredValidContainers.every(container => container.classList.contains('border-success'));
+    
+    return allInputsValid && allContainersValid;
+}
+
 
 // Form submission event
 gameForm.addEventListener('submit', async (event) => {
 
-    // Prevent default submission to validate first
+    // 1. Prevent default submission to validate first
     event.preventDefault();
 
-    // If something is not valid, don't submit the form
-    if (!titleInput.classList.contains('is-valid') ||
-        !descriptionInput.classList.contains('is-valid') ||
-        !short_descriptionInput.classList.contains('is-valid') ||
-        !developerInput.classList.contains('is-valid') ||
-        !editorInput.classList.contains('is-valid') ||
-        !priceInput.classList.contains('is-valid') ||
-        !release_dateInput.classList.contains('is-valid') ||
-        !age_classificationInput.classList.contains('is-valid') ||
-        !ratingInput.classList.contains('is-valid') ||
-        !imageInput.classList.contains('is-valid') ||
-        !platformContainer.classList.contains('border-success') ||
-        !gamemodContainer.classList.contains('border-success') ||
-        !genreContainer.classList.contains('border-success')
-        ) {
+    // 00. If something is not valid, don't submit the form
+    /*if (!checkAllClientValidations()) {
 
         // Show a general alert and don't submit the form
         alert('Por favor, corrija los errores en el formulario antes de enviarlo.');
         return;
 
-    } else { // If everything is correct, submit the form
-    
-        gameForm.submit();
+    }*/
 
-    }
+    // 2. AJAX submission v----------------------------------------------v
+        // Show the loading spinner
+        showLoadingSpinner();
+
+        const formData = new FormData(gameForm);
+        // Obteins the URL form acction (/game/create/:id)
+        const formAction = gameForm.action;
+
+        try {
+            const response = await fetch(formAction, {
+                method: 'POST',
+                body: formData, // FormData manages the codification and the image automatically
+            });
+            
+            // Hide the spinner before processing the response
+            hideLoadingSpinner();
+
+            // The server should respond with 200/201 (success) or 4xx/5xx (error)
+
+            if (response.ok) {
+                // Success: The server responded with 200-299
+                
+                // If the server sends a JSON with the new ID (or the edited ID)
+                const data = await response.json(); 
+                
+                // Redirect to the detail page of the created/edited game
+                // Assume the JSON response contains the game ID
+                const gameId = data.gameId || data._id;
+
+                if (gameId) {
+                    window.location.href = `/game/${gameId}`;
+                } else {
+                    // If the ID is not in the response (just in case), redirect to the catalog
+                    window.location.href = '/catalog';
+                }
+
+            } else if (response.status === 400) {
+                // Error 400 (Bad Request) - Server Validation Failure
+                
+                // Show error in a dialog box
+                const errorData = await response.json(); // Try to read the JSON with errors
+                 
+                showArrayErrorModal(errorData.errors);
+
+                if (errorData.errors && Array.isArray(errorData.errors)) {
+                    // If the server returns a list of errors
+                    showArrayErrorModal(errorData.errors);
+                } else {
+                    // Fallback if the server didn't send the expected list of errors
+                    showErrorModal(['Error desconocido en la validación del servidor.']);
+                }
+            
+            } else {
+
+                // Generic HTTP error (e.g., 404, 500)
+                errorMessage = `Error ${response.status}: ${response.statusText}.`;
+               
+            }
+
+        } catch (error) {
+            // Network error (server not responding or connection fails)
+            hideLoadingSpinner();
+            console.error('Network or Parse Error:', error);
+            showErrorModal('Error de conexión con el servidor. Por favor, inténtelo de nuevo.');
+        }
+    // ^-----------------------------------------------------------------^
 
 });

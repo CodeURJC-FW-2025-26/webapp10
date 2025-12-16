@@ -8,18 +8,26 @@
     <div class="col-12 col-lg-10 md-10">
         <main class="content">
 
-            <h1>Editar el videojuego del catálogo</h1>
+            <!-- Title of the page -->
+            {{#new_game_from_scratch}}
+                <h1>Crear un nuevo videojuego para el catálogo</h1>
+            {{/new_game_from_scratch}}
+
+            {{^new_game_from_scratch}}
+                <h1>Editar el videojuego del catálogo</h1>
+            {{/new_game_from_scratch}}
+
             <br>
 
             {{#new_game_from_scratch}}
-            <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data"
+                <form method="post" id="createGameForm" action="/game/create" novalidate enctype="multipart/form-data"
                 class="d-grid">
-                {{/new_game_from_scratch}}
+            {{/new_game_from_scratch}}
 
-                {{^new_game_from_scratch}}
+            {{^new_game_from_scratch}}
                 <form method="post" id="createGameForm" action="/game/create/{{game_id}}" novalidate
                     enctype="multipart/form-data" class="d-grid">
-                    {{/new_game_from_scratch}}
+            {{/new_game_from_scratch}}
 
                     <!-- Hidden field to store the game ID when editing -->
                     {{^new_game_from_scratch}}
@@ -79,13 +87,30 @@
                     <div class="row mb-4">
                         <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del videojuego:</label>
                         <div class="col-sm-9">
-                            <input type="file" id="imageFilename" name="imageFilename" class="form-control"
-                                accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp">
-                            {{^new_game_from_scratch}}
-                            <div class="mt-2">
-                                <span>Archivo actual:</span><br>
-                                <img src="/game/{{game._id}}/image" width="300" height="300" alt="Imagen actual">
+                            <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp">
+                            
+                            <!-- Drag-and-drop area -->
+                            <div id="dropArea" class="file-upload-container">
+                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
+                                <label for="imageFilename">
+                                    Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
+                                </label>
                             </div>
+
+                            <!-- Button for clearing image -->
+                            <div class="mt-2">
+                                <button type="button" id="clearImage"
+                                    class="btn btn-outline-secondary mt-2">
+                                    Quitar imagen
+                                </button>
+                            </div>
+
+                            <!-- Display current image when editing an existing videogame -->
+                            {{^new_game_from_scratch}}
+                                <div class="mt-2">
+                                    <span>Archivo actual:</span><br>
+                                    <img src="/game/{{game._id}}/image" width="300" height="300" alt="Imagen actual">
+                                </div>
                             {{/new_game_from_scratch}}
 
                             <!-- Preview of the new selected image -->

@@ -252,6 +252,19 @@ form {
     margin-left: 1.2%;
 }
 
+#dropArea {
+    border: 2px dashed #ccc;
+    border-radius: 20px;
+    width: 480px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+#dropArea.highlight {
+  border-color: red; /* Class to highlight when a file is dragged over the area */
+}
+
 
 /* Footer styles */
 
