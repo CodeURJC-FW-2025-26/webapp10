@@ -273,3 +273,131 @@ I was responsible for making the create game form work on the website. I started
   4. [CreateGame_editor.html](./views/CreateGame_editor.html)
   5. [Success.html](./views/Success.html)
   
+## Practica 3
+
+
+###
+
+### Web video
+
+### Execution instructions
+
+#### Requirements
+- Node.js 
+- MongoDB
+- npm
+ 
+```bash
+npm install
+git clone https://github.com/CodeURJC-FW-2025-26/webapp10.git
+cd webapp10
+npm run watch
+```
+
+
+### Files description
+#### data.json
+It is the static database that is loaded when the web page starts
+
+#### infiniteScroll.js
+
+
+#### reviews.js
+
+
+#### validationsCreateGame.js
+
+
+#### app.js
+It is the central hub that brings together the Express framework, necessary external modules, and custom routing logic before finally launching the web server.
+
+#### catalog.js
+main data access module
+
+#### load_data.js
+Its main function is to initialize the application with demo data, ensuring that the system has base content each time it runs.
+
+#### router.js
+It manages the workflow of user requests, deciding what to do with them, how to interact with the data (via catalog.js), and what response to send (rendering views from views/).
+
+#### CreateGame.html
+It is the form to create a new game.
+
+#### deleted.html
+It is the page that indicates that a game or review has been deleted.
+
+#### Error.html
+This page indicates that the game has not been saved and shows the errors that were made during its creation.
+
+#### footer.html, header.html and sidebar.html
+Parts of the website common to all pages
+
+#### game.html
+general details page for all games created
+
+#### index.html
+Main page where the covers of all the games created are displayed
+
+#### review_editor.html
+Review editing form
+
+#### Success.html
+Page indicating that the review or game has been successfully saved
+
+### History
+#### Paula De La Fuente
+
+ * Description of my tasks during the practice:
+
+* 5 best commits:
+  1. [static review editor added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/ab5d4dfe12ed8849c8e70068ca35552599da145d)
+  2. [reviews db](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/88edd850d3bc50f6f1dbbf4fc69b2a8f404723e8)
+  3. [minecraft review stars](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/fc927e6bb05945631fd04785e6bccc33a305c4dc)
+  4. [trying review](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/28f4b37594883489e2de1f3fa7acdec756203182)
+  5. [id_bd](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/c4b72ad1788167a0b3f81bdefdfffb1457a790d5)
+ 
+* 5 files most participated:
+  1. [game.html](./views/game.html)
+  2. [review_editor.html](./views/review_editor.js)
+  3. [router.js](./src/router.js)
+  4. [Readme.md](#moreforplaying)
+  5. [data.json](./data/data.json)
+
+#### Marcos Vidal 
+
+* Description of my tasks during the practice:
+
+
+* 5 best commits:
+  1. [Db working](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/92a5091dcefe452693fe0512b63d9412a4718303)
+  2. [index template](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/2719962b435e7ccb621efd6b29d536963c72796f)
+  3. [rating in stars working](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/eaf900d0315cf19b9a2f91e8c11455f080b78742)
+  4. [working pagination](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/2a47babad51f0b67bee3cf03678405574e6ceed6)
+  5. [categories and more changes](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/10149fa915e59743f8ea2a0d9421327b152ae79e)
+  
+* 5 files most participated:
+  1. [router.js](./src/router.js)
+  2. [data.json](./data/data.json)
+  3. [index.html](./views/index.html)
+  4. [catalog.js](./src/catalog.js)
+  5. [sidebar.html](./views/sidebar.html)
+
+#### Fran García
+* Description of my tasks during the practice:
+
+
+
+* 5 best commits:
+  1. [Fixed a problem with the names, and added to the data.json the info to all the other games, not only Minecraft.](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/a48b291a50adc6fe2a8a2bf82208cb96b39fe3e3)
+  2. [Adding express to the form](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/b7bad7cc532a9868284a6fae67ed1d1914712c50)
+  3. [Compleatly resolved the problem with the filters and the checkbox fields of the videogames. Edit game also added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/4f5f79bfeec8f13adcc7d5444b9485cf78d31048)
+  4. [New server validation options and new error page to show them](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/6dbeb8d4c417338dc40e75cd47fc2aa513cd3714)
+  5. [Now the created games are being saved, but there are still thing to improve](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/89235677a711c50b246ececea7bc64967fc053a1)
+
+* 5 files most participated:
+  1. [CreateGame.html](./views/CreateGame.html)
+  2. [router.js](./src/router.js)
+  3. [data.json](./data/data.json)
+  4. [CreateGame_editor.html](./views/CreateGame_editor.html)
+  5. [Success.html](./views/Success.html)
+  
