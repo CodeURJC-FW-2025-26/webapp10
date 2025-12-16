@@ -134,6 +134,7 @@ async function createreview(event) {
       showBootstrapAlert("✅ Reseña creada exitosamente.", "success");
       // Add the new review to the page dynamically
       if (data.review) {
+        console.log(data.review);
         addReviewToPage(data.review, gameId);
       }
     } else {
@@ -415,9 +416,11 @@ function addReviewToPage(review, gameId) {
               .join("")}
         </div>
         <p>${review.comment}</p>
-        <div>
-            <img src="/game/${gameId}/review/${review._id}/image" width="300" height="200" alt="Imagen de reseña">
-        </div>
+
+          <div>
+            <img src="/game/${gameId}/review/${review._id}/image" width="300" height="200">
+          </div>
+
         <div class="buttons m-3 justify-content-start d-flex">
           <form action="/game/${gameId}/review/delete" method="POST">
             <input type="hidden" name="review_id" value="${review._id}">
@@ -792,10 +795,7 @@ document.addEventListener("submit", async (e) => {
 
     // Success: remove review element from DOM
     const reviewId = form.querySelector('[name="review_id"]')
-      ? form.querySelector('[name="review_id"]').value
-      : data && data.review_id
-      ? data.review_id
-      : null;
+      ? form.querySelector('[name="review_id"]').value: data && data.review_id ? data.review_id: null;
     let reviewEl = null;
     if (reviewId)
       reviewEl = document.querySelector(

@@ -664,7 +664,7 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
             comment: req.body.comment_description,
             rating: req.body.rating,
             date: new Date().toISOString().split('T')[0],
-            imageFilename: req.file ? req.file.filename : null
+            imageFilename: req.file ? req.file.filename : 'cod-poster.jpg'
         };
 
         await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
@@ -786,7 +786,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         comment: req.body ? req.body.comment_description : review.comment,
         rating: req.body ? req.body.rating : review.rating,
         date: new Date().toISOString().split('T')[0],
-        imageFilename: req.file ? req.file.filename : null
+        imageFilename: req.file ? req.file.filename : 'cod-poster.jpg'
     };
 
     try {
