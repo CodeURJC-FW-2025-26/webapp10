@@ -232,7 +232,7 @@ router.get('/game/:id/image', async (req, res) => {
     let game = await catalog.getGame(req.params.id);
 
     // If it's the default image, serve from public/images, otherwise from uploads
-    if (game.imageFilename === 'default_img.jpg') {
+    if (game.imageFilename === 'default_img.png') {
         res.download('./public/images/' + game.imageFilename);
     } else {
         res.download(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
@@ -472,7 +472,7 @@ async function handler(req, res) {
         } else if (existing_game && existing_game.imageFilename) {
             game_create.imageFilename = existing_game.imageFilename;
         } else {
-            game_create.imageFilename = 'default_img.jpg';
+            game_create.imageFilename = 'default_img.png';
         }
 
         // Create or modify the game in the database
@@ -504,7 +504,12 @@ router.get('/image', (req, res) => {
     if (/[\\/]/.test(filename)) {
         return res.status(400);
     }
-    res.download('uploads/' + filename);
+    // If it's the default image, serve from public/images, otherwise from uploads
+    if (filename === 'default_img.png') {
+        res.download('./public/images/' + filename);
+    } else {
+        res.download('uploads/' + filename);
+    }
 });
 
 // Route: Show a specific game page with reviews and stars
@@ -537,13 +542,13 @@ router.get('/game/:id', async (req, res) => {
 router.post('/game/:id/delete-image', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
-    if (game && game.imageFilename && game.imageFilename !== 'default_img.jpg') {
+    if (game && game.imageFilename && game.imageFilename !== 'default_img.png') {
         try {
             await fs.rm(catalog.UPLOADS_FOLDER + '/' + game.imageFilename);
         } catch (err) {
             console.error('Error al eliminar archivo de imagen:', err);
         }
-        await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: { imageFilename: 'default_img.jpg' } });
+        await catalog.editGame({ _id: new ObjectId(game_id) }, { $set: { imageFilename: 'default_img.png' } });
     }
     res.json({ success: true });
 });
