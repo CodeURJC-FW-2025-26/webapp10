@@ -128,6 +128,8 @@ async function createreview(event) {
     if (data.success) {
       // Clear form fields
       form.reset();
+      const clearBtn = document.getElementById("clearReviewImage");
+      if (clearBtn) clearBtn.click();
       hideLoadingSpinner();
       showBootstrapAlert("✅ Reseña creada exitosamente.", "success");
       // Add the new review to the page dynamically
@@ -216,8 +218,8 @@ function validateField(input, isEdit = false) {
         setError("El comentario debe tener al menos 25 caracteres.");
         return false;
       }
-      if (value.length > 200) {
-        setError("El comentario no puede exceder 200 caracteres.");
+      if (value.length > 500) {
+        setError("El comentario no puede exceder 500 caracteres.");
         return false;
       }
       clear();
@@ -320,8 +322,8 @@ function validateForm(form, isEdit = false) {
   } else if (comment.value.length < 25) {
     showFieldError(comment, "El comentario debe tener al menos 25 caracteres.");
     isValid = false;
-  } else if (comment.value.length > 200) {
-    showFieldError(comment, "El comentario no puede exceder 200 caracteres.");
+  } else if (comment.value.length > 500) {
+    showFieldError(comment, "El comentario no puede exceder 500 caracteres.");
     isValid = false;
   }
 
@@ -528,7 +530,7 @@ document.addEventListener("click", function (event) {
             </div>
             <div class="row mb-2">
                 <label class="col-sm-3 col-form-label">Comentario:</label>
-                <div class="col-sm-9"><textarea name="comment_description" class="form-control" rows="3" minlength="25" maxlength="200" required>${currentComment}</textarea>
+                <div class="col-sm-9"><textarea name="comment_description" class="form-control" rows="3" minlength="25" maxlength="500" required>${currentComment}</textarea>
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
@@ -611,8 +613,8 @@ document.addEventListener("click", function (event) {
         "El comentario debe tener al menos 25 caracteres."
       );
       skipSubmit = true;
-    } else if (comment.value.length > 200) {
-      showFieldError(comment, "El comentario no puede exceder 200 caracteres.");
+    } else if (comment.value.length > 500) {
+      showFieldError(comment, "El comentario no puede exceder 500 caracteres.");
       skipSubmit = true;
     }
     const ratingVal = parseFloat(rating.value);

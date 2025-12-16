@@ -626,8 +626,8 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         }
     };
     if (req.body.comment_description) {
-        if (req.body.comment_description.length < 25 || req.body.comment_description.length > 200) {
-            errors.push("La descripción debe tener entre 25 y 200 caracteres.");
+        if (req.body.comment_description.length < 25 || req.body.comment_description.length > 500) {
+            errors.push("La descripción debe tener entre 25 y 500 caracteres.");
         }
     };
 
