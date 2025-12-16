@@ -98,13 +98,7 @@ async function createreview(event) {
   event.preventDefault();
 
   const form = event.target;
-  const match = form.action.match(/\/game\/([^\/]+)\/review\/create/);
-  const gameId = match ? match[1] : null;
-
-  if (!gameId) {
-    showBootstrapAlert("Error: No se pudo identificar el juego.", "danger");
-    return;
-  }
+  const gameId = event.target.action.split("/")[4];
 
   // Clear previous errors
   clearFormErrors(form);
@@ -134,6 +128,8 @@ async function createreview(event) {
     if (data.success) {
       // Clear form fields
       form.reset();
+      const clearBtn = document.getElementById("clearReviewImage");
+      if (clearBtn) clearBtn.click();
       hideLoadingSpinner();
       showBootstrapAlert("✅ Reseña creada exitosamente.", "success");
       // Add the new review to the page dynamically
@@ -526,7 +522,6 @@ document.addEventListener("click", function (event) {
 
   const existingImgSrc = imgNode ? imgNode.src : "";
   const formHtml = `
-    
         <form class="review-edit-form d-grid p-3" enctype="multipart/form-data">
             <div class="row mb-2">
                 <label class="col-sm-3 col-form-label">Nombre:</label>
@@ -828,7 +823,7 @@ document.addEventListener("submit", async (e) => {
       );
     if (!reviewEl) reviewEl = form.closest(".review");
     if (reviewEl) {
-      // remove smoothly
+
       reviewEl.remove();
     }
 
