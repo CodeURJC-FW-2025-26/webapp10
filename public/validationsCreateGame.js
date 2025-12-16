@@ -69,6 +69,7 @@ function showGroupValid(container) {
     }
 }
 
+// Function to show error modal with an array of errors
 function showArrayErrorModal(errorsArray) {
     const modalBody = document.getElementById("errorModalBody");
     
@@ -83,6 +84,103 @@ function showArrayErrorModal(errorsArray) {
     const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
     modal.show();
 }
+
+
+
+
+
+// Drag-and-Drop functionality for image upload area v---------------------------------v
+    const dropArea = document.getElementById('dropArea');
+
+    // 1. Prevent default behaviour
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false); // Also at the body level to prevent navigation
+    });
+
+    function preventDefaults (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    }
+
+    // 2. Resaltar la zona al arrastrar
+    ['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+    dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+    dropArea.classList.remove('highlight');
+    }
+
+    // 3. Manejar el archivo soltado
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+    let dt = e.dataTransfer;
+    let files = dt.files; // files es un objeto FileList con los archivos
+
+    handleFiles(files); // Llama a una función para procesar los archivos
+    }
+
+    function handleFiles(files) {
+    files = [...files]; // Convierte FileList a un array
+
+    files.forEach(file => {
+        // Aquí puedes hacer validaciones (como verificar que sea una imagen)
+        if (file.type.startsWith('image/')) {
+            // Por ejemplo, para mostrar una vista previa:
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                // Aquí añades img a tu galería o zona de vista previa
+            };
+            reader.readAsDataURL(file);
+            
+            // Aquí es donde enviarías el archivo al servidor (fetch o XMLHttpRequest)
+            // uploadFile(file); 
+        }
+    });
+    }
+// ^-----------------------------------------------------------------------------------^
+
+
+// Function to clear image in the review
+document.addEventListener("DOMContentLoaded", function () {
+    const clearBtn = document.getElementById("clearImage");
+    const input = document.getElementById("imageFilename");
+    const preview = document.getElementById("imagePreview");
+    const previewImg = document.getElementById("previewImg");
+
+    // Dishable if no file is selected
+    if (clearBtn && input) {
+        clearBtn.disabled = !(input.files && input.files.length > 0);
+    }
+
+    // Changing the input, enable/disable the button, depending on whether there is a file
+    input.addEventListener("change", () => {
+        clearBtn.disabled = !(input.files && input.files.length > 0);
+    });
+
+    // On click, clear selection and hide the preview
+    clearBtn.addEventListener("click", () => {
+        input.value = "";
+        if (preview) preview.style.display = "none";
+        if (previewImg) previewImg.src = "";
+        clearBtn.disabled = true;
+        showError(input, 'Debe subir una imagen para el videojuego');
+    });
+});
+
+
 
 
 
