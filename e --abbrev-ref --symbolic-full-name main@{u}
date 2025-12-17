@@ -1,0 +1,13 @@
+* [33mdb78574[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/testsuccess[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mtestsuccess[m[33m)[m review edit/default/preview/delete image
+* [33m3b49076[m comments + more bootstrap modals
+* [33m1e7f518[m bootstrap modals
+*   [33m9fdbc38[m Merge branch 'main' of https://github.com/CodeURJC-FW-2025-26/webapp10
+[32m|[m[33m\[m  
+[32m|[m * [33md4049f2[m Now, editing and de-checking all the checkboxes that came checked doesn't let you submit the form
+* [33m|[m [33m726635c[m some changes
+[33m|[m[33m/[m  
+* [33m40c95bc[m Just some code-style improvements
+* [33mbdcc815[m Drag-and-Drop working perfectly now
+* [33mcdc6b51[m New default image and now it works perfectly
+*   [33m1c9d305[m Merge branch 'main' of https://github.com/CodeURJC-FW-2025-26/webapp10
+[34m|[m[35m\[m  
