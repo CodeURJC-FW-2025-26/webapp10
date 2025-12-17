@@ -281,10 +281,11 @@ router.get('/check-title-unique', async (req, res) => {
         res.status(500).json({ isUnique: false, message: 'Error interno del servidor.' });
     }
 });
-
+// Route: Create or edit a game (POST) with image upload
 router.post('/game/create', upload.single('imageFilename'), handler);
 router.post('/game/create/:id', upload.single('imageFilename'), handler);
 
+// Shared handler function for creating or editing a game
 async function handler(req, res) {
 
     let new_game_from_scratch = !req.query.id; 
@@ -361,21 +362,25 @@ async function handler(req, res) {
             errors.push("El nombre debe tener entre 1 y 75 caracteres.");
         }
     };
+    // Description lengths
     if (req.body.description) {
         if (req.body.description.length < 250 || req.body.description.length > 1500) {
             errors.push("La descripción debe tener entre 250 y 1500 caracteres.");
         }
     };
+    // Short description lengths
     if (req.body.short_description) {
         if (req.body.short_description.length < 100 || req.body.short_description.length > 500) {
             errors.push("La descripción corta debe tener entre 100 y 500 caracteres.");
         }
     };
+    // Developer and editor lengths
     if (req.body.developer) {
         if (req.body.developer.length < 1 || req.body.developer.length > 50) {
             errors.push("El desarrollador debe tener entre 1 y 50 caracteres.");
         }
     };
+    // Editor length
     if (req.body.editor) {
         if (req.body.editor.length < 1 || req.body.editor.length > 50) {
             errors.push("El editor debe tener entre 1 y 50 caracteres.");
@@ -455,7 +460,7 @@ async function handler(req, res) {
             rating: req.body.rating || existing_game.rating,
             genre: genreArr
         };
-
+        // Handle image filename
         if (req.file) {
             game_create.imageFilename = req.file.filename;
         } else if (existing_game && existing_game.imageFilename) {
@@ -527,7 +532,7 @@ router.get('/game/:id', async (req, res) => {
         }
     });
 });
-
+// Route: Delete the image associated with a game
 router.post('/game/:id/delete-image', async (req, res) => {
     let game_id = req.params.id;
     let game = await catalog.getGame(game_id);
@@ -660,7 +665,7 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
             date: new Date().toISOString().split('T')[0],
             imageFilename: req.file ? req.file.filename : 'cod-poster.jpg'
         };
-
+        // Insert the new review into the game's reviews array
         await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
         res.json({
             success: true,
@@ -691,13 +696,13 @@ router.post('/game/:id/review/delete', async (req, res) => {
                 console.error('Error al eliminar archivo de imagen:', err);
             }
         }
-
+        // Respond with success JSON
         res.json({
             success: true,
             message: 'Juego borrado exitosamente',
             gameId: req.params.id
         });
-
+        
     } catch (error) {
         console.error('Error al borrar el juego:', error);
         res.status(500).json({
@@ -745,6 +750,7 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         errorsObj.user_name = msg;
         errorsArr.push(msg);
     }
+    // Description size
     if (req.body.comment_description && (req.body.comment_description.length < 25 || req.body.comment_description.length > 500)) {
         const msg = 'La descripción debe tener entre 25 y 500 caracteres.';
         errorsObj.comment_description = msg;
@@ -828,7 +834,7 @@ router.get('/search', async (req, res) => {
             stars: calcRating(game.rating)
         };
     });
-
+    // Render index with search results
     res.render('index', {
         games,
         pages,

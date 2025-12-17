@@ -1,14 +1,18 @@
+// public/infiniteScroll.js
+// JavaScript for Infinite Scroll functionality
+
 // Infinite Scroll functions
 let currentPage = 1;
 let isLoading = false;
 let hasMore = true;
 
+// Load more games
 async function loadMore() {
     if (isLoading || !hasMore) return;
     
     isLoading = true;
 
-    // Show loading indicator (spinner existente)
+    // Show loading indicator/spinner
     const spinnerContainer = document.querySelector('.spinner-container');
     if (spinnerContainer) {
         spinnerContainer.style.display = 'flex';
@@ -32,6 +36,7 @@ async function loadMore() {
             platform: platform
         });
         
+        // Fetch data from server
         const response = await fetch(`/games/load?${params}`);
         const data = await response.json();
         
@@ -111,6 +116,7 @@ function initInfiniteScroll() {
         return;
     }
     
+    // Listen to scroll event
     contentContainer.addEventListener("scroll", () => {
         const containerHeight = contentContainer.clientHeight;
         const scrollTop = contentContainer.scrollTop;

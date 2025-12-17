@@ -1,44 +1,100 @@
+// public/reviews.js
+// JavaScript for handling reviews: create, edit, delete with confirmation, validation, image preview, and dynamic UI updates.
+
+// Function to show a confirmation modal
+function showConfirmModal(message, onConfirm) {
+  let confirmModal = document.getElementById("ConfirmModal");
+  
+  // If it doesn't exist, create it
+  if (!confirmModal) {
+    confirmModal = document.createElement("div");
+    confirmModal.id = "ConfirmModal";
+    confirmModal.setAttribute("class", "modal fade");
+    confirmModal.setAttribute("tabindex", "-1");
+    confirmModal.setAttribute("aria-hidden", "true");
+    document.body.appendChild(confirmModal);
+  }
+
+  // Set modal content
+  confirmModal.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar acción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ${message}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmActionBtn">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Show the modal
+  const modal = new bootstrap.Modal(confirmModal);
+  modal.show();
+
+  // Execute callback on confirm
+  const confirmBtn = document.getElementById("confirmActionBtn");
+  confirmBtn.onclick = () => {
+    modal.hide();
+    if (onConfirm) onConfirm();
+  };
+}
+
+//Function to handle secure delete with confirmation
 async function securemessage(event) {
   event.preventDefault();
 
-  const confirmed = window.confirm(
-    "¿Está seguro de que desea borrar el juego? Esta acción no se puede deshacer."
-  );
-  if (confirmed) {
-    showLoadingSpinner();
+  showConfirmModal(
+    "¿Está seguro de que desea borrar el juego? Esta acción no se puede deshacer.",
+    async () => {
+      showLoadingSpinner();
+      // Extract game ID from form action URL
+      const match = event.target.action.match(/\/game\/([^\/]+)\/delete/);
+      const gameId = match ? match[1] : null;
+      // If no gameId, show error and return
+      if (!gameId) {
+        hideLoadingSpinner();
+        showBootstrapAlert("Error: No se pudo identificar el juego.", "danger");
+        return;
+      }
+      // Proceed to send delete request
+      try {
+        const response = await fetch(`/game/${gameId}/delete`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-    const gameId = event.target.action.split("/")[4];
-
-    try {
-      const response = await fetch(`/game/${gameId}/delete`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        window.location.href = `/game/${gameId}/deleted`;
-      } else {
+        const data = await response.json();
+        // On success, redirect to deleted confirmation page
+        if (data.success) {
+          window.location.href = `/game/${gameId}/deleted`;
+        } else {
+          hideLoadingSpinner();
+          showBootstrapAlert(
+            "❌ Error: " +
+              (data.message || "No se ha podido realizar el borrado del juego"),
+            "danger"
+          );
+        }
+      } catch (error) {
         hideLoadingSpinner();
         showBootstrapAlert(
-          "❌ Error: " +
-            (data.message || "No se ha podido realizar el borrado del juego"),
+          "❌ Error: No se ha podido realizar el borrado del juego. Intenta nuevamente.",
           "danger"
         );
       }
-    } catch (error) {
-      hideLoadingSpinner();
-      showBootstrapAlert(
-        "❌ Error: No se ha podido realizar el borrado del juego. Intenta nuevamente.",
-        "danger"
-      );
     }
-  }
+  );
 }
-
+// Show and hide loading spinner
 function showLoadingSpinner() {
   let spinner = document.getElementById("loading-spinner");
   if (!spinner) {
@@ -57,18 +113,18 @@ function showLoadingSpinner() {
   }
   spinner.style.display = "flex";
 }
-
+// Hide loading spinner
 function hideLoadingSpinner() {
   let spinner = document.getElementById("loading-spinner");
   if (spinner) {
     spinner.style.display = "none";
   }
 }
-
+// Function to show Bootstrap alert modal
 function showBootstrapAlert(message, type = "danger", timeout = 0) {
   let alertContainer = document.getElementById("AlertContainer");
 
-  // Si no existe, créalo
+  // If it doesn't exist, create it
   if (!alertContainer) {
     alertContainer = document.createElement("div");
     alertContainer.id = "AlertContainer";
@@ -78,16 +134,16 @@ function showBootstrapAlert(message, type = "danger", timeout = 0) {
     document.body.appendChild(alertContainer);
   }
 
-  // Mapear tipos de Bootstrap
+  // Set modal content
   const typeMap = {
     success: "Success",
     danger: "Error",
     warning: "Warning",
     info: "Information",
   };
-
+  // Determine title based on type
   const title = typeMap[type] || "Alert";
-
+  // Set modal content
   alertContainer.innerHTML = `
     <div class="modal-dialog">
       <div class="modal-content">
@@ -104,18 +160,18 @@ function showBootstrapAlert(message, type = "danger", timeout = 0) {
       </div>
     </div>
   `;
-
+  // Show the modal
   const modal = new bootstrap.Modal(alertContainer);
   modal.show();
 
-  // Auto-cerrar después del timeout (si se especifica)
+  // Auto-close after timeout (if specified)
   if (timeout > 0) {
     setTimeout(() => {
       modal.hide();
     }, timeout);
   }
 }
-
+// Function to handle review creation
 async function createreview(event) {
   event.preventDefault();
 
@@ -133,7 +189,7 @@ async function createreview(event) {
   showLoadingSpinner();
 
   const formData = new FormData(form);
-
+  // Submit form data via fetch
   try {
     const response = await fetch(`/game/${gameId}/review/create`, {
       method: "POST",
@@ -175,7 +231,7 @@ async function createreview(event) {
     );
   }
 }
-
+// Clear all form errors
 function clearFormErrors(form) {
   const errorElements = form.querySelectorAll(".invalid-feedback");
   errorElements.forEach((el) => (el.textContent = ""));
@@ -319,7 +375,7 @@ function attachRealTimeValidation(form, isEdit = false) {
     });
   });
 }
-
+// Validate entire form before submission
 function validateForm(form, isEdit = false) {
   let isValid = true;
 
@@ -372,7 +428,7 @@ function validateForm(form, isEdit = false) {
 
   return isValid;
 }
-
+// Show error message for a specific input field
 function showFieldError(input, message) {
   input.classList.add("is-invalid");
   const errorDiv = input.parentNode.querySelector(".invalid-feedback");
@@ -380,14 +436,14 @@ function showFieldError(input, message) {
     errorDiv.textContent = message;
   }
 }
-
+// Function to show error modal with message
 function showErrorModal(message) {
   const modalBody = document.getElementById("errorModalBody");
   modalBody.textContent = message;
   const modal = new bootstrap.Modal(document.getElementById("errorModal"));
   modal.show();
 }
-
+// Calculate star ratings 
 function calcRating(rating) {
   let ratingt = Math.trunc(rating);
   let starFull = [];
@@ -414,7 +470,7 @@ function calcRating(rating) {
 
   return { starFull, starHalf, starEmpty };
 }
-
+// Function to add a new review to the page dynamically
 function addReviewToPage(review, gameId) {
   const reviewsContainer = document.getElementById("reseñas");
   if (!reviewsContainer) return;
@@ -528,6 +584,7 @@ document.addEventListener("click", function (event) {
   const currentComment = commentNode ? commentNode.textContent.trim() : "";
   const currentRating = extractRatingFromNode(ratingNode);
 
+  // Get existing image src (if any)
   const existingImgSrc = imgNode ? imgNode.src : "";
   const formHtml = `
         <form class="review-edit-form d-grid p-3" enctype="multipart/form-data">
@@ -797,7 +854,7 @@ document.addEventListener("submit", async (e) => {
 
   try {
     const formData = new FormData(form);
-
+    // Send delete request via fetch
     const response = await fetch(`/game/${gameId}/review/delete`, {
       method: "POST",
       body: new URLSearchParams(formData),
@@ -815,7 +872,7 @@ document.addEventListener("submit", async (e) => {
         throw new Error(text || "Error al eliminar la reseña");
       }
     }
-
+    // Handle error responses
     if (!response.ok || (data && data.success === false)) {
       const msg =
         data && (data.message || (data.errors && data.errors.join(". ")))
@@ -841,7 +898,7 @@ document.addEventListener("submit", async (e) => {
     if (reviewEl) {
       reviewEl.remove();
     }
-
+    
     hideLoadingSpinner();
     showBootstrapAlert("✅ Reseña eliminada con éxito.", "success");
   } catch (err) {
