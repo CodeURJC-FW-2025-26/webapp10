@@ -466,7 +466,7 @@ async function handler(req, res) {
         } else if (existing_game && existing_game.imageFilename) {
             game_create.imageFilename = existing_game.imageFilename;
         } else {
-            game_create.imageFilename = 'default_img.png';
+            game_create.imageFilename = '/public/images/default_img.png';
         }
 
         // Create or modify the game in the database
@@ -603,9 +603,12 @@ router.get('/game/:id/review/:_id/image', async (req, res) => {
     let review_id = req.params._id;
     let review = game.reviews.find(r => r._id.toString() === review_id);
 
-
-    res.download(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
-
+    // If it's the default image, serve from public/images, otherwise from uploads
+    if (review.imageFilename === 'default_img.png' || review.imageFilename === '/public/images/default_img.png') {
+        res.download('./public/images/default_img.png');
+    } else {
+        res.download(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
+    }
 });
 
 // Route: Create a review for a game (POST) with optional image upload
@@ -658,13 +661,13 @@ router.post('/game/:id/review/create', upload.single('imageFilename'), async (re
         // ---------------------------
         // If there are no errors: Create game
         let review_create = {
-            _id: new ObjectId(),
-            username: req.body.user_name,
-            comment: req.body.comment_description,
-            rating: req.body.rating,
-            date: new Date().toISOString().split('T')[0],
-            imageFilename: req.file ? req.file.filename : 'cod-poster.jpg'
-        };
+    _id: new ObjectId(),
+    username: req.body.user_name,
+    comment: req.body.comment_description,
+    rating: req.body.rating,
+    date: new Date().toISOString().split('T')[0],
+    imageFilename: req.file ? req.file.filename : 'default_img.png' 
+};
         // Insert the new review into the game's reviews array
         await catalog.addreview({ _id: new ObjectId(game_id) }, { $push: { reviews: review_create } });
         res.json({
@@ -683,11 +686,8 @@ router.post('/game/:id/review/delete', async (req, res) => {
     let game_id = req.params.id;
     let review_id = req.body.review_id;
 
-    console.log('Deleting review:', review_id, 'from game:', game_id);
-
     try {
         let review = await catalog.deletereview({ _id: new ObjectId(game_id) }, { $pull: { reviews: { _id: new ObjectId(review_id) } } });
-        console.log('Review deleted:', review);
         // Remove uploaded image file if present
         if (review && review.imageFilename) {
             try {
@@ -708,6 +708,41 @@ router.post('/game/:id/review/delete', async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Ocurrió un error al borrar el juego. Por favor, intenta nuevamente.'
+        });
+    }
+});
+
+// Route: Delete the image associated with a review
+router.post('/game/:id/review/:_id/delete-image', async (req, res) => {
+    let game_id = req.params.id;
+    let review_id = req.params._id;
+
+    try {
+        let game = await catalog.getGame(game_id);
+        let review = game.reviews.find(r => r._id.toString() === review_id);
+
+        // Delete the file from uploads folder if it's not the default image
+        if (review && review.imageFilename && review.imageFilename !== 'default_img.png') {
+            try {
+                await fs.rm(catalog.UPLOADS_FOLDER + '/' + review.imageFilename);
+            } catch (err) {
+                console.error('Error al eliminar archivo de imagen:', err);
+            }
+        }
+
+        // Update review to have default image
+        await catalog.editreview(
+            { _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, 
+            { $set: { "reviews.$.imageFilename": 'default_img.png' } }
+        );
+
+        res.json({ success: true, message: 'Imagen eliminada correctamente' });
+
+    } catch (error) {
+        console.error('Error al eliminar imagen de reseña:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error al eliminar la imagen'
         });
     }
 });
@@ -781,13 +816,13 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
 
     // Build the updated review object (replace the review in the array)
     let review_edit = {
-        _id: new ObjectId(review_id),
-        username: req.body ? req.body.user_name : review.username,
-        comment: req.body ? req.body.comment_description : review.comment,
-        rating: req.body ? req.body.rating : review.rating,
-        date: new Date().toISOString().split('T')[0],
-        imageFilename: req.file ? req.file.filename : 'cod-poster.jpg'
-    };
+    _id: new ObjectId(review_id),
+    username: req.body ? req.body.user_name : review.username,
+    comment: req.body ? req.body.comment_description : review.comment,
+    rating: req.body ? req.body.rating : review.rating,
+    date: new Date().toISOString().split('T')[0],
+    imageFilename: req.file ? req.file.filename : (review.imageFilename || 'default_img.png') // Keep existing image if no new one uploaded
+};
 
     try {
         // Update the specific review using positional operator

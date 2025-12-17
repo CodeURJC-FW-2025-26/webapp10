@@ -144,9 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
         btn.addEventListener('click', loadMore);
     }
     
-    // Initialize infinite scroll (only if not a search)
-    // Or always, as you prefer
     initInfiniteScroll();
     
-    console.log('Scroll infinito inicializado. Página:', currentPage);
+
 });

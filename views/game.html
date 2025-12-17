@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="edit-button col-6 mb-3 d-flex flex-column flex-md-row gap-2">
-                    <form onsubmit="securemessage(event)" action="/game/{{_id}}/delete">
+                    <form onsubmit="securemessage(event)" action="/game/{{_id}}/delete" method="POST">
                         <input type="submit" class="btn btn-primary" value="Borrar juego">
                     </form>
 
@@ -49,7 +49,7 @@
                     </div>
                     <!-- Game /images -->
                     <div class="image-side col-12 col-md-3">
-                        <img src="/image?filename={{imageFilename}}" alt="Portada de {{title}}">
+                        <img src="/game/{{_id}}/image" alt="Portada de {{title}}" width="300" height="300">
                     </div>
 
                 </div>
@@ -146,9 +146,9 @@
                                 <p>{{comment}} </p>
                                 <!-- Review image -->
                                 {{#imageFilename}}
-                                    <div>
-                                        <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
-                                    </div>
+                                <div>
+                                    <img src="/game/{{game_id}}/review/{{_id}}/image" width="300" height="200">
+                                </div>
                                 {{/imageFilename}}
                                 <!-- Edit and delete buttons for the review -->
                                 <div class="buttons m-3 justify-content-start d-flex">
@@ -209,10 +209,13 @@
                                         videojuego:</label>
                                     <div class="col-sm-9">
                                         <div id="dropArea" class="file-upload-container">
-                                            <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
-                                                <label for="imageFilename">
-                                                    Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
-                                                </label>
+                                            <input type="file" id="imageFilename" name="imageFilename"
+                                                class="form-control"
+                                                accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp"
+                                                style="display: none;">
+                                            <label for="imageFilename">
+                                                Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
+                                            </label>
                                         </div>
                                         <div class="invalid-feedback" id="imageFilename_error"></div>
 

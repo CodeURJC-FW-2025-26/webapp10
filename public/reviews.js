@@ -212,7 +212,6 @@ async function createreview(event) {
       showBootstrapAlert("✅ Reseña creada exitosamente.", "success");
       // Add the new review to the page dynamically
       if (data.review) {
-        console.log(data.review);
         addReviewToPage(data.review, gameId);
       }
     } else {
@@ -577,7 +576,6 @@ document.addEventListener("click", function (event) {
     const colonIndex = titleText.indexOf("|");
     if (colonIndex !== -1) {
       // If the title begins with a date (YY-MM-DD:username:), strip the date prefix
-      console.log(colonIndex);
       username = titleText.substring(11, colonIndex).trim();
     }
   }
@@ -607,22 +605,35 @@ document.addEventListener("click", function (event) {
                 </div>
             </div>
             <div class="row mb-2">
-                <label class="col-sm-3 col-form-label">Imagen actual / Cambiar:</label>
-                <div class="col-sm-9 d-flex flex-column">
-                    <img src="${existingImgSrc}" class="edit-image-preview mb-2" width="300" height="200">
-                    <div id="dropArea" class="file-upload-container">
-                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
-                                <label for="imageFilename">
-                                    Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
-                                </label>
-                            </div>
-                    <input type="hidden" name="existing_image" value="${existingImgSrc}">
-                    <div class="invalid-feedback"></div>
-                    <button type="button" id="clearReviewImage" class="btn btn-outline-secondary mt-2">
-                      Quitar imagen
-                    </button>
-                </div>
-            </div>
+    <label class="col-sm-3 col-form-label">Imagen actual:</label>
+    <div class="col-sm-9 d-flex flex-column">
+        <img src="${existingImgSrc}" class="edit-current-image mb-2" width="300" height="200" style="display: ${existingImgSrc ? 'block' : 'none'};">
+        <button type="button" class="btn btn-outline-danger mt-2 btn-clear-current-image" style="display: ${existingImgSrc ? 'block' : 'none'};">
+          Eliminar imagen actual
+        </button>
+        <input type="hidden" name="delete_current_image" value="false">
+    </div>
+</div>
+<div class="row mb-2">
+    <label class="col-sm-3 col-form-label">Cambiar imagen:</label>
+    <div class="col-sm-9 d-flex flex-column">
+        <div id="dropArea" class="file-upload-container">
+            <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
+            <label for="imageFilename">
+                Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
+            </label>
+        </div>
+        <div id="newImagePreviewContainer" class="mt-2" style="display: none;">
+            <span>Vista previa de la nueva imagen:</span><br>
+            <img id="newImagePreview" class="mb-2" width="300" height="200">
+        </div>
+        <button type="button" class="btn btn-outline-secondary mt-2 btn-clear-new-image" style="display: none;">
+          Eliminar imagen nueva
+        </button>
+        <input type="hidden" name="existing_image" value="${existingImgSrc}">
+        <div class="invalid-feedback"></div>
+    </div>
+</div>
             <div class="d-flex gap-2 mt-2">
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <button type="button" class="btn btn-secondary btn-cancel-edit">Cancelar</button>
@@ -652,6 +663,74 @@ document.addEventListener("click", function (event) {
 
   // Attach realtime validation to the inline edit form (image optional)
   attachRealTimeValidation(editForm, true);
+
+// Handle current image deletion
+const clearCurrentBtn = wrapper.querySelector(".btn-clear-current-image");
+const currentImg = wrapper.querySelector(".edit-current-image");
+const deleteCurrentInput = wrapper.querySelector('[name="delete_current_image"]');
+
+if (clearCurrentBtn && currentImg && deleteCurrentInput) {
+  clearCurrentBtn.addEventListener("click", async () => {
+    showLoadingSpinner();
+
+    try {
+      const response = await fetch(`/game/${gameId}/review/${reviewId}/delete-image`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Set image to default
+        currentImg.src = "/images/default_img.png";
+        clearCurrentBtn.style.display = "none";
+        deleteCurrentInput.value = "true"; 
+        showBootstrapAlert("✅ Imagen eliminada correctamente", "success");
+      } else {
+        showBootstrapAlert(data.message || "Error al eliminar la imagen", "danger");
+      }
+    } catch (error) {
+      showBootstrapAlert("Error al eliminar la imagen: " + error.message, "danger");
+    } finally {
+      hideLoadingSpinner();
+    }
+  });
+}
+
+//Handle new image preview and deletion
+const fileInput = wrapper.querySelector('input[type="file"][name="imageFilename"]');
+const newPreviewContainer = wrapper.querySelector("#newImagePreviewContainer");
+const newPreviewImg = wrapper.querySelector("#newImagePreview");
+const clearNewBtn = wrapper.querySelector(".btn-clear-new-image");
+
+if (fileInput && newPreviewImg && clearNewBtn) {
+  fileInput.addEventListener("change", (ev) => {
+    const f = fileInput.files && fileInput.files[0];
+    if (f) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        newPreviewImg.src = e.target.result;
+        newPreviewContainer.style.display = "block";
+        clearNewBtn.style.display = "block";
+      };
+      reader.readAsDataURL(f);
+    } else {
+      newPreviewContainer.style.display = "none";
+      clearNewBtn.style.display = "none";
+    }
+  });
+
+  clearNewBtn.addEventListener("click", () => {
+    fileInput.value = "";
+    newPreviewImg.src = "";
+    newPreviewContainer.style.display = "none";
+    clearNewBtn.style.display = "none";
+  });
+}
+
   cancelBtn.addEventListener("click", (e) => {
     // Remove form and show original content
     editForm.remove();
@@ -748,28 +827,6 @@ document.addEventListener("click", function (event) {
       showErrorModal("Error al editar la reseña: " + err.message);
     }
   });
-
-  // File input preview handling: when user chooses a new file, show it; otherwise keep existing preview
-  const fileInput = wrapper.querySelector(
-    'input[type="file"][name="imageFilename"]'
-  );
-  const previewImg = wrapper.querySelector(".edit-image-preview");
-  const originalImg = existingImgSrc;
-  if (fileInput && previewImg) {
-    fileInput.addEventListener("change", (ev) => {
-      const f = fileInput.files && fileInput.files[0];
-      if (f) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          previewImg.src = e.target.result;
-        };
-        reader.readAsDataURL(f);
-      } else {
-        // no file selected -> show the old image
-        previewImg.src = originalImg;
-      }
-    });
-  }
 });
 
 // Function to set up image preview

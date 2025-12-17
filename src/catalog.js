@@ -20,7 +20,6 @@ export async function findGame(filter) {
    const item = await games.findOne(filter); 
 
     if (!item) {
-       console.log("Elemento no encontrado.");
         return null;
    }
     return item;
@@ -31,8 +30,6 @@ export async function findGameByName(title) {
 }
 
 export async function deletereview(query, update) {
-    console.log("Intentando actualizar con Query:", query); 
-    console.log("Con Update:", update);
     // 1. The function receives two arguments:
     //    - query: An object to find the game (e.g., { _id: new ObjectID(id) })
     //    - update: An object with the changes to apply (e.g., { $pull: { reviews: {_id: new ObjectId(taskId)} } })
