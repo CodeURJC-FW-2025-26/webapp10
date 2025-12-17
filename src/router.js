@@ -829,15 +829,11 @@ router.post('/game/:id/review_editor/:_id/edit', upload.single('imageFilename'),
         await catalog.editreview({ _id: new ObjectId(game_id), "reviews._id": new ObjectId(review_id) }, { $set: { "reviews.$": review_edit } });
 
         // If this is an XHR / AJAX request, respond with JSON so the client can update in-place
-        if (req.xhr || (req.headers.accept && req.headers.accept.indexOf('application/json') !== -1)) {
+      
             return res.json({ success: true, review: review_edit });
-        }
+        
 
-        res.render('Success', {
-            new_game_added: false, game_id, review_id, _id: game_id,
-            genres: allGenres.map(g => ({ ...g, active: false })),
-            platforms: allPlatforms.map(p => ({ ...p, active: false }))
-        });
+        
     } catch (err) {
         console.error('Error editing review:', err);
         if (req.xhr || (req.headers.accept && req.headers.accept.indexOf('application/json') !== -1)) {
