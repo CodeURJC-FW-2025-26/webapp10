@@ -525,7 +525,12 @@ document.addEventListener("click", function (event) {
                 <label class="col-sm-3 col-form-label">Imagen actual / Cambiar:</label>
                 <div class="col-sm-9 d-flex flex-column">
                     <img src="${existingImgSrc}" class="edit-image-preview mb-2" width="300" height="200">
-                    <input type="file" name="imageFilename" class="form-control" accept="image/*">
+                    <div id="dropArea" class="file-upload-container">
+                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
+                                <label for="imageFilename">
+                                    Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
+                                </label>
+                            </div>
                     <input type="hidden" name="existing_image" value="${existingImgSrc}">
                     <div class="invalid-feedback"></div>
                     <button type="button" id="clearReviewImage" class="btn btn-outline-secondary mt-2">
@@ -639,7 +644,7 @@ document.addEventListener("click", function (event) {
       const newDate = new Date().toISOString().split("T")[0];
       titleNode.querySelector(
         "h4"
-      ).innerHTML = `${newDate}-${userName.value}:<i class="bi bi-person-check-fill text-info"></i>`;
+      ).innerHTML = `${newDate}:${userName.value}|<i class="bi bi-person-check-fill text-info"></i>`;
       commentNode.textContent = comment.value;
       ratingNode.innerHTML = buildStarsHtml(ratingVal);
       if (imgNode) {
