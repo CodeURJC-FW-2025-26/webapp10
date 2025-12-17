@@ -364,4 +364,80 @@ form {
     font-weight: bold;
     font-family: "Orbitron";
 }
-    
+
+/* Alert Modal styles */
+
+.modal-content {
+    background-color: rgb(39, 38, 41);
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    color: white;
+    font-family: "Orbitron";
+}
+
+.modal-header {
+    border-bottom: 2px solid rgb(255, 0, 0);
+    background-color: rgb(8, 4, 12);
+}
+
+.modal-header .modal-title {
+    color: white;
+    font-family: "Orbitron";
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+    opacity: 0.7;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    background-color: rgb(39, 38, 41);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.modal-footer {
+    border-top: 2px solid rgb(255, 0, 0);
+    background-color: rgb(8, 4, 12);
+}
+
+.modal-footer .btn-primary {
+    background-color: rgb(8, 4, 12);
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    color: white;
+    font-family: "Orbitron";
+    font-weight: bold;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: grey;
+    color: black;
+    border: 2px solid rgb(255, 0, 0);
+}
+
+.modal-footer .btn-primary:focus {
+    background-color: grey;
+    color: black;
+    border: 2px solid rgb(255, 0, 0);
+    box-shadow: none;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#AlertContainer {
+    z-index: 9999;
+}
