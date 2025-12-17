@@ -413,19 +413,15 @@ async function handler(req, res) {
     const gamemodArr = toArr(req.body.gamemod);
     const genreArr = toArr(req.body.genre);
 
-    // In edition, if no platforms/modes/genres are sent, keep existing ones
-    const platformsToValidate = platformArr.length > 0 ? platformArr : (existing_game?.platform || []);
-    const modesToValidate = gamemodArr.length > 0 ? gamemodArr : (existing_game?.gamemod || []);
-    const genresToValidate = genreArr.length > 0 ? genreArr : (existing_game?.genre || []);
-
     // 8. Ensure at least one platform, mode and genre is selected
-    if (!platformsToValidate || platformsToValidate.length === 0) {
+    // For validation: always require at least one selection (regardless of create/edit)
+    if (!platformArr || platformArr.length === 0) {
         errors.push("Debes seleccionar al menos una plataforma de juego.");
     };
-    if (!modesToValidate || modesToValidate.length === 0) {
+    if (!gamemodArr || gamemodArr.length === 0) {
         errors.push("Debes seleccionar al menos un modo de juego.");
     };
-    if (!genresToValidate || genresToValidate.length === 0) {
+    if (!genreArr || genreArr.length === 0) {
         errors.push("Debes seleccionar al menos un género.");
     };
 
@@ -453,11 +449,11 @@ async function handler(req, res) {
             editor: req.body.editor || existing_game.editor,
             price: req.body.price || existing_game.price,
             release_date: req.body.release_date || existing_game.release_date,
-            platform: platformArr.length > 0 ? platformArr : existing_game.platform,
-            gamemod: gamemodArr.length > 0 ? gamemodArr : existing_game.gamemod,
+            platform: platformArr,
+            gamemod: gamemodArr,
             age_classification: req.body.age_classification || existing_game.age_classification,
             rating: req.body.rating || existing_game.rating,
-            genre: genreArr.length > 0 ? genreArr : existing_game.genre
+            genre: genreArr
         };
 
         if (req.file) {
