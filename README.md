@@ -60,12 +60,12 @@ Attributes:
 
 
 
-## Practica 1
+## Practice 1
 
 
 ###
 
-### Capturas de la web
+### Web photos
 #### Main page
 ![](/data/images/screenshotmain1.png)
 #####
@@ -150,7 +150,7 @@ Attributes:
  
 
 
-## Practica 2
+## Practice 2
 
 
 ###
@@ -272,8 +272,9 @@ I was responsible for making the create game form work on the website. I started
   3. [data.json](./data/data.json)
   4. [CreateGame_editor.html](./views/CreateGame_editor.html)
   5. [Success.html](./views/Success.html)
-  
-## Practica 3
+
+
+## Practice 3
 
 
 ###
@@ -385,20 +386,19 @@ In this final section, I've focused on everything related to reviews: using AJAX
 
 #### Fran García
 * Description of my tasks during the practice:
-
-
+I was responsible for upgrading the create game form and edit game form on the website. I started with the [validationsCreateGame.js](./public/validationsCreateGame.js) file, to add the Bootstrap validations for the client. Then I adjusted the [router.js](./src/router.js) to validate the same thing and in the same way as in the client. I also changed a little the [header.html](./views/header.html), [sidebar.html](./views/sidebar.html) and [footer.html](./views/footer.html) files to save space in the principal html's.
 
 * 5 best commits:
-  1. [Fixed a problem with the names, and added to the data.json the info to all the other games, not only Minecraft.](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/a48b291a50adc6fe2a8a2bf82208cb96b39fe3e3)
-  2. [Adding express to the form](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/b7bad7cc532a9868284a6fae67ed1d1914712c50)
-  3. [Compleatly resolved the problem with the filters and the checkbox fields of the videogames. Edit game also added](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/4f5f79bfeec8f13adcc7d5444b9485cf78d31048)
-  4. [New server validation options and new error page to show them](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/6dbeb8d4c417338dc40e75cd47fc2aa513cd3714)
-  5. [Now the created games are being saved, but there are still thing to improve](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/89235677a711c50b246ececea7bc64967fc053a1)
+  1. [Added cleanest and shotrest version of header, sidebar and footer to all html files](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/da73f81a86b8f0451650fe68b7ae8f28bba3e963)
+  2. [All client validations working perfectly](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/cb671607182bdec58b91f519250861c889e2ff9e)
+  3. [Bootstrap client validations. The AJAX part doesn't work correctly every time, I have to solve it.](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/92b818e1a216bb751a97b90389e4c9245790e5af)
+  4. [Everything of the form working correctly. It only remains the image part](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/7737e8f753c2f76fbb337abfda4dd1a778444a02)
+  5. [Adding the drag-and-drop for the image in the form (it's not finished yet)](https://github.com/CodeURJC-FW-2025-26/webapp10/commit/7bb672b5085d52b0c08b32bbc0cad40a05ad0fa2)
 
 * 5 files most participated:
-  1. [CreateGame.html](./views/CreateGame.html)
+  1. [validationsCreateGame.js](./public/validationsCreateGame.js)
   2. [router.js](./src/router.js)
-  3. [data.json](./data/data.json)
-  4. [CreateGame_editor.html](./views/CreateGame_editor.html)
-  5. [Success.html](./views/Success.html)
+  3. [CreateGame.html](./views/CreateGame.html)
+  4. [MoreForPlaying.css](./public/MoreForPlaying.css)
+  5. [header.html](./views/header.html), [sidebar.html](./views/sidebar.html) and [footer.html](./views/footer.html)
   
