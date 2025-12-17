@@ -65,31 +65,53 @@ function hideLoadingSpinner() {
   }
 }
 
-function showBootstrapAlert(message, type = "danger", timeout = 6000) {
-  let container = document.getElementById("bootstrap-alert-container");
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "bootstrap-alert-container";
-    container.style.position = "fixed";
-    container.style.top = "1rem";
-    container.style.right = "1rem";
-    container.style.zIndex = "1080";
-    container.style.maxWidth = "calc(100% - 2rem)";
-    document.body.appendChild(container);
+function showBootstrapAlert(message, type = "danger", timeout = 0) {
+  let alertContainer = document.getElementById("AlertContainer");
+
+  // Si no existe, créalo
+  if (!alertContainer) {
+    alertContainer = document.createElement("div");
+    alertContainer.id = "AlertContainer";
+    alertContainer.setAttribute("class", "modal fade");
+    alertContainer.setAttribute("tabindex", "-1");
+    alertContainer.setAttribute("aria-hidden", "true");
+    document.body.appendChild(alertContainer);
   }
 
-  const alertEl = document.createElement("div");
-  alertEl.className = `alert alert-${type} alert-dismissible fade show`;
-  alertEl.setAttribute("role", "alert");
-  alertEl.innerHTML = `${message} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+  // Mapear tipos de Bootstrap
+  const typeMap = {
+    success: "Success",
+    danger: "Error",
+    warning: "Warning",
+    info: "Information",
+  };
 
-  container.appendChild(alertEl);
+  const title = typeMap[type] || "Alert";
 
+  alertContainer.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">${title}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ${message}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const modal = new bootstrap.Modal(alertContainer);
+  modal.show();
+
+  // Auto-cerrar después del timeout (si se especifica)
   if (timeout > 0) {
     setTimeout(() => {
-      try {
-        alertEl.remove();
-      } catch (e) {}
+      modal.hide();
     }, timeout);
   }
 }
@@ -339,14 +361,14 @@ function validateForm(form, isEdit = false) {
 
   // Validate imageFilename (required when creating, optional when editing)
   const image = form.querySelector('[name="imageFilename"]');
-    // image optional, but if provided must be an image
-    if (image && image.files && image.files.length > 0) {
-      const file = image.files[0];
-      if (!file.type.startsWith("image/")) {
-        showFieldError(image, "El archivo debe ser una imagen.");
-        isValid = false;
-      }
+  // image optional, but if provided must be an image
+  if (image && image.files && image.files.length > 0) {
+    const file = image.files[0];
+    if (!file.type.startsWith("image/")) {
+      showFieldError(image, "El archivo debe ser una imagen.");
+      isValid = false;
     }
+  }
 
   return isValid;
 }
@@ -402,7 +424,9 @@ function addReviewToPage(review, gameId) {
   const reviewHtml = `
     <div class="review" data-review-id="${review._id}">
         <div class="game-title">
-            <h4>${review.date}:${review.username} | <i class="bi bi-person-check-fill text-info"></i></h4>
+            <h4>${review.date}:${
+    review.username
+  } | <i class="bi bi-person-check-fill text-info"></i></h4>
         </div>
         <div class="rating-stars">
             ${stars.starFull
@@ -418,14 +442,18 @@ function addReviewToPage(review, gameId) {
         <p>${review.comment}</p>
 
           <div>
-            <img src="/game/${gameId}/review/${review._id}/image" width="300" height="200">
+            <img src="/game/${gameId}/review/${
+    review._id
+  }/image" width="300" height="200">
           </div>
 
         <div class="buttons m-3 justify-content-start d-flex">
           <form action="/game/${gameId}/review/delete" method="POST">
             <input type="hidden" name="review_id" value="${review._id}">
             <input type="submit" class="btn btn-primary" value="Borrar">
-              <a href="/game/${gameId}/review_editor/${review._id}" class="btn">Editar</a>
+              <a href="/game/${gameId}/review_editor/${
+    review._id
+  }" class="btn">Editar</a>
           </form>
 
         </div>
@@ -493,8 +521,8 @@ document.addEventListener("click", function (event) {
     const colonIndex = titleText.indexOf("|");
     if (colonIndex !== -1) {
       // If the title begins with a date (YY-MM-DD:username:), strip the date prefix
-        console.log(colonIndex);
-        username = titleText.substring(11, colonIndex).trim();
+      console.log(colonIndex);
+      username = titleText.substring(11, colonIndex).trim();
     }
   }
   const currentComment = commentNode ? commentNode.textContent.trim() : "";
@@ -525,7 +553,12 @@ document.addEventListener("click", function (event) {
                 <label class="col-sm-3 col-form-label">Imagen actual / Cambiar:</label>
                 <div class="col-sm-9 d-flex flex-column">
                     <img src="${existingImgSrc}" class="edit-image-preview mb-2" width="300" height="200">
-                    <input type="file" name="imageFilename" class="form-control" accept="image/*">
+                    <div id="dropArea" class="file-upload-container">
+                                <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
+                                <label for="imageFilename">
+                                    Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
+                                </label>
+                            </div>
                     <input type="hidden" name="existing_image" value="${existingImgSrc}">
                     <div class="invalid-feedback"></div>
                     <button type="button" id="clearReviewImage" class="btn btn-outline-secondary mt-2">
@@ -639,7 +672,7 @@ document.addEventListener("click", function (event) {
       const newDate = new Date().toISOString().split("T")[0];
       titleNode.querySelector(
         "h4"
-      ).innerHTML = `${newDate}-${userName.value}:<i class="bi bi-person-check-fill text-info"></i>`;
+      ).innerHTML = `${newDate}:${userName.value}|<i class="bi bi-person-check-fill text-info"></i>`;
       commentNode.textContent = comment.value;
       ratingNode.innerHTML = buildStarsHtml(ratingVal);
       if (imgNode) {
@@ -740,7 +773,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Delegated handler: intercept review delete forms and perform AJAX delete
 document.addEventListener("submit", async (e) => {
   const form = e.target;
-  
+
   if (!form || !form.action || form.action.indexOf("/review/delete") === -1)
     return;
 
@@ -795,7 +828,10 @@ document.addEventListener("submit", async (e) => {
 
     // Success: remove review element from DOM
     const reviewId = form.querySelector('[name="review_id"]')
-      ? form.querySelector('[name="review_id"]').value: data && data.review_id ? data.review_id: null;
+      ? form.querySelector('[name="review_id"]').value
+      : data && data.review_id
+      ? data.review_id
+      : null;
     let reviewEl = null;
     if (reviewId)
       reviewEl = document.querySelector(
@@ -803,7 +839,6 @@ document.addEventListener("submit", async (e) => {
       );
     if (!reviewEl) reviewEl = form.closest(".review");
     if (reviewEl) {
-
       reviewEl.remove();
     }
 

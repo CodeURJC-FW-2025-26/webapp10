@@ -208,8 +208,12 @@
                                     <label for="imageFilename" class="col-sm-3 col-form-label">Imagen del
                                         videojuego:</label>
                                     <div class="col-sm-9">
-                                        <input type="file" id="imageFilename" name="imageFilename" class="form-control"
-                                            accept="image/*">
+                                        <div id="dropArea" class="file-upload-container">
+                                            <input type="file" id="imageFilename" name="imageFilename" class="form-control" accept=".png, .jpg, .jpeg, .svg, .webp, image/png, image/jpeg, image/svg+xml, image/webp" style="display: none;">
+                                                <label for="imageFilename">
+                                                    Arrastra tus imágenes aquí, o haz clic para seleccionarlas.
+                                                </label>
+                                        </div>
                                         <div class="invalid-feedback" id="imageFilename_error"></div>
 
                                         <!-- Preview -->
